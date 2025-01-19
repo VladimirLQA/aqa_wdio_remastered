@@ -1,5 +1,5 @@
-import * as dotenv from "dotenv";
-import { rimraf } from "rimraf";
+import * as dotenv from 'dotenv';
+import { rimraf } from 'rimraf';
 
 dotenv.config();
 
@@ -9,8 +9,8 @@ export const config: WebdriverIO.Config = {
   // Runner Configuration
   // ====================
   // WebdriverIO supports running e2e tests as well as unit and component tests.
-  runner: "local",
-  tsConfigPath: "./tsconfig.json",
+  runner: 'local',
+  tsConfigPath: './tsconfig.json',
 
   //
   // ==================
@@ -29,7 +29,7 @@ export const config: WebdriverIO.Config = {
   //
   specs: [
     // ToDo: define location for spec files here
-    "./src/**/*.test.ts",
+    './src/**/*.test.ts',
     // "./src/tests/waits.test.ts",
   ],
   // Patterns to exclude.
@@ -38,9 +38,9 @@ export const config: WebdriverIO.Config = {
   ],
 
   suites: {
-    ui_products: ["./src/ui/tests/Products/**/*.test.ts"],
-    ui_simple: ["./src/ui/tests/baseTests/**/*.test.ts"],
-    api_products: ["./src/api/tests/**/*.test.ts"],
+    ui_products: ['./src/ui/tests/Products/**/*.test.ts'],
+    ui_simple: ['./src/ui/tests/baseTests/**/*.test.ts'],
+    api_products: ['./src/api/tests/**/*.test.ts'],
   },
   //
   // ============
@@ -66,7 +66,7 @@ export const config: WebdriverIO.Config = {
   //
   capabilities: [
     {
-      browserName: "chrome",
+      browserName: 'chrome',
       // "goog:chromeOptions": {
       //   args: ["headless", "disable-gpu"],
       // },
@@ -80,7 +80,7 @@ export const config: WebdriverIO.Config = {
   // Define all options that are relevant for the WebdriverIO instance here
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  logLevel: "error",
+  logLevel: 'error',
   //
   // Set specific log levels per logger
   // loggers:
@@ -128,7 +128,7 @@ export const config: WebdriverIO.Config = {
   //
   // Make sure you have the wdio adapter package for the specific framework installed
   // before running any tests.
-  framework: "mocha",
+  framework: 'mocha',
 
   //
   // The number of times to retry the entire specfile when it fails as a whole
@@ -144,11 +144,11 @@ export const config: WebdriverIO.Config = {
   // The only one supported by default is 'dot'
   // see also: https://webdriver.io/docs/dot-reporter
   reporters: [
-    "spec",
+    'spec',
     [
-      "allure",
+      'allure',
       {
-        outputDir: "allure-results",
+        outputDir: 'allure-results',
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: false,
         disableMochaHooks: false,
@@ -159,7 +159,7 @@ export const config: WebdriverIO.Config = {
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
   mochaOpts: {
-    ui: "bdd",
+    ui: 'bdd',
     timeout: 60000,
   },
 
@@ -177,7 +177,7 @@ export const config: WebdriverIO.Config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    */
   onPrepare: function (config, capabilities) {
-    rimraf.sync("./allure-results");
+    rimraf.sync('./allure-results');
   },
   /**
    * Gets executed before a worker process is spawned and can be used to initialize specific service

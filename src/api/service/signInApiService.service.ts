@@ -1,7 +1,7 @@
-import { ADMIN_PASSWORD, ADMIN_USERNAME } from "../../config/environment";
-import { STATUS_CODES } from "../../data/api/statusCodes";
-import { validateResponse } from "../../utils/validation/apiValidation";
-import signInController from "../controllers/signIn.controller";
+import { ADMIN_PASSWORD, ADMIN_USERNAME } from '../../config/environment';
+import { STATUS_CODES } from '../../data/api/statusCodes';
+import { validateResponse } from '../../utils/validation/apiValidation';
+import signInController from '../controllers/signIn.controller';
 
 export class SignInApiService {
   private token: string | null = null;
@@ -14,7 +14,7 @@ export class SignInApiService {
       password: ADMIN_PASSWORD,
     });
     validateResponse(response, STATUS_CODES.OK, true, null);
-    this.setToken(response.headers["authorization"]);
+    this.setToken(response.headers['authorization']);
     return this.getToken();
   }
 

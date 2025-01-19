@@ -1,1 +1,1 @@
-export type GetTextMethod = "with" | "contains";
+export type GetTextMethod = 'with' | 'contains';

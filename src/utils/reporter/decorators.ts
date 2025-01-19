@@ -1,41 +1,48 @@
-import allure from "@wdio/allure-reporter";
-import { Status } from "allure-js-commons";
-import { hideSecretData } from "../string/hide";
-
-export function logStep(stepName: string): MethodDecorator {
-  return function (_target: unknown, _propertyKey: string | symbol, descriptor: PropertyDescriptor) {
-    const originalMethod = descriptor?.value;
-    descriptor.value = async function (...args: unknown[]) {
-      allure.startStep(stepName);
+import allure from '@wdio/allure-reporter';
+import { Status } from 'allure-js-commons';
+import { hideSecretData } from '../string/hide';
+import { getElementSelector } from '../helpers';
+/*
+  https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#decorators
+*/
+export function logStep<This, Args extends any[], Return>(stepName: string) {
+  return function (
+    target: (this: This, ...args: Args) => Promise<Return>,
+    _context: ClassMethodDecoratorContext<This, (this: This, ...args: Args) => Promise<Return>>,
+  ) {
+    return async function (this: This, ...args: Args): Promise<Return> {
+      let res: any;
       try {
-        const result = await originalMethod.apply(this, args);
+        allure.startStep(stepName);
+        res = await target.apply(this, args);
         allure.endStep();
-        return result;
-      } catch (error) {
+        return res;
+      } catch (e) {
         allure.endStep(Status.FAILED);
-        throw error;
+        throw e;
       }
     };
-    return descriptor;
   };
 }
 
-export function logAction(stepName: string): MethodDecorator {
-  return function (_target: any, _propertyKey: string | symbol, descriptor: PropertyDescriptor) {
-    const originalMethod = descriptor?.value;
-    descriptor.value = async function (...args: any[]) {
-      const selectorOrElement = args[0]; // Extract the selector from the arguments
-      const selector = selectorOrElement;
+export function logAction<This, Args extends any[], Return>(stepName: string) {
+  return function (
+    target: (this: This, ...args: Args) => Promise<Return>,
+    _context: ClassMethodDecoratorContext<This, (this: This, ...args: Args) => Promise<Return>>,
+  ) {
+    return async function (this: This, ...args: Args): Promise<Return> {
+      const [selectorOrElement, value, ..._opt] = args;
 
-      const value = args[1]; // Extract the value from the arguments
-      const isSecretArgument = args.find((el) => typeof el === "object" && "isSecretValue" in el);
+      const isSecretArgument = args.find((el) => typeof el === 'object' && 'isSecretValue' in el);
       const isSecretValue = isSecretArgument ? isSecretArgument.isSecretValue : false;
-      let newStepName = stepName
-        .replace("{selector}", `"${selector}"`)
-        .replace("{text}", `"${isSecretValue ? hideSecretData(value) : value}"`);
-      allure.startStep(newStepName);
+
+      const newStepName = stepName
+        .replace('{selector}', `"${getElementSelector(selectorOrElement)}"`)
+        .replace('{text}', `"${isSecretValue ? hideSecretData(value) : value}"`);
+
       try {
-        const result = await originalMethod.apply(this, args);
+        allure.startStep(newStepName);
+        const result = await target.apply(this, args);
         allure.endStep();
         return result;
       } catch (error) {
@@ -43,6 +50,5 @@ export function logAction(stepName: string): MethodDecorator {
         throw error;
       }
     };
-    return descriptor;
   };
 }

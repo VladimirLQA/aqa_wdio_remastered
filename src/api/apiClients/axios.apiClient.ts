@@ -1,6 +1,6 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, isAxiosError } from "axios";
-import { IRequestOptions, IResponse, IResponseFields } from "../../data/types/api.types";
-import { reportApiRequest } from "../../utils/reporter/api";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, isAxiosError } from 'axios';
+import { IRequestOptions, IResponse, IResponseFields } from '../../data/types/api.types';
+import { reportApiRequest } from '../../utils/reporter/api';
 
 export class AxiosApiClient {
   private response: AxiosResponse | undefined;
@@ -11,8 +11,8 @@ export class AxiosApiClient {
     } catch (err: unknown) {
       if (!isAxiosError(err)) throw err;
       else {
-        console.log("Error", (err as AxiosError).message);
-        console.log("Request URL:", options.method, options.url);
+        console.log('Error', (err as AxiosError).message);
+        console.log('Request URL:', options.method, options.url);
         this.response = (err as AxiosError).response;
         return this.transformResponse();
       }

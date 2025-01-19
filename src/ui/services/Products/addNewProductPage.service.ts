@@ -1,14 +1,14 @@
-import { IProduct } from "../../../data/types/product.types";
-import { logStep } from "../../../utils/reporter/decorators";
-import addNewProductPage from "../../pages/Products/addNewProduct.page";
-import productsPage from "../../pages/Products/products.page";
-import { SalesPortalPageService } from "../salesPortalPage.service";
+import { IProduct } from '../../../data/types/product.types';
+import { logStep } from '../../../utils/reporter/decorators';
+import addNewProductPage from '../../pages/Products/addNewProduct.page';
+import productsPage from '../../pages/Products/products.page';
+import { SalesPortalPageService } from '../salesPortalPage.service';
 
 class AddNewProductService extends SalesPortalPageService {
   private addNewProductPage = addNewProductPage;
   private productsPage = productsPage;
 
-  @logStep("Create product via UI")
+  @logStep('Create product via UI')
   async populate(product: IProduct) {
     await this.addNewProductPage.fillInputs(product);
     await this.addNewProductPage.clickOnSaveButton();

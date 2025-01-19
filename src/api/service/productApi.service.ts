@@ -1,9 +1,9 @@
-import { STATUS_CODES } from "../../data/api/statusCodes";
-import { productResponseSchema } from "../../data/jsonSchemas/product.schema";
-import { generateProductData } from "../../data/products/generateProduct";
-import { IProduct, IProductFromResponse } from "../../data/types/product.types";
-import { validateJsonSchema, validateResponse } from "../../utils/validation/apiValidation";
-import productsController from "../controllers/products.controller";
+import { STATUS_CODES } from '../../data/api/statusCodes';
+import { productResponseSchema } from '../../data/jsonSchemas/product.schema';
+import { generateProductData } from '../../data/products/generateProduct';
+import { IProduct, IProductFromResponse } from '../../data/types/product.types';
+import { validateJsonSchema, validateResponse } from '../../utils/validation/apiValidation';
+import productsController from '../controllers/products.controller';
 
 class ProductApiService {
   private createdProducts: IProductFromResponse[] = [];
@@ -18,10 +18,10 @@ class ProductApiService {
   }
 
   getCreatedProduct(id?: string) {
-    if (!this.createdProducts.length) throw new Error("No product was created");
+    if (!this.createdProducts.length) throw new Error('No product was created');
     if (id) {
       const foundProduct = this.createdProducts[this.findProductIndex(id)];
-      if (!foundProduct) throw new Error("No product was found");
+      if (!foundProduct) throw new Error('No product was found');
       return foundProduct;
     }
     const foundProduct = this.createdProducts.at(-1) as IProductFromResponse;

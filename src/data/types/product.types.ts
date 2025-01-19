@@ -1,4 +1,4 @@
-import { IResponseFields } from "./api.types";
+import { IResponseFields } from './api.types';
 
 export interface IProduct {
   name: string;
@@ -9,14 +9,14 @@ export interface IProduct {
 }
 
 export enum MANUFACTURERS {
-  APPLE = "Apple",
-  SAMSUNG = "Samsung",
-  GOOGLE = "Google",
-  MICROSOFT = "Microsoft",
-  SONY = "Sony",
-  XIAOMI = "Xiaomi",
-  AMAZON = "Amazon",
-  TESLA = "Tesla",
+  APPLE = 'Apple',
+  SAMSUNG = 'Samsung',
+  GOOGLE = 'Google',
+  MICROSOFT = 'Microsoft',
+  SONY = 'Sony',
+  XIAOMI = 'Xiaomi',
+  AMAZON = 'Amazon',
+  TESLA = 'Tesla',
 }
 
 export interface IProductFromResponse extends IProduct {

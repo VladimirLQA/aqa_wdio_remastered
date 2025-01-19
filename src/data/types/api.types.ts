@@ -1,9 +1,9 @@
-import { AxiosResponseHeaders, RawAxiosResponseHeaders } from "axios";
+import { AxiosResponseHeaders, RawAxiosResponseHeaders } from 'axios';
 
 export interface IRequestOptions {
   baseURL: string;
   url: string;
-  method: "get" | "post" | "put" | "delete";
+  method: 'get' | 'post' | 'put' | 'delete';
   data?: object;
   headers?: Record<string, string>;
 }

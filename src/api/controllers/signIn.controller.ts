@@ -1,18 +1,18 @@
-import { apiConfig } from "../../config/apiConfig";
-import { ICredentials } from "../../data/types/signIn.types";
-import { IRequestOptions, IResponseFields } from "../../data/types/api.types";
-import { AxiosApiClient } from "../apiClients/axios.apiClient";
-import { logStep } from "../../utils/reporter/decorators";
+import { apiConfig } from '../../config/apiConfig';
+import { ICredentials } from '../../data/types/signIn.types';
+import { IRequestOptions, IResponseFields } from '../../data/types/api.types';
+import { AxiosApiClient } from '../apiClients/axios.apiClient';
+import { logStep } from '../../utils/reporter/decorators';
 
 class SignInController {
   constructor(private apiClient = new AxiosApiClient()) {}
 
-  @logStep("Login via API")
+  @logStep('Login via API')
   async login(credentials: ICredentials) {
     const options: IRequestOptions = {
-      method: "post",
+      method: 'post',
       headers: {
-        "content-type": "application/json",
+        'content-type': 'application/json',
       },
       data: credentials,
       baseURL: apiConfig.baseUrl,

@@ -1,4 +1,4 @@
-import { logAction, logStep } from "../../utils/reporter/decorators";
+import { logAction, logStep } from '../../utils/reporter/decorators';
 
 export type ActionContext = {
   isSecretValue?: boolean;
@@ -7,7 +7,7 @@ export type ActionContext = {
 type SelectorOrLocator = string | WebdriverIO.Element;
 
 function isStringSelector(selector: SelectorOrLocator): selector is string {
-  return typeof selector === "string";
+  return typeof selector === 'string';
 }
 
 export abstract class BasePage {
@@ -28,33 +28,33 @@ export abstract class BasePage {
     return element;
   }
 
-  @logAction("Click on element with selector {selector}")
+  @logAction('Click on element with selector {selector}')
   async click(selector: string) {
     const element = await this.waitForDisplayed(selector);
     await element.waitForEnabled();
     await element.click();
   }
 
-  @logAction("Set {text} into element with selector {selector}")
+  @logAction('Set {text} into element with selector {selector}')
   async setValue(selector: SelectorOrLocator, value: string | number, context?: ActionContext) {
     const input = await this.waitForDisplayed(selector);
     await input.setValue(value);
   }
 
-  @logAction("Select dropdown value from {selector}")
+  @logAction('Select dropdown value from {selector}')
   async selectDropdownValue(selector: SelectorOrLocator, value: string | number) {
     const select = await this.waitForDisplayed(selector);
     await select.selectByVisibleText(value);
   }
 
-  @logStep("Get text from ${selector}")
+  @logStep('Get text from ${selector}')
   async getText(selector: SelectorOrLocator) {
     const element = await this.waitForDisplayed(selector);
     const text = await element.getText();
     return text;
   }
 
-  @logStep("Open page")
+  @logStep('Open page')
   async openPage(url: string) {
     await browser.url(url);
   }

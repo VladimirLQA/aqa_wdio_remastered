@@ -1,12 +1,12 @@
 //TODO: npm run test -- --spec="./src/api/tests/Products/get.test.ts"
 
-import { STATUS_CODES } from "../../../data/api/statusCodes";
-import { validateResponse } from "../../../utils/validation/apiValidation";
-import ProductsController from "../../controllers/products.controller";
-import productApiService from "../../service/productApi.service";
-import { SignInApiService } from "../../service/signInApiService.service";
+import { STATUS_CODES } from '../../../data/api/statusCodes';
+import { validateResponse } from '../../../utils/validation/apiValidation';
+import ProductsController from '../../controllers/products.controller';
+import productApiService from '../../service/productApi.service';
+import { SignInApiService } from '../../service/signInApiService.service';
 
-describe("[API] [Products] Get", async function () {
+describe('[API] [Products] Get', async function () {
   const signInApiService = new SignInApiService();
 
   beforeEach(async function () {
@@ -14,7 +14,7 @@ describe("[API] [Products] Get", async function () {
     await productApiService.create(token);
   });
 
-  it("Should get created product", async function () {
+  it('Should get created product', async function () {
     const getProductResponse = await ProductsController.get(
       productApiService.getCreatedProduct()._id,
       signInApiService.getToken()

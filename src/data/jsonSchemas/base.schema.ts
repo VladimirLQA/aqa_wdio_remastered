@@ -1,8 +1,8 @@
 export const baseSchemaPart = {
   IsSuccess: {
-    type: "boolean",
+    type: 'boolean',
   },
   ErrorMessage: {
-    type: ["string", "null"],
+    type: ['string', 'null'],
   },
 };
