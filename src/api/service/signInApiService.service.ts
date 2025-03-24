@@ -2,8 +2,7 @@ import { ADMIN_PASSWORD, ADMIN_USERNAME } from '../../config/environment';
 import { STATUS_CODES } from '../../data/api/statusCodes';
 import { validateResponse } from '../../utils/validation/apiValidation';
 import signInController from '../controllers/signIn.controller';
-
-export class SignInApiService {
+class SignInApiService {
   private token: string | null = null;
 
   constructor(private controller = signInController) {}
@@ -30,3 +29,5 @@ export class SignInApiService {
     this.token = null;
   }
 }
+
+export default new SignInApiService();

@@ -1,21 +1,18 @@
-//TODO: npm run test -- --spec="./src/ui/tests/Products/smoke/create.test.ts"
-
 import { NOFITICATIONS } from '../../../../data/notifications';
 import { generateProductData } from '../../../../data/products/generateProduct';
+import { TAGS } from '../../../../utils/tags';
 import homePageService from '../../../services/homePage.service';
 import addNewProductPageService from '../../../services/Products/addNewProductPage.service';
 import productsPageService from '../../../services/Products/productsPage.service';
 import signInPageService from '../../../services/signInPage.service';
 
-describe('[UI] [Products] Smoke', () => {
-  beforeEach(async function () {
-    await signInPageService.openSalesPortal();
-    await signInPageService.loginAsAdmin();
+describe(`[UI] [Products] Smoke ${TAGS.GLOBAL_SETUP}`, () => {
+  beforeEach(async () => {
     await homePageService.openProductsPage();
     await productsPageService.openAddNewProductPage();
   });
 
-  it('Should create product with smoke data', async function () {
+  it('Should create product with smoke data', async () => {
     const newProductData = generateProductData();
 
     await addNewProductPageService.populate(newProductData);

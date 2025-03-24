@@ -3,35 +3,44 @@
   "type": "module",
   "devDependencies": {
     "@eslint/js": "^9.14.0",
-    "@stylistic/eslint-plugin-js": "^2.10.1",
-    "@types/eslint__js": "^8.42.3",
-    "@typescript-eslint/eslint-plugin": "^8.14.0",
-    "@typescript-eslint/parser": "^8.14.0",
-    "eslint": "^9.14.0",
-    "globals": "^15.12.0",
     "@faker-js/faker": "^9.3.0",
+    "@stylistic/eslint-plugin-js": "^2.10.1",
     "@types/ajv": "^0.0.5",
     "@types/axios": "^0.9.36",
     "@types/chai": "^5.0.1",
     "@types/dotenv": "^6.1.1",
+    "@types/eslint__js": "^8.42.3",
     "@types/lodash": "^4.17.13",
     "@types/rimraf": "^3.0.2",
-    "@wdio/allure-reporter": "^9.2.14",
-    "@wdio/cli": "^9.4.1",
-    "@wdio/local-runner": "^9.4.1",
-    "@wdio/mocha-framework": "^9.2.8",
-    "@wdio/spec-reporter": "^9.2.14",
-    "typescript-eslint": "^8.14.0"
+    "@typescript-eslint/eslint-plugin": "^8.14.0",
+    "@typescript-eslint/parser": "^8.14.0",
+    "@wdio/allure-reporter": "^9.11.0",
+    "@wdio/cli": "^9.12.0",
+    "@wdio/local-runner": "^9.12.0",
+    "@wdio/mocha-framework": "^9.11.0",
+    "@wdio/spec-reporter": "^9.11.0",
+    "@wdio/types": "^9.10.1",
+    "@wdio/visual-service": "^6.3.3",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.14.0",
+    "globals": "^15.12.0",
+    "typescript-eslint": "^8.14.0",
+    "wdio-intercept-service": "^4.4.1"
   },
   "scripts": {
     "test": "npx wdio run ./wdio.conf.ts",
     "test:ui-products": "npm run test -- --suite ui_products",
+    "test:single": "npm run test -- --suite single",
+    "test:api-serial": "cross-env BAIL=true HEADLESS=true MAX_INSTANCES=1 npm run test -- --suite serial",
+    "test:grep-test": "npm run test -- --suite api_products --mochaOpts.grep=@serial",
+    "test:grep": "cross-env GREP=@serial npm run test",
     "test:ui-simple": "npm run test -- --suite ui_simple",
     "test:api-products": "npm run test -- --suite api_products",
     "report:generate": "allure generate allure-results -o allure-report --clean",
     "report:open": "npm run report:generate && allure open allure-report",
     "lint:check": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "wdio": "wdio run ./wdio.conf.ts"
   },
   "dependencies": {
     "ajv": "^8.17.1",
@@ -40,6 +49,7 @@
     "chai": "^5.1.2",
     "dotenv": "^16.4.7",
     "lodash": "^4.17.21",
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.0.1",
+    "webdriverio": "^9.12.0"
   }
 }

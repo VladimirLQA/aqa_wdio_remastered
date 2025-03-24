@@ -1,7 +1,7 @@
-import * as dotenv from 'dotenv';
 import { rimraf } from 'rimraf';
-
-dotenv.config();
+import { globalAuthSetup } from './src/config/global-setup';
+import { BAIL, HEADLESS, MAX_INSTANCES } from './src/config/environment';
+import { TAGS } from './src/utils/tags';
 
 export const config: WebdriverIO.Config = {
   //
@@ -36,11 +36,12 @@ export const config: WebdriverIO.Config = {
   exclude: [
     // 'path/to/excluded/files'
   ],
-
   suites: {
-    ui_products: ['./src/ui/tests/Products/**/*.test.ts'],
+    ui_products: ['./src/ui/tests/**/create.test.ts'],
     ui_simple: ['./src/ui/tests/baseTests/**/*.test.ts'],
     api_products: ['./src/api/tests/**/*.test.ts'],
+    serial: ['./src/api/tests/**/smoke.test.ts'],
+    single: ['./src/api/tests/Products/smoke.test.ts'],
   },
   //
   // ============
@@ -58,7 +59,7 @@ export const config: WebdriverIO.Config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 3,
+  maxInstances: +MAX_INSTANCES || 5,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -67,9 +68,12 @@ export const config: WebdriverIO.Config = {
   capabilities: [
     {
       browserName: 'chrome',
-      // "goog:chromeOptions": {
-      //   args: ["headless", "disable-gpu"],
-      // },
+      'goog:chromeOptions': {
+        args: [
+          ...(HEADLESS === 'true' ? ['headless'] : [])
+        ],
+      },
+      // webSocketUrl: true
     },
   ],
 
@@ -98,7 +102,7 @@ export const config: WebdriverIO.Config = {
   //
   // If you only want to run your tests until a specific amount of tests have failed use
   // bail (default is 0 - don't bail, run all tests).
-  bail: 0,
+  bail: BAIL === 'true' ? 1 : 0,
   //
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
@@ -120,7 +124,7 @@ export const config: WebdriverIO.Config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  // services: [],
+  services: ['intercept'],
   //
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
@@ -230,8 +234,9 @@ export const config: WebdriverIO.Config = {
    * Hook that gets executed before the suite starts
    * @param {object} suite suite details
    */
-  // beforeSuite: function (suite) {
-  // },
+  beforeSuite: async function (suite) {
+    if(suite.fullTitle.includes(TAGS.GLOBAL_SETUP)) await globalAuthSetup();
+  },
   /**
    * Function to be executed before a test (in Mocha/Jasmine) starts.
    */
