@@ -5,11 +5,13 @@ import productsPage from '../../pages/Products/products.page';
 import { SalesPortalPageService } from '../salesPortalPage.service';
 import editProductPage from '../../pages/Products/editProduct.page';
 import { logStep } from '../../../utils/reporter/decorators';
+import deleteProductModalPage from '../../pages/Products/deleteProduct.modal.page';
 
 class ProductsPageService extends SalesPortalPageService {
   private productsPage = productsPage;
   private addNewProductPage = addNewProductPage;
   private editProductPage = editProductPage;
+  private deleteProductModalPage = deleteProductModalPage;
 
   @logStep('Open Add New Product Page')
   async openAddNewProductPage() {
@@ -33,9 +35,9 @@ class ProductsPageService extends SalesPortalPageService {
   @logStep('Delete Product via UI')
   async deleteProduct(productName: string) {
     await this.productsPage.clickOnDeleteProductButton(productName);
-    await this.productsPage['Delete Modal'].waitForPageOpened();
-    await this.productsPage['Delete Modal'].clickOnDeleteButton();
-    await this.productsPage['Delete Modal'].waitForDisappeared();
+    await this.deleteProductModalPage.waitForPageOpened();
+    await this.deleteProductModalPage.clickOnDeleteButton();
+    await this.deleteProductModalPage.waitForDisappeared();
     await this.productsPage.waitForPageOpened();
   }
 }

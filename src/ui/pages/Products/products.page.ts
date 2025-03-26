@@ -1,10 +1,8 @@
 import { SalesPortalPage } from '../salesPortal.page';
-import deleteProductModal from './deleteProduct.modal';
 
 class ProductsPage extends SalesPortalPage {
-  readonly ['Delete Modal'] = deleteProductModal;
   readonly ['Add New Product'] = 'button.page-title-button';
-  readonly Title = '//h2[.="Products List "]';
+  readonly $Title = '//h2[.="Products List "]';
   readonly ['Table row'] = (productName: string) => `//tr[./td[.="${productName}"]]`;
   readonly ['Product Name in table'] = (productName: string) => `${this['Table row'](productName)}/td[1]`;
   readonly ['Product Price in table'] = (productName: string) => `${this['Table row'](productName)}/td[2]`;
@@ -20,7 +18,7 @@ class ProductsPage extends SalesPortalPage {
   }
 
   async waitForPageOpened(): Promise<void> {
-    await this.waitForDisplayed(this.Title);
+    await this.waitForDisplayed(this.$Title);
     await this.waitForSpinnersToBeHidden('Products');
   }
 
