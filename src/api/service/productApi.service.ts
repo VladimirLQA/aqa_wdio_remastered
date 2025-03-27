@@ -1,5 +1,5 @@
 import { STATUS_CODES } from '../../data/api/statusCodes';
-import { productResponseSchema } from '../../data/jsonSchemas/product.schema';
+import { PRODUCT_SCHEMA_RESPONSE } from '../../data/jsonSchemas/products/product.schema';
 import { generateProductData } from '../../data/products/generateProduct';
 import { IProduct, IProductFromResponse } from '../../data/types/product.types';
 import { validateJsonSchema, validateResponse } from '../../utils/validation/apiValidation';
@@ -12,7 +12,7 @@ class ProductApiService {
   async create(token: string, customData?: Partial<IProduct>) {
     const response = await this.controller.create(generateProductData(customData), token);
     validateResponse(response, STATUS_CODES.CREATED, true, null);
-    validateJsonSchema(productResponseSchema, response);
+    validateJsonSchema(PRODUCT_SCHEMA_RESPONSE, response);
     this.createdProducts.push(response.body.Product);
     return response.body.Product;
   }
