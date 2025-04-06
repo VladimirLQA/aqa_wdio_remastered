@@ -5,7 +5,7 @@ import stylisticJs from '@stylistic/eslint-plugin-js';
 
 export default [
   pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
   {
     files: ['**/*.{js,mjs,cjs,ts}'],
     plugins: { '@stylistic/js': stylisticJs },
@@ -53,10 +53,19 @@ export default [
         'single',
         { allowTemplateLiterals: true, avoidEscape: true },
       ],
-      'no-this-before-super': 'error',
-      '@typescript-eslint/no-unused-expressions': 0,
       '@typescript-eslint/no-unsafe-function-type': 'off',
       '@typescript-eslint/no-namespace': ['error', { allowDeclarations: true }],
+      "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unsafe-return": "warn",
+      "@typescript-eslint/restrict-template-expressions": "warn",
+      "@typescript-eslint/no-unused-expressions": ["error", { allowShortCircuit: true, allowTernary: true, }],
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@stylistic/js/function-call-argument-newline": ["error", "consistent"],
+      "no-this-before-super": "error",
+      "no-useless-catch": "off",
       // '@typescript-eslint/no-unused-expressions': [
       //   'error',
       //   {
@@ -69,5 +78,13 @@ export default [
     },
   },
   { ignores: ['node-modules', 'eslint', 'src/report', 'test-results'] },
-  { languageOptions: { globals: { ...globals.es2021, ...globals.node } } },
+  {
+    languageOptions: {
+      globals: { ...globals.es2021, ...globals.node, },
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: process.cwd(),
+      },
+    },
+  },
 ];

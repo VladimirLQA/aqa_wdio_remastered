@@ -1,33 +1,28 @@
 {
-    "compilerOptions": {
-        "moduleResolution": "node",
-        "module": "ESNext",
-        "target": "es2023",
-        "lib": [
-            "es2023",
-            "dom"
-        ],
-        "types": [
-            "node",
-            "@wdio/globals/types",
-            "expect-webdriverio",
-            "@wdio/mocha-framework",
-            "wdio-intercept-service"
-        ],
-        "skipLibCheck": true,
-        "noEmit": true,
-        "allowImportingTsExtensions": true,
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "strict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true,
-        "allowSyntheticDefaultImports": true,
-        "experimentalDecorators": false
-    },
-    "include": [
-        "src",
-        "wdio.conf.ts"
-    ]
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "ESNext",
+    "target": "es2023",
+    "lib": ["es2023", "dom"],
+    "types": [
+      "node",
+      "@wdio/globals/types",
+      "expect-webdriverio",
+      "@wdio/mocha-framework",
+      "wdio-intercept-service"
+    ],
+    "skipLibCheck": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": false
+  },
+  "include": ["src", "wdio.conf.ts", "eslint.config.mjs"],
+  "exclude": ["eslint.config.mjs"]
 }
