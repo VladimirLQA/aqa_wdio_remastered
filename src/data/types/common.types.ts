@@ -1,1 +1,1 @@
-export type TValues<T> = T[keyof T];
+export type ActionButtons = 'Delete' | 'Details' | 'Edit';

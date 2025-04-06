@@ -1,8 +1,9 @@
 import { IResponseFields } from './api.types';
-import { TValues } from './common.types';
+import { ObtainTypeValues } from './helper.types';
+
 export interface IProduct {
   name: string;
-  manufacturer: TValues<typeof MANUFACTURERS>;
+  manufacturer: ObtainTypeValues<typeof MANUFACTURERS>;
   price: number;
   amount: number;
   notes?: string;

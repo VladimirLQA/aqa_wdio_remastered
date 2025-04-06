@@ -1,24 +1,34 @@
-import { SalesPortalPage } from '../salesPortal.page';
+import { ListPage } from '../list.page';
 
-class ProductsPage extends SalesPortalPage {
+class ProductsPage extends ListPage {
   readonly ['Add New Product'] = 'button.page-title-button';
-  readonly $Title = '//h2[.="Products List "]';
-  readonly ['Table row'] = (productName: string) => `//tr[./td[.="${productName}"]]`;
-  readonly ['Product Name in table'] = (productName: string) => `${this['Table row'](productName)}/td[1]`;
-  readonly ['Product Price in table'] = (productName: string) => `${this['Table row'](productName)}/td[2]`;
-  readonly ['Product Manufacturer in table'] = (productName: string) => `${this['Table row'](productName)}/td[3]`;
-  readonly ['Product Creation Date in table'] = (productName: string) => `${this['Table row'](productName)}/td[4]`;
-  readonly ['Product Delete button in table'] = (productName: string) =>
-    `${this['Table row'](productName)}//button[@title="Delete"]`;
-  readonly ['Product Edit button in table'] = (productName: string) =>
-    `${this['Table row'](productName)}//button[@title="Edit"]`;
+
+  readonly Title = '//h2[.="Products List "]';
+
+  readonly ['Product Name in table'] = (productName: string) =>
+    `${this['Table row'](productName)}/td[1]`;
+
+  readonly ['Product Price in table'] = (productName: string) =>
+    `${this['Table row'](productName)}/td[2]`;
+
+  readonly ['Product Manufacturer in table'] = (productName: string) =>
+    `${this['Table row'](productName)}/td[3]`;
+
+  readonly ['Product Creation Date in table'] = (productName: string) =>
+    `${this['Table row'](productName)}/td[4]`;
+
+  // readonly ['Product Delete button in table'] = (productName: string) =>
+  //   `${this['Table row'](productName)}//button[@title="Delete"]`;
+
+  // readonly ['Product Edit button in table'] = (productName: string) =>
+  //   `${this['Table row'](productName)}//button[@title="Edit"]`;
 
   async clickOnAddNewProduct() {
     await this.click(this['Add New Product']);
   }
 
   async waitForPageOpened(): Promise<void> {
-    await this.waitForDisplayed(this.$Title);
+    await this.waitForDisplayed(this.Title);
     await this.waitForSpinnersToBeHidden('Products');
   }
 
@@ -36,13 +46,13 @@ class ProductsPage extends SalesPortalPage {
     };
   }
 
-  async clickOnDeleteProductButton(productName: string) {
-    await this.click(this['Product Delete button in table'](productName));
-  }
+  // async clickOnDeleteProductButton(productName: string) {
+  //   await this.click(this['Product Delete button in table'](productName));
+  // }
 
-  async clickOnEditProductButton(productName: string) {
-    await this.click(this['Product Edit button in table'](productName));
-  }
+  // async clickOnEditProductButton(productName: string) {
+  //   await this.click(this['Product Edit button in table'](productName));
+  // }
 }
 
 export default new ProductsPage();

@@ -1,7 +1,7 @@
-import { BaseModalPage } from '../modals/base.modal.page';
+import { BaseModalPage } from './base.modal.page';
 
-class DeleteProductModalPage extends BaseModalPage {
-  readonly TtileName = 'Delete Product';
+class DeleteModalPage extends BaseModalPage {
+  readonly TtileText = 'Delete Product';
   readonly Title = `//${this.getModalTitleXPath()}`;
   readonly ['Modal container'] = '//div[@role="dialog"]';
   readonly ['Delete button'] = `//div[@class="modal-footer"]//*[@type="submit"]`;
@@ -24,4 +24,4 @@ class DeleteProductModalPage extends BaseModalPage {
   }
 }
 
-export default new DeleteProductModalPage();
+export default new DeleteModalPage();

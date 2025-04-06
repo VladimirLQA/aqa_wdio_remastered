@@ -5,10 +5,10 @@ import homePageService from '../../../services/homePage.service';
 import editProductPageService from '../../../services/Products/editProductPage.service';
 import productsPageService from '../../../services/Products/productsPage.service';
 import signInPageService from '../../../services/signInPage.service';
-import { TValues } from '../../../../data/types/common.types';
+import { ObtainTypeValues } from '../../../../data/types/helper.types';
 import { TAGS } from '../../../../utils/tags';
 
-describe(`[UI] [Products] Smoke`, async () => {
+describe(`[UI] [Products] Smoke`, () => {
 
   beforeEach(async () => {
     const token = await SignInApiService.signInAsAdmin();
@@ -29,11 +29,11 @@ describe(`[UI] [Products] Smoke`, async () => {
       name: await $('#inputName').getValue(),
       amount: +(await $('#inputAmount').getValue()),
       price: +(await $('#inputPrice').getValue()),
-      manufacturer: (await $('#inputManufacturer').getValue()) as TValues<typeof MANUFACTURERS>,
+      manufacturer: (await $('#inputManufacturer').getValue()) as ObtainTypeValues<typeof MANUFACTURERS>,
       notes: await $('#textareaNotes').getValue(),
     };
 
-    expect(actualObject).toMatchObject({ ..._.omit(ProductApiService.getCreatedProduct(), ['_id', 'createdOn']) });
+    await expect(actualObject).toMatchObject({ ..._.omit(ProductApiService.getCreatedProduct(), ['_id', 'createdOn']) });
   });
 
   afterEach(async () => {

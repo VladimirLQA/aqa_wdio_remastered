@@ -1,10 +1,16 @@
 import { GetTextMethod } from '../../data/types/base.types';
+import { ObtainTypeValues } from '../../data/types/helper.types';
+import { MANUFACTURERS } from '../../data/types/product.types';
 import { BasePage } from './base.page';
 
 export abstract class SalesPortalPage extends BasePage {
   readonly ['Notification container'] = 'div.toast-container';
   readonly Notification = `${this['Notification container']} .toast-body`;
+  readonly ['Toast close button'] = '.toast-container button';
   readonly Spinner = '.spinner-border';
+  // | COUNTRIES | DELIVERY | string,
+  readonly ['Dropdown option [last()]'] = (option: ObtainTypeValues<typeof MANUFACTURERS>) =>
+    `(//option[text()="${option}"])[last()]`;
 
   abstract waitForPageOpened(): Promise<void>;
 
@@ -15,7 +21,9 @@ export abstract class SalesPortalPage extends BasePage {
         const notifications = await this.findArrayOfElements(this.Notification);
         const foundNotification = await notifications.find<WebdriverIO.Element>(async (n) => {
           const notificationText = await this.getText(n);
-          return method === 'contains' ? notificationText.includes(text) : notificationText === text;
+          return method === 'contains'
+            ? notificationText.includes(text)
+            : notificationText === text;
         });
         if (foundNotification) {
           notification = foundNotification;
@@ -25,9 +33,9 @@ export abstract class SalesPortalPage extends BasePage {
       {
         timeout: 10000,
         timeoutMsg: `Notification ${method} text ${text} not found`,
-      }
+      },
     );
-    if (!notification) throw notification;
+    if (!notification) throw Error(`Notification ${method} text ${text} not found`);
 
     return notification;
   }
@@ -46,7 +54,7 @@ export abstract class SalesPortalPage extends BasePage {
       {
         timeout: 30000,
         timeoutMsg: `Spinners are still displayed on ${page} Page after 30 seconds`,
-      }
+      },
     );
   }
 }

@@ -5,7 +5,7 @@ import productsPage from '../../pages/Products/products.page';
 import { SalesPortalPageService } from '../salesPortalPage.service';
 import editProductPage from '../../pages/Products/editProduct.page';
 import { logStep } from '../../../utils/reporter/decorators';
-import deleteProductModalPage from '../../pages/Products/deleteProduct.modal.page';
+import deleteProductModalPage from '../../pages/modals/delete.modal.page';
 
 class ProductsPageService extends SalesPortalPageService {
   private productsPage = productsPage;
