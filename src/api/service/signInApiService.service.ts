@@ -1,10 +1,10 @@
 import { ADMIN_PASSWORD, ADMIN_USERNAME } from '../../config/environment';
 import { STATUS_CODES } from '../../data/api/statusCodes';
+import usersTokenStorage, { TokenTypes } from '../../utils/storage/users-token.storage';
 import { validateResponse } from '../../utils/validation/apiValidation';
 import signInController from '../controllers/signIn.controller';
-class SignInApiService {
-  private token: string | null = null;
 
+class SignInApiService {
   constructor(private controller = signInController) {}
 
   async signInAsAdmin() {
@@ -13,20 +13,12 @@ class SignInApiService {
       password: ADMIN_PASSWORD,
     });
     validateResponse(response, STATUS_CODES.OK, true, null);
-    this.setToken(response.headers['authorization']);
-    return this.getToken();
+    usersTokenStorage.addToken(ADMIN_USERNAME, response.headers['authorization']);
+    return usersTokenStorage.getToken();
   }
 
-  setToken(token: string) {
-    this.token = token;
-  }
-
-  getToken() {
-    return this.token as string;
-  }
-
-  removeToken() {
-    this.token = null;
+  getToken(options: { type?: keyof TokenTypes; username?: string } = {}) {
+    return usersTokenStorage.getToken({ ...options });
   }
 }
 

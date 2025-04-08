@@ -5,11 +5,13 @@ import productsPage from '../../pages/products/products.page';
 import { SalesPortalPageService } from '../salesPortalPage.service';
 import editProductPage from '../../pages/products/editProduct.page';
 import { logStep } from '../../../utils/reporter/decorators';
+import deleteProductModalPage from '../../pages/modals/delete.modal.page';
 
 class ProductsPageService extends SalesPortalPageService {
   private productsPage = productsPage;
   private addNewProductPage = addNewProductPage;
   private editProductPage = editProductPage;
+  private deleteProductModalPage = deleteProductModalPage;
 
   @logStep('Open Add New Product Page')
   async openAddNewProductPage() {
@@ -27,15 +29,15 @@ class ProductsPageService extends SalesPortalPageService {
   async checkProductInTable(product: IProduct) {
     const actualProductData = await this.productsPage.getProductFromTable(product.name);
     const expectedProductData = _.pick(product, ['name', 'price', 'manufacturer']);
-    expect(actualProductData).toEqual(expectedProductData);
+    await expect(actualProductData).toEqual(expectedProductData);
   }
 
   @logStep('Delete Product via UI')
   async deleteProduct(productName: string) {
     await this.productsPage.clickOnDeleteProductButton(productName);
-    await this.productsPage['Delete Modal'].waitForPageOpened();
-    await this.productsPage['Delete Modal'].clickOnDeleteButton();
-    await this.productsPage['Delete Modal'].waitForDisappeared();
+    await this.deleteProductModalPage.waitForPageOpened();
+    await this.deleteProductModalPage.clickOnDeleteButton();
+    await this.deleteProductModalPage.waitForDisappeared();
     await this.productsPage.waitForPageOpened();
   }
 }

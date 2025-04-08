@@ -30,6 +30,6 @@
     "include": [
         "src",
         "wdio.conf.ts",
-        "prettier.config.ts"
-    ],
+        "eslint.config.mjs"
+    ]
 }

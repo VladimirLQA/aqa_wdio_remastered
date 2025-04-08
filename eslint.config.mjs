@@ -3,23 +3,75 @@ import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import stylisticJs from '@stylistic/eslint-plugin-js';
 
-export default [
+export default tseslint.config([
   pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
   {
     files: ['**/*.{js,mjs,cjs,ts}'],
     plugins: { '@stylistic/js': stylisticJs },
     rules: {
+      'max-nested-callbacks': [
+        'error',
+        {
+          max: 5,
+        },
+      ],
+      'new-cap': [
+        'error',
+        {
+          newIsCap: true,
+          capIsNew: false,
+          properties: true,
+        },
+      ],
+      'no-lonely-if': ['error'],
+      'no-unneeded-ternary': ['error'],
+      'no-nested-ternary': ['error'],
+      'operator-assignment': ['error', 'always'],
+      '@stylistic/js/no-extra-parens': [
+        'error',
+        'all',
+        {
+          returnAssign: false,
+          nestedBinaryExpressions: false,
+          enforceForArrowConditionals: false,
+        },
+      ],
+      '@stylistic/js/space-unary-ops': ['error', {
+        words: true,
+        nonwords: false,
+      },
+      ],
+      '@stylistic/js/space-infix-ops': 'error',
+      '@stylistic/js/space-in-parens': ['error', 'never'],
+      '@stylistic/js/space-before-function-paren': ['error', { 'anonymous': 'always', 'named': 'never', 'asyncArrow': 'always' }],
+      '@stylistic/js/space-before-blocks': ['error', 'always'],
+      '@stylistic/js/operator-linebreak': ['error',
+        'after',
+        { overrides: { '?': 'before', ':': 'before' } },
+      ],
+      '@stylistic/js/no-whitespace-before-property': 'error',
+      '@stylistic/js/new-parens': 'error',
+      '@stylistic/js/keyword-spacing': [
+        'error',
+        {
+          before: true,
+          after: true,
+          overrides: {
+            function: {
+              after: false,
+            },
+          },
+        },
+      ],
       '@stylistic/js/key-spacing': [
         'error',
-        { beforeColon: false, afterColon: true, mode: 'strict' },
+        { beforeColon: false, afterColon: true, mode: 'minimum' },
       ],
       '@stylistic/js/lines-between-class-members': [
         'error',
         {
-          enforce: [
-            { blankLine: 'always', prev: 'method', next: 'method' },
-          ],
+          enforce: [{ blankLine: 'always', prev: 'method', next: 'method' }],
         },
       ],
       '@stylistic/js/multiline-ternary': ['error', 'always-multiline'],
@@ -37,6 +89,10 @@ export default [
       '@stylistic/js/arrow-parens': ['error', 'always'],
       '@stylistic/js/block-spacing': ['error', 'always'],
       '@stylistic/js/indent': ['error', 2],
+      '@stylistic/js/brace-style': ['error', '1tbs', { allowSingleLine: true } ],
+      '@stylistic/js/comma-dangle': ['error', 'always-multiline'],
+      '@stylistic/js/eol-last': ['error'],
+      '@stylistic/js/function-call-spacing': ['error', 'never'],
       '@stylistic/js/max-len': [
         'error',
         {
@@ -47,7 +103,6 @@ export default [
           ignoreTemplateLiterals: true,
           ignorePattern: '^\\s*(export\\s+abstract\\s+class\\s+.*|import\\s.+\\sfrom\\s.+;)$',
           ignoreRegExpLiterals: true,
-
         },
       ],
       '@stylistic/js/semi': ['error', 'always', { omitLastInOneLineClassBody: true }],
@@ -56,9 +111,20 @@ export default [
         'single',
         { allowTemplateLiterals: true, avoidEscape: true },
       ],
-      'no-this-before-super': 'error',
-      '@typescript-eslint/no-unused-expressions': 0,
+      '@typescript-eslint/no-redundant-type-constituents': 'off',
       '@typescript-eslint/no-unsafe-function-type': 'off',
+      '@typescript-eslint/no-namespace': ['error', { allowDeclarations: true }],
+      '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-return': 'warn',
+      '@typescript-eslint/restrict-template-expressions': 'warn',
+      '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@stylistic/js/function-call-argument-newline': ['error', 'consistent'],
+      'no-this-before-super': 'error',
+      'no-useless-catch': 'off',
       // '@typescript-eslint/no-unused-expressions': [
       //   'error',
       //   {
@@ -71,5 +137,14 @@ export default [
     },
   },
   { ignores: ['node-modules', 'eslint', 'src/report', 'test-results'] },
-  { languageOptions: { globals: { ...globals.es2021, ...globals.node } } },
-];
+  {
+    languageOptions: {
+      globals: { ...globals.es2021, ...globals.node },
+      parserOptions: {
+        project: './tsconfig.json',
+        tsconfigRootDir: import.meta.dirname,
+        createDefaultProgram: true,
+      },
+    },
+  },
+]);

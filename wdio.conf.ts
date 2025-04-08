@@ -3,6 +3,7 @@ import { globalAuthSetup } from './src/config/global-setup';
 import { BAIL, HEADLESS, MAX_INSTANCES } from './src/config/environment';
 import { TAGS } from './src/utils/tags';
 import path from 'node:path';
+import { addCustomCommands } from './src/utils/custom-matchers';
 
 export const config: WebdriverIO.Config = {
   //
@@ -29,9 +30,7 @@ export const config: WebdriverIO.Config = {
   // of the config file unless it's absolute.
   //
   specs: [
-    // ToDo: define location for spec files here
     './src/**/*.test.ts',
-    // "./src/tests/waits.test.ts",
   ],
   // Patterns to exclude.
   exclude: [
@@ -70,9 +69,9 @@ export const config: WebdriverIO.Config = {
     {
       browserName: 'chrome',
       'goog:chromeOptions': {
-        args: [...(HEADLESS === 'true' ? ['headless'] : [])],
+        args: [...HEADLESS === 'true' ? ['headless'] : []],
       },
-      // webSocketUrl: true
+      webSocketUrl: true,
     },
   ],
 
@@ -228,6 +227,7 @@ export const config: WebdriverIO.Config = {
    * @param {object}         browser      instance of created browser/device session
    */
   before: async function (capabilities, specs) {
+    addCustomCommands(); // initialize custom commands
     await browser.maximizeWindow();
   },
   /**

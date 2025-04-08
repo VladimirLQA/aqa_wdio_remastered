@@ -9,7 +9,7 @@ class EditProductPageService extends SalesPortalPageService {
   async checkPageTitle(productName: string) {
     const actualTitle = await this.editProductPage.getTitleText();
     const expectedTitle = 'Edit ' + productName;
-    expect(actualTitle).toBe(expectedTitle);
+    await expect(actualTitle).toBe(expectedTitle);
   }
 }
 

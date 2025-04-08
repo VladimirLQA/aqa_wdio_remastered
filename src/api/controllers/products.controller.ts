@@ -15,7 +15,7 @@ class ProductsController {
       method: 'post',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
       },
       data: productData,
       url: apiConfig.endpoints.Products,
@@ -30,7 +30,7 @@ class ProductsController {
       method: 'put',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
       },
       data: productData,
       url: apiConfig.endpoints['Get Product By Id'](productId),
@@ -45,7 +45,7 @@ class ProductsController {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
       },
       url: apiConfig.endpoints['Get Product By Id'](productId),
       baseURL: apiConfig.baseUrl,
@@ -63,7 +63,7 @@ class ProductsController {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
       },
       url: apiConfig.endpoints.Products + urlParams,
       baseURL: apiConfig.baseUrl,
@@ -77,7 +77,7 @@ class ProductsController {
       method: 'delete',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
       },
       url: apiConfig.endpoints['Get Product By Id'](productId),
       baseURL: apiConfig.baseUrl,

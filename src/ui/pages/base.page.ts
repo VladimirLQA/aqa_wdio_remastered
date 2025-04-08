@@ -12,7 +12,7 @@ function isStringSelector(selector: SelectorOrLocator): selector is string {
 
 export abstract class BasePage {
   async findElement(selector: SelectorOrLocator): Promise<WebdriverIO.Element> {
-    return isStringSelector(selector) ? await $(selector).getElement() : selector;
+    return isStringSelector(selector) ? $(selector).getElement() : selector;
   }
 
   async findArrayOfElements(selector: SelectorOrLocator) {
@@ -36,7 +36,8 @@ export abstract class BasePage {
   }
 
   @logAction('Set {text} into element with selector {selector}')
-  async setValue(selector: SelectorOrLocator, value: string | number, context?: ActionContext) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async setValue(selector: SelectorOrLocator, value: string | number, _context?: ActionContext) {
     const input = await this.waitForDisplayed(selector);
     await input.setValue(value);
   }

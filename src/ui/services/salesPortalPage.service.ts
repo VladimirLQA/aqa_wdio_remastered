@@ -8,7 +8,7 @@ export abstract class SalesPortalPageService {
   @logStep('Validate Notification')
   async validateNotification(text: string, method: GetTextMethod = 'with') {
     const notification = await this.basePage.getNotificationText(text, method);
-    expect(notification).toBe(text);
+    await expect(notification).toBe(text);
   }
 
   @logStep('Log out')
