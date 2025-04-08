@@ -1,5 +1,5 @@
 import { logStep } from '../../../utils/reporter/decorators';
-import editProductPage from '../../pages/Products/editProduct.page';
+import editProductPage from '../../pages/products/editProduct.page';
 import { SalesPortalPageService } from '../salesPortalPage.service';
 
 class EditProductPageService extends SalesPortalPageService {

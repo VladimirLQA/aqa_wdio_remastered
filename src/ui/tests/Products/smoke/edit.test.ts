@@ -5,8 +5,8 @@ import productApiService from '../../../../api/service/productApi.service';
 import { SignInApiService } from '../../../../api/service/signInApiService.service';
 import { IProduct, MANUFACTURERS } from '../../../../data/types/product.types';
 import homePageService from '../../../services/homePage.service';
-import editProductPageService from '../../../services/Products/editProductPage.service';
-import productsPageService from '../../../services/Products/productsPage.service';
+import editProductPageService from '../../../services/products/editProductPage.service';
+import productsPageService from '../../../services/products/productsPage.service';
 import signInPageService from '../../../services/signInPage.service';
 
 describe('[UI] [Products] Smoke', async function () {

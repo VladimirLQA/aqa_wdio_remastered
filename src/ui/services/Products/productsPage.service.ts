@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { IProduct } from '../../../data/types/product.types';
-import addNewProductPage from '../../pages/Products/addNewProduct.page';
-import productsPage from '../../pages/Products/products.page';
+import addNewProductPage from '../../pages/products/addNewProduct.page';
+import productsPage from '../../pages/products/products.page';
 import { SalesPortalPageService } from '../salesPortalPage.service';
-import editProductPage from '../../pages/Products/editProduct.page';
+import editProductPage from '../../pages/products/editProduct.page';
 import { logStep } from '../../../utils/reporter/decorators';
 
 class ProductsPageService extends SalesPortalPageService {

@@ -2,6 +2,7 @@ import { rimraf } from 'rimraf';
 import { globalAuthSetup } from './src/config/global-setup';
 import { BAIL, HEADLESS, MAX_INSTANCES } from './src/config/environment';
 import { TAGS } from './src/utils/tags';
+import path from 'node:path';
 
 export const config: WebdriverIO.Config = {
   //
@@ -41,7 +42,7 @@ export const config: WebdriverIO.Config = {
     ui_simple: ['./src/ui/tests/baseTests/**/*.test.ts'],
     api_products: ['./src/api/tests/**/*.test.ts'],
     serial: ['./src/api/tests/**/smoke.test.ts'],
-    single: ['./src/api/tests/Products/smoke.test.ts'],
+    single: ['./src/ui/tests/snapshot.test.ts'],
   },
   //
   // ============
@@ -69,9 +70,7 @@ export const config: WebdriverIO.Config = {
     {
       browserName: 'chrome',
       'goog:chromeOptions': {
-        args: [
-          ...(HEADLESS === 'true' ? ['headless'] : [])
-        ],
+        args: [...(HEADLESS === 'true' ? ['headless'] : [])],
       },
       // webSocketUrl: true
     },
@@ -124,7 +123,18 @@ export const config: WebdriverIO.Config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: ['intercept'],
+  services: ['intercept',
+    [
+      'visual',
+      {
+        baselineFolder: path.join(process.cwd(), 'tests-screenshots', 'baseline'),
+        formatImageName: '{tag}-{logName}-{width}x{height}',
+        screenshotPath: path.join(process.cwd(), 'tmp'),
+        savePerInstance: true,
+        autoSaveBaseline: true,
+      },
+    ],
+  ],
   //
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
@@ -162,10 +172,7 @@ export const config: WebdriverIO.Config = {
 
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
-  mochaOpts: {
-    ui: 'bdd',
-    timeout: 60000,
-  },
+  mochaOpts: { ui: 'bdd', timeout: 60000 },
 
   //
   // =====
@@ -235,7 +242,7 @@ export const config: WebdriverIO.Config = {
    * @param {object} suite suite details
    */
   beforeSuite: async function (suite) {
-    if(suite.fullTitle.includes(TAGS.GLOBAL_SETUP)) await globalAuthSetup();
+    if (suite.fullTitle.includes(TAGS.GLOBAL_SETUP)) await globalAuthSetup();
   },
   /**
    * Function to be executed before a test (in Mocha/Jasmine) starts.
