@@ -1,23 +1,30 @@
-class UsersTokenStorage {
-  private tokens = new Map<string, string>();
-  private static instance: UsersTokenStorage;
+export interface TokenTypes {
+  formated: string;
+  raw: string;
+}
+
+class UsersToken {
+  private tokens = new Map<string, TokenTypes>();
+  private static instance: UsersToken;
 
   constructor() {
-    if (UsersTokenStorage.instance) {
-      return UsersTokenStorage.instance;
+    if (UsersToken.instance) {
+      return UsersToken.instance;
     }
 
-    return UsersTokenStorage.instance = this;
+    return (UsersToken.instance = this);
   }
 
   addToken(username: string, token: string) {
-    this.tokens.set(username, this.formatToken(token));
+    this.tokens.set(username, { formated: this.formatToken(token), raw: token });
   }
 
-  getToken(username?: string) {
-    return username
-      ? this.tokens.get(username) as string
-      : this.getLastAddedToken() as string;
+  getToken(options: { type?: keyof TokenTypes; username?: string } = {}) {
+    const { type = 'formated', username } = options;
+    const tokenObj = username
+      ? (this.tokens.get(username) as TokenTypes)
+      : (this.getLastAddedToken() as TokenTypes);
+    return tokenObj[type];
   }
 
   removeToken(username?: string) {
@@ -39,4 +46,4 @@ class UsersTokenStorage {
   }
 }
 
-export default new UsersTokenStorage();
+export default new UsersToken();

@@ -2,11 +2,11 @@ import { NOFITICATIONS } from '../../../../data/notifications';
 import { generateProductData } from '../../../../data/products/generateProduct';
 import { TAGS } from '../../../../utils/tags';
 import homePageService from '../../../services/homePage.service';
-import addNewProductPageService from '../../../services/Products/addNewProductPage.service';
-import productsPageService from '../../../services/Products/productsPage.service';
+import addNewProductPageService from '../../../services/products/addNewProductPage.service';
+import productsPageService from '../../../services/products/productsPage.service';
 import signInPageService from '../../../services/signInPage.service';
 
-describe(`[UI] [Products] Smoke ${TAGS.GLOBAL_SETUP}`, () => {
+describe(`[UI] [Products] Smoke (${TAGS.GLOBAL_SETUP})`, () => {
   beforeEach(async () => {
     await homePageService.openProductsPage();
     await productsPageService.openAddNewProductPage();

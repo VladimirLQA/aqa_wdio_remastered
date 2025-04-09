@@ -1,7 +1,7 @@
 import { IProduct } from '../../../data/types/product.types';
 import { logStep } from '../../../utils/reporter/decorators';
-import addNewProductPage from '../../pages/Products/addNewProduct.page';
-import productsPage from '../../pages/Products/products.page';
+import addNewProductPage from '../../pages/products/addNewProduct.page';
+import productsPage from '../../pages/products/products.page';
 import { SalesPortalPageService } from '../salesPortalPage.service';
 
 class AddNewProductService extends SalesPortalPageService {

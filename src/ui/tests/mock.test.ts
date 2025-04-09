@@ -15,12 +15,12 @@ export async function mockResponseWithBrowser() {
             ],
             'sorting': {
               'sortField': 'createdOn',
-              'sortOrder': 'desc'
+              'sortOrder': 'desc',
             },
             'IsSuccess': true,
-            'ErrorMessage': null
+            'ErrorMessage': null,
           }),
-          { status: 200 }
+          { status: 200 },
         ));
       }
       return originalFetch(url, config);
@@ -38,14 +38,14 @@ describe('Mocking', () => {
     mock.respond([{
       title: 'Injected (non) completed Todo',
       order: null,
-      completed: false
+      completed: false,
     }, {
       title: 'Injected completed Todo',
       order: null,
-      completed: true
+      completed: true,
     }], {
       headers: {
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
       },
     });
 

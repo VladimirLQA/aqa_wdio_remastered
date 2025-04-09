@@ -35,7 +35,7 @@ export const PRODUCTS_SCHEMA_RESPONSE = {
         },
         required: ['_id', 'name', 'amount', 'price', 'manufacturer', 'createdOn'],
         additionalProperties: false,
-      }
+      },
     },
     ...baseSchemaPart,
   },

@@ -36,7 +36,7 @@ class ProductApiService {
   async delete(token: string) {
     for (const product of this.createdProducts) {
       const response = await this.controller.delete(product._id, token);
-      expect(response.status).toBe(STATUS_CODES.DELETED);
+      await expect(response.status).toBe(STATUS_CODES.DELETED);
     }
     this.createdProducts = [];
   }

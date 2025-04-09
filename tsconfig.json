@@ -12,7 +12,8 @@
             "@wdio/globals/types",
             "expect-webdriverio",
             "@wdio/mocha-framework",
-            "wdio-intercept-service"
+            "wdio-intercept-service",
+            "@wdio/visual-service"
         ],
         "skipLibCheck": true,
         "noEmit": true,
@@ -28,6 +29,7 @@
     },
     "include": [
         "src",
-        "wdio.conf.ts"
+        "wdio.conf.ts",
+        "eslint.config.mjs"
     ]
 }

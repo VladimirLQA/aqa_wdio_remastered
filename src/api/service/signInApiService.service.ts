@@ -1,6 +1,6 @@
 import { ADMIN_PASSWORD, ADMIN_USERNAME } from '../../config/environment';
 import { STATUS_CODES } from '../../data/api/statusCodes';
-import usersTokenStorage from '../../utils/storage/users-token.storage';
+import usersTokenStorage, { TokenTypes } from '../../utils/storage/users-token.storage';
 import { validateResponse } from '../../utils/validation/apiValidation';
 import signInController from '../controllers/signIn.controller';
 
@@ -17,8 +17,8 @@ class SignInApiService {
     return usersTokenStorage.getToken();
   }
 
-  getToken() {
-    usersTokenStorage.getToken();
+  getToken(options: { type?: keyof TokenTypes; username?: string } = {}) {
+    return usersTokenStorage.getToken({ ...options });
   }
 }
 

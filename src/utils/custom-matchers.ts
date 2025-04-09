@@ -1,10 +1,10 @@
-import { browser, expect } from '@wdio/globals';
+import { browser } from '@wdio/globals';
 import { borderColors } from '../data/ui/inputs';
 
 export const addCustomCommands = () => {
   browser.addCommand(
     'toHaveInputBorder',
-    async function (this: WebdriverIO.Element, options: { mode: 'dark' | 'light', type: 'valid' | 'invalid'}) {
+    async function (this: WebdriverIO.Element, options: { mode: 'dark' | 'light', type: 'valid' | 'invalid' }) {
       const { mode, type } = options;
       const elementClass = await this.getAttribute('class');
       const elementCss = (await this.getCSSProperty('border-color')).parsed.hex;
@@ -14,11 +14,11 @@ export const addCustomCommands = () => {
 
       if (!elementClass.includes(expectedClass) || elementCss !== expectedBorderColor) {
         throw new Error(
-          `Element "${this.selector}" should have border-color "${expectedBorderColor}" and class "${expectedClass}", but got "${elementCss}" and "${elementClass}"`
+          `Element "${this.selector}" should have border-color "${expectedBorderColor}" and class "${expectedClass}", but got "${elementCss}" and "${elementClass}"`,
         );
       }
     },
-    true // only for elements
+    true, // only for elements
   );
 };
 
@@ -53,4 +53,3 @@ export const addCustomCommands = () => {
 //     true
 //   );
 // };
-

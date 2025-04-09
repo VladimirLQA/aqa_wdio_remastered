@@ -10,7 +10,7 @@ import { PRODUCTS_SCHEMA_RESPONSE } from '../../../data/jsonSchemas/products/pro
 import { errorMessages } from '../../../data/errorMessages';
 import { fileBailOnFailure } from '../../../utils/helpers';
 
-describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, async () => {
+describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
   fileBailOnFailure();
   let id = '', productData: IProduct, token: string, createdProduct: IProductFromResponse;
 
@@ -22,7 +22,7 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, async () => {
     const product = await ProductsController.get(id, token);
     if (product.status === STATUS_CODES.OK) {
       const response = await ProductsController.delete(product.body.Product._id, token);
-      expect(response.status).toBe(STATUS_CODES.DELETED);
+      await expect(response.status).toBe(STATUS_CODES.DELETED);
     }
   });
 
@@ -35,7 +35,7 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, async () => {
 
     id = createProductResponse.body.Product._id;
     createdProduct = createProductResponse.body.Product;
-    expect(createdProduct).toMatchObject({ ...productData });
+    await expect(createdProduct).toMatchObject({ ...productData });
   });
 
   it('Should get created product', async () => {
@@ -45,7 +45,7 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, async () => {
     validateJsonSchema(PRODUCT_SCHEMA_RESPONSE, createProductResponse);
 
     createdProduct = createProductResponse.body.Product;
-    expect(createdProduct).toMatchObject({ ...productData });
+    await expect(createdProduct).toMatchObject({ ...productData });
   });
 
   it('Should get all products and contain created', async () => {
@@ -55,10 +55,10 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, async () => {
     validateJsonSchema(PRODUCTS_SCHEMA_RESPONSE, productsResponse);
 
     const products =  productsResponse.body.Products;
-    expect(products.length).toBeGreaterThan(0);
+    await expect(products.length).toBeGreaterThan(0);
 
     const product = products.find((p) => p._id === id);
-    expect(product).toMatchObject({ ...createdProduct });
+    await expect(product).toMatchObject({ ...createdProduct });
   });
 
   it('Should update created product', async () => {
@@ -69,7 +69,7 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, async () => {
     validateJsonSchema(PRODUCT_SCHEMA_RESPONSE, updatedProductResponse);
 
     createdProduct = updatedProductResponse.body.Product;
-    expect(createdProduct).toMatchObject({ ...productData });
+    await expect(createdProduct).toMatchObject({ ...productData });
   });
 
   it('Should delete created product', async () => {

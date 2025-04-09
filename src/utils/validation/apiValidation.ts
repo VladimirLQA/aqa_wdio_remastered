@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import Ajv from 'ajv';
 import { IResponse, IResponseFields } from '../../data/types/api.types';
 
@@ -27,7 +28,7 @@ export function validateJsonSchema<T extends IResponseFields>(schema: object, re
  *
  */
 export const isWithIsSuccess = (
-  response: IResponse<unknown>
+  response: IResponse<unknown>,
 ): response is IResponse<IResponseFields> => {
   const body = response.body;
   return (
@@ -70,7 +71,7 @@ export function validateResponse<T>(
   response: IResponse<T>,
   status: number,
   IsSuccess?: boolean,
-  ErrorMessage?: null | string
+  ErrorMessage?: null | string,
 ) {
   expect(response.status).toBe(status);
   if (isWithIsSuccess(response)) {

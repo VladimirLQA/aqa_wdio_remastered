@@ -62,13 +62,13 @@ export const getElementSelector = (item: WebdriverIO.Element | string) => {
 export function fileBailOnFailure() {
   let suiteFailed = false;
 
-  beforeEach(function() {
+  beforeEach(function () {
     if (suiteFailed) {
       this.skip();
     }
   });
 
-  afterEach(function() {
+  afterEach(function () {
     if (this.currentTest?.state === 'failed') {
       suiteFailed = true;
     }
