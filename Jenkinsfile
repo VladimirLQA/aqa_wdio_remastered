@@ -5,7 +5,7 @@ pipeline {
         stage('Install dependencies') {
             agent {
                 docker {
-                    image 'node:18-alpine'
+                    image 'node:latest'
                     reuseNode true
                 }
             }
