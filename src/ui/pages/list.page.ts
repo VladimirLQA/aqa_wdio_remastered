@@ -28,6 +28,14 @@ export abstract class ListPage extends SalesPortalPage {
 
   async clickOnEditActionButton(searchValue: string) {
     await this.clickOnTableRowActionButton(searchValue, 'Edit');
-    await this.waitForPageOpened();
   }
+
+  async clickOnDeleteActionButton(searchValue: string) {
+    await this.clickOnTableRowActionButton(searchValue, 'Delete');
+  }
+
+  async clickOnDetailsActionButton(searchValue: string) {
+    await this.clickOnTableRowActionButton(searchValue, 'Details');
+  }
+
 }

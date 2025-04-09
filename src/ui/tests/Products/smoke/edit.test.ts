@@ -8,32 +8,27 @@ import signInPageService from '../../../services/signInPage.service';
 import { ObtainTypeValues } from '../../../../data/types/helper.types';
 import { TAGS } from '../../../../utils/tags';
 
-describe(`[UI] [Products] Smoke`, () => {
+describe(`[UI] [Products edit page] Smoke (${TAGS.SMOKE} | ${TAGS.REGRESSION})`, () => {
+
+  before(async () => {
+    await signInPageService.openSalesPortal();
+  });
 
   beforeEach(async () => {
     const token = await SignInApiService.signInAsAdmin();
     await ProductApiService.create(token);
-    await signInPageService.openSalesPortal();
     await signInPageService.loginAsAdmin();
     await homePageService.openProductsPage();
   });
 
-  it('Should open Edit Product page with created product', async () => {
+  it('should contain created product name in page title', async () => {
     await productsPageService.openEditProductPage(ProductApiService.getCreatedProduct().name);
     await editProductPageService.checkPageTitle(ProductApiService.getCreatedProduct().name);
   });
 
-  it('Should validate Product data on Edit Product page', async () => {
+  it('should contain data of created product in input fields', async () => {
     await productsPageService.openEditProductPage(ProductApiService.getCreatedProduct().name);
-    const actualObject: IProduct = {
-      name: await $('#inputName').getValue(),
-      amount: +await $('#inputAmount').getValue(),
-      price: +await $('#inputPrice').getValue(),
-      manufacturer: (await $('#inputManufacturer').getValue()) as ObtainTypeValues<typeof MANUFACTURERS>,
-      notes: await $('#textareaNotes').getValue(),
-    };
-
-    await expect(actualObject).toMatchObject({ ..._.omit(ProductApiService.getCreatedProduct(), ['_id', 'createdOn']) });
+    await editProductPageService.checkTextInInputFields({ ..._.omit(ProductApiService.getCreatedProduct(), ['_id', 'createdOn']) });
   });
 
   afterEach(async () => {

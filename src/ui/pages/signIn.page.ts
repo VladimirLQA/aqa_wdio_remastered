@@ -6,10 +6,12 @@ class SignInPage extends SalesPortalPage {
   readonly ['Email input'] = '#emailinput';
   readonly ['Password input'] = '#passwordinput';
   readonly ['Login button'] = 'button[type="submit"]';
+  readonly ['Page image'] = `[alt="Sample image"]`;
+  protected readonly uniqueElement: string = this['Page image'];
 
-  async waitForPageOpened(): Promise<void> {
-    await this.waitForDisplayed(this['Login button']);
-  }
+  // async waitForPageOpened(): Promise<void> {
+  //   await this.waitForDisplayed(this['Login button']);
+  // }
 
   async fillCredentials(credentials: ICredentials) {
     await this.setValue(this['Email input'], credentials.username);

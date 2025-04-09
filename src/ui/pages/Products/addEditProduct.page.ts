@@ -1,4 +1,5 @@
-import { IProduct } from '../../../data/types/product.types';
+import { ObtainTypeValues } from '../../../data/types/helper.types';
+import { IProduct, MANUFACTURERS } from '../../../data/types/product.types';
 import { SalesPortalPage } from '../salesPortal.page';
 
 export abstract class AddEditProductPage extends SalesPortalPage {
@@ -17,6 +18,20 @@ export abstract class AddEditProductPage extends SalesPortalPage {
     if (product.notes) {
       await this.setValue(this['Notes textarea'], product.notes);
     }
+  }
+
+  async getInputsText() {
+    const [ name, amount, price, manufacturer, notes ] =
+    await Promise.all([
+      this.getValue(this['Name input']),
+      this.getValue(this['Amount input']),
+      this.getValue(this['Price input']),
+      this.getValue(this['Manufacturer dropdown']),
+      this.getText(this['Notes textarea']),
+    ]);
+    return {
+      name, amount: +amount, price: +price, manufacturer, notes,
+    };
   }
 
 }

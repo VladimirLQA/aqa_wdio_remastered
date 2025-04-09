@@ -5,15 +5,12 @@ class HomePage extends SalesPortalPage {
   readonly ['Menu Button'] = (menuItemName: MenuItemNames) =>
     `[name="${menuItemName}"]`;
   readonly ['Welcome label'] = '.welcome-text';
+  protected readonly uniqueElement: string = this['Welcome label'];
 
   async clickOnMenuButton(menuItemName: MenuItemNames) {
     await this.click(this['Menu Button'](menuItemName));
   }
 
-  async waitForPageOpened(): Promise<void> {
-    await this.waitForDisplayed(this['Welcome label']);
-    await this.waitForSpinnersToBeHidden('Home');
-  }
 }
 
 export default new HomePage();

@@ -2,7 +2,7 @@ import { BaseModalPage } from './base.modal.page';
 
 class DeleteModalPage extends BaseModalPage {
   readonly TtileText = 'Delete Product';
-  readonly Title = `//${this.getModalTitleXPath()}`;
+  readonly uniqueElement = `//${this.getModalTitleXPath()}`;
   readonly ['Modal container'] = '//div[@role="dialog"]';
   readonly ['Delete button'] = `//div[@class="modal-footer"]//*[@type="submit"]`;
   readonly ['Cancel button'] = `//button[.="Cancel"]`;
@@ -15,9 +15,9 @@ class DeleteModalPage extends BaseModalPage {
     await this.click(this['Cancel button']);
   }
 
-  async waitForPageOpened(): Promise<void> {
-    await this.waitForDisplayed(this.Title);
-  }
+  // async waitForPageOpened(): Promise<void> {
+  //   await this.waitForDisplayed(this.Title);
+  // }
 
   async waitForDisappeared() {
     await this.waitForDisplayed(this['Modal container'], true);

@@ -2,6 +2,7 @@ import { AddEditProductPage } from './addEditProduct.page';
 
 class EditProductPage extends AddEditProductPage {
   readonly Title = 'h2.page-title-text';
+  readonly uniqueElement = this.Title;
   readonly ['Save changes button'] = '#save-product-changes';
   readonly ['Delete product button'] = '#delete-product-btn';
 
@@ -17,10 +18,10 @@ class EditProductPage extends AddEditProductPage {
     return await this.getText(this.Title);
   }
 
-  async waitForPageOpened(): Promise<void> {
-    await this.waitForDisplayed(this.Title);
-    await this.waitForSpinnersToBeHidden('Edit Product');
-  }
+  // async waitForPageOpened(): Promise<void> {
+  //   await this.waitForDisplayed(this.Title);
+  //   await this.waitForSpinnersToBeHidden('Edit Product');
+  // }
 }
 
 export default new EditProductPage();
