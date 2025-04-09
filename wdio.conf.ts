@@ -41,7 +41,7 @@ export const config: WebdriverIO.Config = {
     ui_simple: ['./src/ui/tests/baseTests/**/*.test.ts'],
     api_products: ['./src/api/tests/**/*.test.ts'],
     serial: ['./src/api/tests/**/smoke.test.ts'],
-    single: ['./src/ui/tests/snapshot.test.ts'],
+    single: ['./src/api/products/tests/smoke.test.ts'],
   },
   //
   // ============

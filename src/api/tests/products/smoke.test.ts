@@ -54,7 +54,7 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
     validateResponse(productsResponse, STATUS_CODES.OK, true, null);
     validateJsonSchema(PRODUCTS_SCHEMA_RESPONSE, productsResponse);
 
-    const products =  productsResponse.body.Products;
+    const products = productsResponse.body.Products;
     await expect(products.length).toBeGreaterThan(0);
 
     const product = products.find((p) => p._id === id);

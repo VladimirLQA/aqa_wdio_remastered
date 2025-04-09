@@ -2,12 +2,27 @@ pipeline {
     agent any
 
     stages { 
-        stage('Hello') {
+        stage('Install dependencies') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
             steps {
                 sh '''
-                    echo 'Hello world'
-                    whoami
+                    ls -la
+                    node --version
+                    npm --version
+                    npm ci
                 '''
+            }
+        }
+
+        stage('Tests') {
+            steps {
+                echo '>>>>>>>>>> Tests <<<<<<<<<<'
+                // sh 'npm run test:single'
             }
         }
     }
