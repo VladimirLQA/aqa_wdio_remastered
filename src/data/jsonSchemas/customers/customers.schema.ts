@@ -1,7 +1,7 @@
 import { MANUFACTURERS } from '../../types/product.types';
 import { baseSchemaPart } from '../base.schema';
 
-export const PRODUCTS_SCHEMA_RESPONSE = {
+export const CUSTOMERS_SCHEMA_RESPONSE = {
   type: 'object',
   properties: {
     Products: {

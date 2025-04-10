@@ -1,7 +1,6 @@
 import { TAGS } from '../../../../utils/tags';
 
 import AllureReporter from '@wdio/allure-reporter';
-import { NOFITICATIONS } from '../../../../data/notifications';
 import homePageService from '../../../services/homePage.service';
 import productsPageService from '../../../services/products/productsPage.service';
 import signInPageService from '../../../services/signInPage.service';

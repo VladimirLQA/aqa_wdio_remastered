@@ -1,11 +1,9 @@
 import _ from 'lodash';
 import { SignInApiService, ProductApiService } from '../../../../api/service/index';
-import { IProduct, MANUFACTURERS } from '../../../../data/types/product.types';
 import homePageService from '../../../services/homePage.service';
 import editProductPageService from '../../../services/products/editProductPage.service';
 import productsPageService from '../../../services/products/productsPage.service';
 import signInPageService from '../../../services/signInPage.service';
-import { ObtainTypeValues } from '../../../../data/types/helper.types';
 import { TAGS } from '../../../../utils/tags';
 
 describe(`[UI] [Products edit page] Smoke (${TAGS.SMOKE} | ${TAGS.REGRESSION})`, () => {
