@@ -49,10 +49,13 @@ describe('Tables', async function () {
     await rows.forEach(async (row) => {
       const cells = await row.$$('td').getElements();
       const cellsTexts = await cells.map(async (cell) => await cell.getText());
-      const rowObject = headers.reduce((obj, header, i) => {
-        obj[header] = cellsTexts[i];
-        return obj;
-      }, {} as Record<string, string>);
+      const rowObject = headers.reduce(
+        (obj, header, i) => {
+          obj[header] = cellsTexts[i];
+          return obj;
+        },
+        {} as Record<string, string>,
+      );
       tableData.push(rowObject);
     });
     expect(tableData.length).toEqual(table.length);

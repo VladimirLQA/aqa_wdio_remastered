@@ -28,9 +28,7 @@ class UsersToken {
   }
 
   removeToken(username?: string) {
-    username
-      ? this.tokens.delete(username)
-      : this.tokens.delete(this.getLastAddedUserName() as string);
+    username ? this.tokens.delete(username) : this.tokens.delete(this.getLastAddedUserName() as string);
   }
 
   private formatToken(token: string, prefix: string = 'Bearer') {

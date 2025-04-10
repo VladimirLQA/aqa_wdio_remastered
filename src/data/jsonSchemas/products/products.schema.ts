@@ -4,9 +4,11 @@ import { baseSchemaPart } from '../base.schema';
 export const PRODUCTS_SCHEMA_RESPONSE = {
   type: 'object',
   properties: {
-    Products: {  // Changed from "Product" to "products" (plural)
-      type: 'array',  // Corrected from 'a' to 'array'
-      items: {  // Define what each array element contains
+    Products: {
+      // Changed from "Product" to "products" (plural)
+      type: 'array', // Corrected from 'a' to 'array'
+      items: {
+        // Define what each array element contains
         type: 'object',
         properties: {
           _id: {

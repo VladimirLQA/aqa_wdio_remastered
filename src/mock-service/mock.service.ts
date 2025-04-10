@@ -1,4 +1,3 @@
-
 //  * @param {String|Function=}    filterOptions.method            filter resource by HTTP method
 //  * @param {Object|Function=}    filterOptions.headers           filter resource by specific request headers
 //  * @param {Object|Function=}    filterOptions.responseHeaders   filter resource by specific response headers
@@ -9,33 +8,34 @@ import { Method } from 'axios';
 import { STATUS_CODES } from '../data/api/statusCodes';
 
 export interface IMocRequestkOptions<T = any> {
-    method?: Method;
-    headers?: Record<string, any>;
-    responseHeaders?: Record<string, any>;
-    postData?: T;
-    statusCode?: STATUS_CODES;
+  method?: Method;
+  headers?: Record<string, any>;
+  responseHeaders?: Record<string, any>;
+  postData?: T;
+  statusCode?: STATUS_CODES;
 }
 
 export interface IMockResponseOptions<T = any> {
-    responseData: T;
-    params?: {
-        statusCode?: STATUS_CODES;
-        cookies?: Record<string, any>;
-        headers?: Record<string, any>;
-    };
-    once?: boolean
+  responseData: T;
+  params?: {
+    statusCode?: STATUS_CODES;
+    cookies?: Record<string, any>;
+    headers?: Record<string, any>;
+  };
+  once?: boolean;
 }
 class MockService {
   async modifyResponse<T, U>(info: {
-    url: string,
-    requestOptions?: IMocRequestkOptions<T>,
-    responseOptions?: IMockResponseOptions<U>
-}) {
+    url: string;
+    requestOptions?: IMocRequestkOptions<T>;
+    responseOptions?: IMockResponseOptions<U>;
+  }) {
     const { url, requestOptions, responseOptions } = info;
     const mock = await this.mock(url, requestOptions);
-    return mock.respond(responseOptions!.responseData!,
+    return mock.respond(
+      responseOptions!.responseData,
       responseOptions?.params as object,
-      responseOptions?.once
+      responseOptions?.once,
     );
   }
 

@@ -6,11 +6,9 @@ class ProductsPage extends ListPage {
 
   protected readonly uniqueElement = this.Title;
 
-  readonly ['Product Name in table'] = (productName: string) =>
-    `${this['Table row'](productName)}/td[1]`;
+  readonly ['Product Name in table'] = (productName: string) => `${this['Table row'](productName)}/td[1]`;
 
-  readonly ['Product Price in table'] = (productName: string) =>
-    `${this['Table row'](productName)}/td[2]`;
+  readonly ['Product Price in table'] = (productName: string) => `${this['Table row'](productName)}/td[2]`;
 
   readonly ['Product Manufacturer in table'] = (productName: string) =>
     `${this['Table row'](productName)}/td[3]`;
@@ -35,7 +33,6 @@ class ProductsPage extends ListPage {
       manufacturer,
     };
   }
-
 }
 
 export default new ProductsPage();

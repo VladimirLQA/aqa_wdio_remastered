@@ -72,7 +72,7 @@ describe('Dynamically loaded elements', async () => {
         timeout: 5000,
         timeoutMsg: 'Button is not clickable',
         interval: 500,
-      }
+      },
     );
   });
 
@@ -125,6 +125,6 @@ async function checkCheckbox(checkboxSelector: string, toBeChecked: boolean) {
 
     await checkbox.click();
     // await expect(checkbox).not.toBeChecked();
-    await browser.waitUntil(async () => !(await checkbox.getAttribute('checked')));
+    await browser.waitUntil(async () => !await checkbox.getAttribute('checked'));
   }
 }

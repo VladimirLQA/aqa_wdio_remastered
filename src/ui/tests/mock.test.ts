@@ -9,19 +9,20 @@ export async function mockResponseWithBrowser() {
 
     window.fetch = async (url, config) => {
       if (url.toString().includes('/api/products')) {
-        return Promise.resolve(new Response(
-          JSON.stringify({
-            'Products': [
-            ],
-            'sorting': {
-              'sortField': 'createdOn',
-              'sortOrder': 'desc',
-            },
-            'IsSuccess': true,
-            'ErrorMessage': null,
-          }),
-          { status: 200 },
-        ));
+        return Promise.resolve(
+          new Response(
+            JSON.stringify({
+              Products: [],
+              sorting: {
+                sortField: 'createdOn',
+                sortOrder: 'desc',
+              },
+              IsSuccess: true,
+              ErrorMessage: null,
+            }),
+            { status: 200 },
+          ),
+        );
       }
       return originalFetch(url, config);
     };
@@ -35,21 +36,29 @@ describe('Mocking', () => {
   it('', async () => {
     const mock = await browser.mock('https://todo-backend-express-knex.herokuapp.com/');
 
-    mock.respond([{
-      title: 'Injected (non) completed Todo',
-      order: null,
-      completed: false,
-    }, {
-      title: 'Injected completed Todo',
-      order: null,
-      completed: true,
-    }], {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
+    mock.respond(
+      [
+        {
+          title: 'Injected (non) completed Todo',
+          order: null,
+          completed: false,
+        },
+        {
+          title: 'Injected completed Todo',
+          order: null,
+          completed: true,
+        },
+      ],
+      {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
       },
-    });
+    );
 
-    await browser.url('https://todobackend.com/client/index.html?https://todo-backend-express-knex.herokuapp.com/');
+    await browser.url(
+      'https://todobackend.com/client/index.html?https://todo-backend-express-knex.herokuapp.com/',
+    );
 
     await $('#todo-list li').waitForExist();
     console.log(await $$('#todo-list li').map((el) => el.getText()));
@@ -71,7 +80,6 @@ describe('Mocking', () => {
           'Access-Control-Allow-Origin': 'http://localhost:3000',
           'Access-Control-Allow-Credentials': 'true',
         },
-
       },
     );
 
@@ -153,6 +161,5 @@ describe('Mocking', () => {
     // });
 
     // await browser.pause(5000);
-
   });
 });
