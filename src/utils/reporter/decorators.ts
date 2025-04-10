@@ -27,11 +27,11 @@ export function logStep<This, Args extends any[], Return>(stepName: string) {
 }
 
 export const getArgumentWithSecretProperty = (args: object[]) =>
-  args.find((el) =>
-    typeof el === 'object' && 'isSecretValue' in el) as { isSecretValue: boolean } | undefined;
+  args.find((el) => typeof el === 'object' && 'isSecretValue' in el) as
+    | { isSecretValue: boolean }
+    | undefined;
 
-export const getValueOfSecret = (arg: { isSecretValue: boolean } | undefined) =>
-  arg && arg.isSecretValue;
+export const getValueOfSecret = (arg: { isSecretValue: boolean } | undefined) => arg && arg.isSecretValue;
 
 export const replaceStepNameParts = (stepName: string, args: any[]) => {
   const [selectorOrElement, value, ..._opt] = args;

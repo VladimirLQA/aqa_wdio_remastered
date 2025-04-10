@@ -12,7 +12,10 @@ import { fileBailOnFailure } from '../../../utils/helpers';
 
 describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
   fileBailOnFailure();
-  let id = '', productData: IProduct, token: string, createdProduct: IProductFromResponse;
+  let id = '',
+    productData: IProduct,
+    token: string,
+    createdProduct: IProductFromResponse;
 
   before(async () => {
     token = await SignInApiService.signInAsAdmin();
@@ -80,5 +83,4 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
     const createProductResponse = await ProductsController.get(id, token);
     validateResponse(createProductResponse, STATUS_CODES.NOT_FOUND, false, errorMessages.productNotFound(id));
   });
-
 });

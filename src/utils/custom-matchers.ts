@@ -4,7 +4,10 @@ import { borderColors } from '../data/ui/inputs';
 export const addCustomCommands = () => {
   browser.addCommand(
     'toHaveInputBorder',
-    async function (this: WebdriverIO.Element, options: { mode: 'dark' | 'light', type: 'valid' | 'invalid' }) {
+    async function (
+      this: WebdriverIO.Element,
+      options: { mode: 'dark' | 'light'; type: 'valid' | 'invalid' },
+    ) {
       const { mode, type } = options;
       const elementClass = await this.getAttribute('class');
       const elementCss = (await this.getCSSProperty('border-color')).parsed.hex;

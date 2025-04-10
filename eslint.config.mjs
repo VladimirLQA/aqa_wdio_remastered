@@ -2,14 +2,20 @@ import globals from 'globals';
 import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import stylisticJs from '@stylistic/eslint-plugin-js';
+import configPrettier from 'eslint-config-prettier';
+import pluginPrettier from 'eslint-plugin-prettier';
 
 export default tseslint.config([
   pluginJs.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
+  configPrettier,
   {
     files: ['**/*.{js,mjs,cjs,ts}'],
-    plugins: { '@stylistic/js': stylisticJs },
+    plugins: { '@stylistic/js': stylisticJs, prettier: pluginPrettier },
     rules: {
+      'prettier/prettier': 'error',
+      'no-this-before-super': 'error',
+      'no-useless-catch': 'off',
       'max-nested-callbacks': [
         'error',
         {
@@ -37,19 +43,21 @@ export default tseslint.config([
           enforceForArrowConditionals: false,
         },
       ],
-      '@stylistic/js/space-unary-ops': ['error', {
-        words: true,
-        nonwords: false,
-      },
+      '@stylistic/js/space-unary-ops': [
+        'error',
+        {
+          words: true,
+          nonwords: false,
+        },
       ],
       '@stylistic/js/space-infix-ops': 'error',
       '@stylistic/js/space-in-parens': ['error', 'never'],
-      '@stylistic/js/space-before-function-paren': ['error', { 'anonymous': 'always', 'named': 'never', 'asyncArrow': 'always' }],
-      '@stylistic/js/space-before-blocks': ['error', 'always'],
-      '@stylistic/js/operator-linebreak': ['error',
-        'after',
-        { overrides: { '?': 'before', ':': 'before' } },
+      '@stylistic/js/space-before-function-paren': [
+        'error',
+        { anonymous: 'always', named: 'never', asyncArrow: 'always' },
       ],
+      '@stylistic/js/space-before-blocks': ['error', 'always'],
+      '@stylistic/js/operator-linebreak': ['error', 'after', { overrides: { '?': 'before', ':': 'before' } }],
       '@stylistic/js/no-whitespace-before-property': 'error',
       '@stylistic/js/new-parens': 'error',
       '@stylistic/js/keyword-spacing': [
@@ -64,10 +72,7 @@ export default tseslint.config([
           },
         },
       ],
-      '@stylistic/js/key-spacing': [
-        'error',
-        { beforeColon: false, afterColon: true, mode: 'minimum' },
-      ],
+      '@stylistic/js/key-spacing': ['error', { beforeColon: false, afterColon: true, mode: 'minimum' }],
       '@stylistic/js/lines-between-class-members': [
         'error',
         {
@@ -89,7 +94,7 @@ export default tseslint.config([
       '@stylistic/js/arrow-parens': ['error', 'always'],
       '@stylistic/js/block-spacing': ['error', 'always'],
       '@stylistic/js/indent': ['error', 2],
-      '@stylistic/js/brace-style': ['error', '1tbs', { allowSingleLine: true } ],
+      '@stylistic/js/brace-style': ['error', '1tbs', { allowSingleLine: true }],
       '@stylistic/js/comma-dangle': ['error', 'always-multiline'],
       '@stylistic/js/eol-last': ['error'],
       '@stylistic/js/function-call-spacing': ['error', 'never'],
@@ -106,11 +111,7 @@ export default tseslint.config([
         },
       ],
       '@stylistic/js/semi': ['error', 'always', { omitLastInOneLineClassBody: true }],
-      '@stylistic/js/quotes': [
-        'error',
-        'single',
-        { allowTemplateLiterals: true, avoidEscape: true },
-      ],
+      '@stylistic/js/quotes': ['error', 'single', { allowTemplateLiterals: true, avoidEscape: true }],
       '@typescript-eslint/no-redundant-type-constituents': 'off',
       '@typescript-eslint/no-unsafe-function-type': 'off',
       '@typescript-eslint/no-namespace': ['error', { allowDeclarations: true }],
@@ -123,8 +124,6 @@ export default tseslint.config([
       '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@stylistic/js/function-call-argument-newline': ['error', 'consistent'],
-      'no-this-before-super': 'error',
-      'no-useless-catch': 'off',
       // '@typescript-eslint/no-unused-expressions': [
       //   'error',
       //   {

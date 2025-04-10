@@ -9,7 +9,6 @@ import { ObtainTypeValues } from '../../../../data/types/helper.types';
 import { TAGS } from '../../../../utils/tags';
 
 describe(`[UI] [Products edit page] Smoke (${TAGS.SMOKE} | ${TAGS.REGRESSION})`, () => {
-
   before(async () => {
     await signInPageService.openSalesPortal();
   });
@@ -28,7 +27,9 @@ describe(`[UI] [Products edit page] Smoke (${TAGS.SMOKE} | ${TAGS.REGRESSION})`,
 
   it('should contain data of created product in input fields', async () => {
     await productsPageService.openEditProductPage(ProductApiService.getCreatedProduct().name);
-    await editProductPageService.checkTextInInputFields({ ..._.omit(ProductApiService.getCreatedProduct(), ['_id', 'createdOn']) });
+    await editProductPageService.checkTextInInputFields({
+      ..._.omit(ProductApiService.getCreatedProduct(), ['_id', 'createdOn']),
+    });
   });
 
   afterEach(async () => {
