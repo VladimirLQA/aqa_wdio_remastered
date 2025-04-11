@@ -25,8 +25,7 @@ pipeline {
 
         stage('Tests') {
             steps {
-                echo '>>>>>>>>>> Tests <<<<<<<<<<'
-                // sh 'npm run test:single'
+                sh 'npm run test:single'
             }
         }
     }
