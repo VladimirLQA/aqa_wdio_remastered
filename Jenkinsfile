@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        nodejs('node:23.7.0')
+    }
     // agent {
     //     docker {
     //         image 'node:latest'
