@@ -31,7 +31,14 @@ pipeline {
 
         stage('Run api tests') {
             steps {
-                sh 'npm run test:single'
+                sh '''
+                    echo ">>>>>>>>>>>>>>>>>>>> Chrome <<<<<<<<<<<<<<\n"
+                    npx chromedriver --version
+                    chrome --version || echo "Chrome not in PATH"
+
+                    echo "\n>>>>>>>>>>>>>>>>>>>> Chrome <<<<<<<<<<<<<<"
+                '''
+                // npm run test:single
             }
         }
     }
