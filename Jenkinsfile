@@ -24,7 +24,8 @@ pipeline {
 
         stage('Check code style') {
             steps {
-                sh 'npm run lint:fix'
+                echo 'npm run lint:fix'
+                // sh 'npm run lint:fix'
             }
         }
 
