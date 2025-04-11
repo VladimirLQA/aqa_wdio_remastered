@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:latest'
+            reuseNode true
+        }
+    }
 
     environment {
         NPM_CONFIG_CACHE = '${WORKSPACE}/.npm'
@@ -7,12 +12,6 @@ pipeline {
 
     stages { 
         stage('Install dependencies') {
-            agent {
-                docker {
-                    image 'node:latest'
-                    reuseNode true
-                }
-            }
             steps {
                 sh '''
                     ls -la
@@ -23,7 +22,13 @@ pipeline {
             }
         }
 
-        stage('Tests') {
+        stage('Check code style') {
+            steps {
+                sh 'npm run lint:fix'
+            }
+        }
+
+        stage('Run api tests') {
             steps {
                 sh 'npm run test:single'
             }
