@@ -1,15 +1,14 @@
 import { PRODUCTS_CREATE_VALIDATIONS } from '../../../data/products/apiCreateBodyData';
 import { generateProductData } from '../../../data/products/generateProduct';
-import { IProduct, IProductFromResponse } from '../../../data/types/product.types';
+import { IProduct } from '../../../data/types/product.types';
 import { validateResponse, validateJsonSchema } from '../../../utils/validation/apiValidation';
 import ProductsController from '../../controllers/products.controller';
-import productApiService from '../../service/productApi.service';
 import { SignInApiService } from '../../service/index';
 import { PRODUCT_SCHEMA_RESPONSE } from '../../../data/jsonSchemas/products/product.schema';
 import { TAGS } from '../../../utils/tags';
 
 describe(`[API] [PRODUCTS] Create route ${TAGS.REGRESSION}`, () => {
-  let products: string[] = [];
+  const products: string[] = [];
   before(async () => {
     await SignInApiService.signInAsAdmin();
   });

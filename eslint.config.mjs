@@ -34,15 +34,6 @@ export default tseslint.config([
       'no-unneeded-ternary': ['error'],
       'no-nested-ternary': ['error'],
       'operator-assignment': ['error', 'always'],
-      '@stylistic/js/no-extra-parens': [
-        'error',
-        'all',
-        {
-          returnAssign: false,
-          nestedBinaryExpressions: false,
-          enforceForArrowConditionals: false,
-        },
-      ],
       '@stylistic/js/space-unary-ops': [
         'error',
         {
@@ -73,12 +64,6 @@ export default tseslint.config([
         },
       ],
       '@stylistic/js/key-spacing': ['error', { beforeColon: false, afterColon: true, mode: 'minimum' }],
-      '@stylistic/js/lines-between-class-members': [
-        'error',
-        {
-          enforce: [{ blankLine: 'always', prev: 'method', next: 'method' }],
-        },
-      ],
       '@stylistic/js/multiline-ternary': ['error', 'always-multiline'],
       '@stylistic/js/newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
       '@stylistic/js/no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
@@ -138,7 +123,7 @@ export default tseslint.config([
   { ignores: ['node-modules', 'eslint', 'src/report', 'test-results'] },
   {
     languageOptions: {
-      globals: { ...globals.es2021, ...globals.node },
+      globals: { ...globals.es2025, ...globals.browser, ...globals.node },
       parserOptions: {
         project: './tsconfig.json',
         tsconfigRootDir: import.meta.dirname,

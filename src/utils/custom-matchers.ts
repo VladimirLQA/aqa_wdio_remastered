@@ -17,7 +17,7 @@ export const addCustomCommands = () => {
 
       if (!elementClass.includes(expectedClass) || elementCss !== expectedBorderColor) {
         throw new Error(
-          `Element "${this.selector}" should have border-color "${expectedBorderColor}" and class "${expectedClass}", but got "${elementCss}" and "${elementClass}"`,
+          `Element "${JSON.stringify(this.selector, null, 2)}" should have border-color "${expectedBorderColor}" and class "${expectedClass}", but got "${elementCss}" and "${elementClass}"`,
         );
       }
     },

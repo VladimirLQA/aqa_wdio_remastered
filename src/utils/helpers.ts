@@ -73,4 +73,4 @@ export function fileBailOnFailure() {
   });
 }
 
-export const isID = (value: string) => /^[0-9a-fA-F-]+$/.test(value);
+export const isID = (value: string) => /^[0-9a-fA-F]{24}$/.test(value);

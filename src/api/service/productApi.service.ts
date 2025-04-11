@@ -39,7 +39,7 @@ class ProductApiService {
     return this.getLastCreatedProduct();
   }
 
-  getLastCreatedProduct() {
+  private getLastCreatedProduct() {
     return this.createdProducts.at(-1) as IProductFromResponse;
   }
 
@@ -57,13 +57,13 @@ class ProductApiService {
 
   async deleteProduct(id: string, token: string) {
     const response = await this.controller.delete(id, token);
-    expect(response.status).toBe(STATUS_CODES.DELETED);
+    await expect(response.status).toBe(STATUS_CODES.DELETED);
   }
 
   async deleteProducts(products: IProductFromResponse[], token: string) {
     for (const product of products) {
       const response = await this.controller.delete(product._id, token);
-      expect(response.status).toBe(STATUS_CODES.DELETED);
+      await expect(response.status).toBe(STATUS_CODES.DELETED);
     }
     this.createdProducts = [];
   }
