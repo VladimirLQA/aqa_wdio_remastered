@@ -1,5 +1,5 @@
-import { NOFITICATIONS } from '../../../../data/notifications';
 import { generateProductData } from '../../../../data/products/generateProduct';
+import { PRODUCTS_TOAST_MESSAGES } from '../../../../data/products/products.data';
 import { TAGS } from '../../../../utils/tags';
 import homePageService from '../../../services/homePage.service';
 import addNewProductPageService from '../../../services/products/addNewProductPage.service';
@@ -16,7 +16,7 @@ describe(`[UI] [Products] Smoke (${TAGS.GLOBAL_SETUP})`, () => {
     const newProductData = generateProductData();
 
     await addNewProductPageService.populate(newProductData);
-    await productsPageService.validateNotification(NOFITICATIONS.PRODUCT_CREATED);
+    await productsPageService.validateNotification(PRODUCTS_TOAST_MESSAGES.CREATED);
     await productsPageService.checkProductInTable(newProductData);
   });
 

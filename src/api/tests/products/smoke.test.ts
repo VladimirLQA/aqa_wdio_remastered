@@ -7,12 +7,15 @@ import { SignInApiService } from '../../service/index';
 import { IProduct, IProductFromResponse } from '../../../data/types/product.types';
 import { TAGS } from '../../../utils/tags';
 import { PRODUCTS_SCHEMA_RESPONSE } from '../../../data/jsonSchemas/products/products.schema';
-import { errorMessages } from '../../../data/errorMessages';
+import { API_ERROR_MESSAGES } from '../../../data/errorMessages';
 import { fileBailOnFailure } from '../../../utils/helpers';
 
 describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
   fileBailOnFailure();
-  let id = '', productData: IProduct, token: string, createdProduct: IProductFromResponse;
+  let id = '',
+    productData: IProduct,
+    token: string,
+    createdProduct: IProductFromResponse;
 
   before(async () => {
     token = await SignInApiService.signInAsAdmin();
@@ -78,7 +81,11 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
     validateResponse(updatedProductResponse, STATUS_CODES.DELETED);
 
     const createProductResponse = await ProductsController.get(id, token);
-    validateResponse(createProductResponse, STATUS_CODES.NOT_FOUND, false, errorMessages.productNotFound(id));
+    validateResponse(
+      createProductResponse,
+      STATUS_CODES.NOT_FOUND,
+      false,
+      API_ERROR_MESSAGES['PRODUCT NOT FOUND'](id),
+    );
   });
-
 });

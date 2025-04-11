@@ -37,5 +37,4 @@ export abstract class ListPage extends SalesPortalPage {
   async clickOnDetailsActionButton(searchValue: string) {
     await this.clickOnTableRowActionButton(searchValue, 'Details');
   }
-
 }

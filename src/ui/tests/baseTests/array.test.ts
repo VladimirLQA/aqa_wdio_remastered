@@ -15,7 +15,9 @@ describe('Array', async function () {
     //   const text = await link.getText();
     //   console.log(text);
     // });
-    const element = await arrayOfLinks.find<WebdriverIO.Element>(async (link) => (await link.getText()) === 'Entry Ad');
+    const element = await arrayOfLinks.find<WebdriverIO.Element>(
+      async (link) => (await link.getText()) === 'Entry Ad',
+    );
     const text = await element.getText();
     console.log(text);
     const arrayOfNames = await arrayOfLinks.map(async (link) => await link.getText());

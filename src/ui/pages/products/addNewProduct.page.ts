@@ -8,7 +8,6 @@ class AddNewProductPage extends AddEditProductPage {
   async clickOnSaveButton() {
     await this.click(this['Save New Product button']);
   }
-
 }
 
 export default new AddNewProductPage();

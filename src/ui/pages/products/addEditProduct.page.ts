@@ -21,8 +21,7 @@ export abstract class AddEditProductPage extends SalesPortalPage {
   }
 
   async getInputsText() {
-    const [ name, amount, price, manufacturer, notes ] =
-    await Promise.all([
+    const [name, amount, price, manufacturer, notes] = await Promise.all([
       this.getValue(this['Name input']),
       this.getValue(this['Amount input']),
       this.getValue(this['Price input']),
@@ -30,8 +29,11 @@ export abstract class AddEditProductPage extends SalesPortalPage {
       this.getText(this['Notes textarea']),
     ]);
     return {
-      name, amount: +amount, price: +price, manufacturer, notes,
+      name,
+      amount: +amount,
+      price: +price,
+      manufacturer,
+      notes,
     };
   }
-
 }

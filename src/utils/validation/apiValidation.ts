@@ -27,9 +27,7 @@ export function validateJsonSchema<T extends IResponseFields>(schema: object, re
  * @returns {response is IResponse<IResponseFields>} - Type predicate
  *
  */
-export const isWithIsSuccess = (
-  response: IResponse<unknown>,
-): response is IResponse<IResponseFields> => {
+export const isWithIsSuccess = (response: IResponse<unknown>): response is IResponse<IResponseFields> => {
   const body = response.body;
   return (
     typeof body === 'object' &&
@@ -58,13 +56,17 @@ export const isWithIsSuccess = (
  * validateResponse(response, 200, true, null);
  */
 export function validateResponse<T>(
-  response: IResponse<T>, status: number,
-  IsSuccess: boolean, ErrorMessage: null | string
+  response: IResponse<T>,
+  status: number,
+  IsSuccess: boolean,
+  ErrorMessage: null | string,
 ): void;
 
 export function validateResponse<T>(
-  response: IResponse<T>, status: number,
-  IsSuccess?: boolean, ErrorMessage?: null | string
+  response: IResponse<T>,
+  status: number,
+  IsSuccess?: boolean,
+  ErrorMessage?: null | string,
 ): void;
 
 export function validateResponse<T>(

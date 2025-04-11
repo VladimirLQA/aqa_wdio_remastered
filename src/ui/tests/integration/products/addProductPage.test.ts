@@ -16,6 +16,5 @@ describe(`Add product page ${TAGS.GLOBAL_SETUP}`, () => {
     console.log('ccss before', a);
 
     await $(addNewProductPage['Name input']).toHaveInputBorder({ mode: 'light', type: 'invalid' });
-
   });
 });
