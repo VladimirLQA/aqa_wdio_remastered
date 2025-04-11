@@ -47,6 +47,7 @@ class ProductsController {
         'content-type': 'application/json',
         Authorization: token,
       },
+      // TODO prevent requst sending if productID is null or undefined
       url: apiConfig.endpoints['Get Product By Id'](productId),
       baseURL: apiConfig.baseUrl,
     };

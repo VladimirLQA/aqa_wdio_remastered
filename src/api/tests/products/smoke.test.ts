@@ -31,13 +31,13 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
 
   it('Should create product with smoke data', async () => {
     productData = generateProductData();
+
     const createProductResponse = await ProductsController.create(productData, token);
-
-    validateResponse(createProductResponse, STATUS_CODES.CREATED, true, '');
-    validateJsonSchema(PRODUCT_SCHEMA_RESPONSE, createProductResponse);
-
     id = createProductResponse.body.Product._id;
     createdProduct = createProductResponse.body.Product;
+
+    validateResponse(createProductResponse, STATUS_CODES.CREATED, true, null);
+    validateJsonSchema(PRODUCT_SCHEMA_RESPONSE, createProductResponse);
     await expect(createdProduct).toMatchObject({ ...productData });
   });
 
