@@ -67,7 +67,12 @@ export const config: WebdriverIO.Config = {
     {
       browserName: 'chrome',
       'goog:chromeOptions': {
-        args: [...HEADLESS === 'true' ? ['headless'] : []],
+        args: [
+          ...HEADLESS === 'true' ? ['--headless'] : [],
+          '--no-sandbox',
+          '--disable-gpu',
+          '--window-size=1280,800'
+        ],
       },
       webSocketUrl: true,
     },
