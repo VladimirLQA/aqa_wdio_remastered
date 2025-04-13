@@ -6,21 +6,22 @@ import ProductsController from '../../controllers/products.controller';
 import { SignInApiService } from '../../service/index';
 import { PRODUCT_SCHEMA_RESPONSE } from '../../../data/jsonSchemas/products/product.schema';
 import { TAGS } from '../../../utils/tags';
+import { jest } from '../../../config/runners/jestRunners';
 
-describe(`[API] [PRODUCTS] Create route ${TAGS.REGRESSION}`, () => {
+jest.describe(`[API] [PRODUCTS] Create route ${TAGS.REGRESSION}`, () => {
   const products: string[] = [];
-  before(async () => {
+  jest.before(async () => {
     await SignInApiService.signInAsAdmin();
   });
 
-  after(async () => {
+  jest.after(async () => {
     for (const id of products) {
       await ProductsController.delete(id, SignInApiService.getToken());
     }
   });
 
   PRODUCTS_CREATE_VALIDATIONS.forEach(({ description, params, expectedStatus, isSuccess, errorMessage }) => {
-    it(`${description}`, async () => {
+    jest.it(`${description}`, async () => {
       const createProductsResponse = await ProductsController.create(
         generateProductData(params as Partial<IProduct>),
         SignInApiService.getToken(),

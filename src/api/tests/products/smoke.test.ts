@@ -1,3 +1,4 @@
+import { jest } from '../../../config/runners/jestRunners';
 import { STATUS_CODES } from '../../../data/api/statusCodes';
 import { generateProductData } from '../../../data/products/generateProduct';
 import ProductsController from '../../controllers/products.controller';
@@ -10,18 +11,18 @@ import { PRODUCTS_SCHEMA_RESPONSE } from '../../../data/jsonSchemas/products/pro
 import { API_ERROR_MESSAGES } from '../../../data/errorMessages';
 import { fileBailOnFailure } from '../../../utils/helpers';
 
-describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
+jest.describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
   fileBailOnFailure();
   let id = '',
     productData: IProduct,
     token: string,
     createdProduct: IProductFromResponse;
 
-  before(async () => {
+  jest.before(async () => {
     token = await SignInApiService.signInAsAdmin();
   });
 
-  after(async () => {
+  jest.after(async () => {
     const product = await ProductsController.get(id, token);
     if (product.status === STATUS_CODES.OK) {
       const response = await ProductsController.delete(product.body.Product._id, token);
@@ -29,7 +30,7 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
     }
   });
 
-  it('Should create product with smoke data', async () => {
+  jest.it('Should create product with smoke data', async () => {
     productData = generateProductData();
 
     const createProductResponse = await ProductsController.create(productData, token);
@@ -41,7 +42,7 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
     await expect(createdProduct).toMatchObject({ ...productData });
   });
 
-  it('Should get created product', async () => {
+  jest.it('Should get created product', async () => {
     const createProductResponse = await ProductsController.get(id, token);
 
     validateResponse(createProductResponse, STATUS_CODES.OK, true, null);
@@ -51,7 +52,7 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
     await expect(createdProduct).toMatchObject({ ...productData });
   });
 
-  it('Should get all products and contain created', async () => {
+  jest.it('Should get all products and contain created', async () => {
     const productsResponse = await ProductsController.getAll(token);
 
     validateResponse(productsResponse, STATUS_CODES.OK, true, null);
@@ -64,7 +65,7 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
     await expect(product).toMatchObject({ ...createdProduct });
   });
 
-  it('Should update created product', async () => {
+  jest.it('Should update created product', async () => {
     productData = generateProductData();
     const updatedProductResponse = await ProductsController.update(productData, id, token);
 
@@ -75,7 +76,7 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
     await expect(createdProduct).toMatchObject({ ...productData });
   });
 
-  it('Should delete created product', async () => {
+  jest.it('Should delete created product', async () => {
     const updatedProductResponse = await ProductsController.delete(id, token);
 
     validateResponse(updatedProductResponse, STATUS_CODES.DELETED);
