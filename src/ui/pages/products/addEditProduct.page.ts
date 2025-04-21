@@ -1,6 +1,5 @@
-import { ObtainTypeValues } from '../../../data/types/helper.types';
-import { IProduct, MANUFACTURERS } from '../../../data/types/product.types';
-import { SalesPortalPage } from '../salesPortal.page';
+import { IProduct } from '../../../data/types/product.types.ts';
+import { SalesPortalPage } from '../salesPortal.page.ts';
 
 export abstract class AddEditProductPage extends SalesPortalPage {
   abstract Title: string;

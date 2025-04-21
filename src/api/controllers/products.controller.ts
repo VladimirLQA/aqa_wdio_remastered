@@ -1,10 +1,10 @@
-import { apiConfig } from '../../config/apiConfig';
-import { IProduct, IProductResponse, IProductsResponse } from '../../data/types/product.types';
-import { IRequestOptions } from '../../data/types/api.types';
-import { AxiosApiClient } from '../apiClients/axios.apiClient';
-import { logStep } from '../../utils/reporter/decorators';
-import { IProductRequestParams } from '../../data/types/requestParams';
-import { convertRequestParams } from '../../utils/request';
+import { apiConfig } from '../../config/apiConfig.ts';
+import { IProduct, IProductResponse, IProductsResponse } from '../../data/types/product.types.ts';
+import { IRequestOptions } from '../../data/types/api.types.ts';
+import { AxiosApiClient } from '../apiClients/axios.apiClient.ts';
+import { logStep } from '../../utils/reporter/decorators.ts';
+import { IProductRequestParams } from '../../data/types/requestParams.ts';
+import { convertRequestParams } from '../../utils/request.ts';
 
 class ProductsController {
   constructor(private apiClient = new AxiosApiClient()) {}

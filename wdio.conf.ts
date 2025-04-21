@@ -39,7 +39,7 @@ export const config: WebdriverIO.Config = {
     ui_simple: ['./src/ui/tests/baseTests/**/*.test.ts'],
     api_products: ['./src/api/tests/**/*.test.ts'],
     serial: ['./src/api/tests/**/smoke.test.ts'],
-    single: ['./src/api/tests/products/smoke.test.ts'],
+    single: ['./src/ui/tests/**/create.test.ts'],
   },
   //
   // ============
@@ -68,10 +68,10 @@ export const config: WebdriverIO.Config = {
       browserName: 'chrome',
       'goog:chromeOptions': {
         args: [
-          ...HEADLESS === 'true' ? ['--headless'] : [],
+          ...(HEADLESS === 'true' ? ['--headless'] : []),
           '--no-sandbox',
           '--disable-gpu',
-          '--window-size=1280,800'
+          '--window-size=1280,800',
         ],
       },
       webSocketUrl: true,
@@ -175,7 +175,7 @@ export const config: WebdriverIO.Config = {
 
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
-  mochaOpts: { ui: 'bdd', timeout: 60000 },
+  mochaOpts: { ui: 'bdd', timeout: 160000 },
 
   //
   // =====

@@ -1,7 +1,8 @@
-import { GetTextMethod } from '../../data/types/base.types';
-import { ObtainTypeValues } from '../../data/types/helper.types';
-import { MANUFACTURERS } from '../../data/types/product.types';
-import { ActionsPage } from './actions.page';
+import { GetTextMethod } from '../../data/types/base.types.ts';
+import { ObtainTypeValues } from '../../data/types/helper.types.ts';
+import { MANUFACTURERS } from '../../data/types/product.types.ts';
+import { logAction } from '../../utils/reporter/decorators.ts';
+import { ActionsPage } from './actions.page.ts';
 
 export abstract class SalesPortalPage extends ActionsPage {
   protected abstract uniqueElement: string;
@@ -13,6 +14,7 @@ export abstract class SalesPortalPage extends ActionsPage {
   readonly ['Dropdown option [last()]'] = (option: ObtainTypeValues<typeof MANUFACTURERS>) =>
     `(//option[text()="${option}"])[last()]`;
 
+  @logAction()
   async waitForPageOpened(page: string = this.constructor.name): Promise<void> {
     await this.waitForDisplayed(this.uniqueElement);
     await this.waitForSpinnersToBeHidden(page);
@@ -31,7 +33,7 @@ export abstract class SalesPortalPage extends ActionsPage {
     return null;
   }
 
-  async waitUntilNotificationFoundAndGetItText(text: string, method: GetTextMethod = 'with') {
+  private async waitUntilNotificationFoundAndGetItText(text: string, method: GetTextMethod = 'with') {
     let notificationText: string | null;
     await browser.waitUntil(
       async () => {
@@ -46,10 +48,12 @@ export abstract class SalesPortalPage extends ActionsPage {
     return notificationText!;
   }
 
+  @logAction()
   async getNotificationText(text: string, method: GetTextMethod = 'with') {
     return await this.waitUntilNotificationFoundAndGetItText(text, method);
   }
 
+  @logAction()
   async waitForSpinnersToBeHidden(page: string) {
     await browser.waitUntil(
       async () => {

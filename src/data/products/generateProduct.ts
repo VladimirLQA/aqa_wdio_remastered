@@ -1,5 +1,5 @@
-import { getRandomObjectValue } from '../../utils/enum/random';
-import { IProduct, MANUFACTURERS } from '../types/product.types';
+import { getRandomObjectValue } from '../../utils/enum/random.ts';
+import { IProduct, MANUFACTURERS } from '../types/product.types.ts';
 import { faker } from '@faker-js/faker';
 
 export function generateProductData(customData?: Partial<IProduct>): IProduct {

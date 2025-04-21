@@ -1,13 +1,16 @@
-import { GetTextMethod } from '../../data/types/base.types';
-import { logStep } from '../../utils/reporter/decorators';
-import basePage from '../pages/base.page';
+import { GetTextMethod } from '../../data/types/base.types.ts';
+import { logStep } from '../../utils/reporter/decorators.ts';
+import basePage from '../pages/base.page.ts';
+import { SalesPortalPage } from '../pages/salesPortal.page.ts';
 
 export abstract class SalesPortalPageService {
   private basePage = basePage;
 
+  protected abstract get notificationPage(): SalesPortalPage;
+
   @logStep('Validate Notification')
   async validateNotification(text: string, method: GetTextMethod = 'with') {
-    const notification = await this.basePage.getNotificationText(text, method);
+    const notification = await this.notificationPage.getNotificationText(text, method);
     await expect(notification).toBe(text);
   }
 
@@ -15,10 +18,5 @@ export abstract class SalesPortalPageService {
   async signOut() {
     await this.basePage.deleteCookies(['Authorization']);
     await browser.refresh();
-  }
-
-  async getToken() {
-    const token = await this.basePage.getCookie('Authorization');
-    return token.value;
   }
 }

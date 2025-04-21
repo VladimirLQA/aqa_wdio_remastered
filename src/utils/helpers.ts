@@ -74,3 +74,14 @@ export function fileBailOnFailure() {
 }
 
 export const isID = (value: string) => /^[0-9a-fA-F]{24}$/.test(value);
+
+export const camelCaseToReadableString = (str: string) =>
+  [...str].reduce(
+    (readableStr, char, idx) => (
+      /[A-Z]/.test(char) && idx !== str.length - 1
+        ? (readableStr += ` ${char.toLowerCase()}`)
+        : (readableStr += `${char}`),
+      readableStr
+    ),
+    '',
+  );

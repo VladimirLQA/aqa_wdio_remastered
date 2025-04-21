@@ -1,5 +1,5 @@
-import { TAGS } from '../../utils/tags';
-import { STATUS_CODES } from '../api/statusCodes';
+import { TAGS } from '../../utils/tags.ts';
+import { STATUS_CODES } from '../api/statusCodes.ts';
 
 export const PRODUCTS_CREATE_VALIDATIONS = [
   {

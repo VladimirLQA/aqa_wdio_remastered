@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import Ajv from 'ajv';
-import { IResponse, IResponseFields } from '../../data/types/api.types';
+import { IResponse, IResponseFields } from '../../data/types/api.types.ts';
+import { expect as chaiExpect } from 'chai';
 
 /**
  * Validates a JSON response against a given schema using Ajv.
@@ -17,7 +17,7 @@ export function validateJsonSchema<T extends IResponseFields>(schema: object, re
   if (validate.errors) {
     console.log(validate.errors);
   }
-  expect(isValidSchema).toBe(true);
+  chaiExpect(isValidSchema).to.equal(true);
 }
 
 /**
@@ -44,9 +44,9 @@ export const isWithIsSuccess = (response: IResponse<unknown>): response is IResp
  *
  * @template T - Response body type
  * @param {IResponse<T>} response - API response to validate
- * @param {number} status - Expected HTTP status code
- * @param {boolean} [IsSuccess] - Expected IsSuccess value (optional)
- * @param {null | string} [ErrorMessage] - Expected ErrorMessage (optional)
+ * @param {number} status - chaiExpected HTTP status code
+ * @param {boolean} [IsSuccess] - chaiExpected IsSuccess value (optional)
+ * @param {null | string} [ErrorMessage] - chaiExpected ErrorMessage (optional)
  *
  * @example
  * // Basic status check
@@ -75,9 +75,9 @@ export function validateResponse<T>(
   IsSuccess?: boolean,
   ErrorMessage?: null | string,
 ) {
-  expect(response.status).toBe(status);
+  chaiExpect(response.status).to.equal(status);
   if (isWithIsSuccess(response)) {
-    expect(response.body.IsSuccess).toBe(IsSuccess);
-    expect(response.body.ErrorMessage).toBe(ErrorMessage);
+    chaiExpect(response.body.IsSuccess).to.equal(IsSuccess);
+    chaiExpect(response.body.ErrorMessage).to.equal(ErrorMessage);
   }
 }

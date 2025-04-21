@@ -1,5 +1,5 @@
-import { MenuItemNames } from '../../data/types/home.types';
-import { SalesPortalPage } from './salesPortal.page';
+import { MenuItemNames } from '../../data/types/home.types.ts';
+import { SalesPortalPage } from './salesPortal.page.ts';
 
 class HomePage extends SalesPortalPage {
   readonly ['Menu Button'] = (menuItemName: MenuItemNames) => `[name="${menuItemName}"]`;

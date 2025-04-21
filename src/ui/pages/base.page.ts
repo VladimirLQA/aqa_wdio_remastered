@@ -1,4 +1,4 @@
-import { SalesPortalPage } from './salesPortal.page';
+import { SalesPortalPage } from './salesPortal.page.ts';
 
 class BasePage extends SalesPortalPage {
   protected readonly uniqueElement: string = '';

@@ -1,5 +1,5 @@
-import { COUNTRIES } from '../../orders/orders.data';
-import { baseSchemaPart } from '../base.schema';
+import { COUNTRIES } from '../../orders/orders.data.ts';
+import { baseSchemaPart } from '../base.schema.ts';
 
 export const CUSTOMER_SCHEMA_RESPONSE = {
   type: 'object',

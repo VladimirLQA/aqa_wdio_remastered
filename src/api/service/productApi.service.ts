@@ -1,11 +1,11 @@
-import { SignInApiService } from './index';
-import { STATUS_CODES } from '../../data/api/statusCodes';
-import { PRODUCT_SCHEMA_RESPONSE } from '../../data/jsonSchemas/products/product.schema';
-import { generateProductData } from '../../data/products/generateProduct';
-import { IProduct, IProductFromResponse } from '../../data/types/product.types';
-import { validateJsonSchema, validateResponse } from '../../utils/validation/apiValidation';
-import ProductsController from '../controllers/products.controller';
-import { isID } from '../../utils/helpers';
+import { SignInApiService } from './index.ts';
+import { STATUS_CODES } from '../../data/api/statusCodes.ts';
+import { PRODUCT_SCHEMA_RESPONSE } from '../../data/jsonSchemas/products/product.schema.ts';
+import { generateProductData } from '../../data/products/generateProduct.ts';
+import { IProduct, IProductFromResponse } from '../../data/types/product.types.ts';
+import { validateJsonSchema, validateResponse } from '../../utils/validation/apiValidation.ts';
+import ProductsController from '../controllers/products.controller.ts';
+import { isID } from '../../utils/helpers.ts';
 
 class ProductApiService {
   private createdProducts: IProductFromResponse[] = [];

@@ -1,5 +1,5 @@
-import { SignInApiService } from '../api/service';
-import signInPageService from '../ui/services/signInPage.service';
+import { SignInApiService } from '../api/service/index.ts';
+import signInPageService from '../ui/services/signInPage.service.ts';
 
 export async function globalAuthSetup() {
   await SignInApiService.signInAsAdmin();

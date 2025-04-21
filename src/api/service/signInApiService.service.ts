@@ -1,8 +1,8 @@
-import { ADMIN_PASSWORD, ADMIN_USERNAME } from '../../config/environment';
-import { STATUS_CODES } from '../../data/api/statusCodes';
-import usersTokenStorage, { TokenTypes } from '../../utils/storage/users-token.storage';
-import { validateResponse } from '../../utils/validation/apiValidation';
-import signInController from '../controllers/signIn.controller';
+import { ADMIN_PASSWORD, ADMIN_USERNAME } from '../../config/environment.ts';
+import { STATUS_CODES } from '../../data/api/statusCodes.ts';
+import usersTokenStorage, { TokenTypes } from '../../utils/storage/users-token.storage.ts';
+import { validateResponse } from '../../utils/validation/apiValidation.ts';
+import signInController from '../controllers/signIn.controller.ts';
 
 class SignInApiService {
   constructor(private controller = signInController) {}

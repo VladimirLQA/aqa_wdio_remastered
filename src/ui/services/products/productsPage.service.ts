@@ -1,11 +1,11 @@
 import _ from 'lodash';
-import { IProduct } from '../../../data/types/product.types';
-import addNewProductPage from '../../pages/products/addNewProduct.page';
-import productsPage from '../../pages/products/products.page';
-import { SalesPortalPageService } from '../salesPortalPage.service';
-import editProductPage from '../../pages/products/editProduct.page';
-import { logAction } from '../../../utils/reporter/decorators';
-import deleteProductModalPage from '../../pages/modals/delete.modal.page';
+import { IProduct } from '../../../data/types/product.types.ts';
+import addNewProductPage from '../../pages/products/addNewProduct.page.ts';
+import productsPage from '../../pages/products/products.page.ts';
+import { SalesPortalPageService } from '../salesPortalPage.service.ts';
+import editProductPage from '../../pages/products/editProduct.page.ts';
+import { logStep } from '../../../utils/reporter/decorators.ts';
+import deleteProductModalPage from '../../pages/modals/delete.modal.page.ts';
 
 class ProductsPageService extends SalesPortalPageService {
   private productsPage = productsPage;
@@ -13,26 +13,30 @@ class ProductsPageService extends SalesPortalPageService {
   private editProductPage = editProductPage;
   private deleteProductModalPage = deleteProductModalPage;
 
-  @logAction('Open Add New Product Page')
+  protected get notificationPage() {
+    return this.productsPage;
+  }
+
+  @logStep(`Open 'Add new product' page`)
   async openAddNewProductPage() {
-    await this.productsPage.clickOnAddNewProduct();
+    await this.productsPage.clickOnAddNewProductButton();
     await this.addNewProductPage.waitForPageOpened();
   }
 
-  @logAction('Open Edit Product Page')
+  @logStep(`Open 'Edit product' page`)
   async openEditProductPage(productName: string) {
     await this.productsPage.clickOnEditActionButton(productName);
     await this.editProductPage.waitForPageOpened();
   }
 
-  @logAction('Check Product In Table')
+  @logStep(`Check product in table`)
   async checkProductInTable(product: IProduct) {
     const actualProductData = await this.productsPage.getProductFromTable(product.name);
     const expectedProductData = _.pick(product, ['name', 'price', 'manufacturer']);
     await expect(actualProductData).toEqual(expectedProductData);
   }
 
-  @logAction('Delete Product via UI')
+  @logStep('Delete Product via UI')
   async deleteProduct(productName: string) {
     await this.productsPage.clickOnDeleteActionButton(productName);
     await this.deleteProductModalPage.clickOnDeleteButton();

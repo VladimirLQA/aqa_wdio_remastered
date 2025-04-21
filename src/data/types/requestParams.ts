@@ -1,5 +1,5 @@
-import { ObtainTypeValues } from './helper.types';
-import { MANUFACTURERS } from './product.types';
+import { ObtainTypeValues } from './helper.types.ts';
+import { MANUFACTURERS } from './product.types.ts';
 
 export interface IProductRequestParams {
   search?: string;

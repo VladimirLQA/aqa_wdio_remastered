@@ -1,4 +1,4 @@
-import { SalesPortalPage } from '../salesPortal.page';
+import { SalesPortalPage } from '../salesPortal.page.ts';
 
 export abstract class BaseModalPage extends SalesPortalPage {
   // protected abstract Title: string;

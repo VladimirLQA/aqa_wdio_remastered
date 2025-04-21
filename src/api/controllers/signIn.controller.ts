@@ -1,8 +1,8 @@
-import { apiConfig } from '../../config/apiConfig';
-import { ICredentials } from '../../data/types/signIn.types';
-import { IRequestOptions, IResponseFields } from '../../data/types/api.types';
-import { AxiosApiClient } from '../apiClients/axios.apiClient';
-import { logStep } from '../../utils/reporter/decorators';
+import { apiConfig } from '../../config/apiConfig.ts';
+import { ICredentials } from '../../data/types/signIn.types.ts';
+import { IRequestOptions, IResponseFields } from '../../data/types/api.types.ts';
+import { AxiosApiClient } from '../apiClients/axios.apiClient.ts';
+import { logStep } from '../../utils/reporter/decorators.ts';
 
 class SignInController {
   constructor(private apiClient = new AxiosApiClient()) {}

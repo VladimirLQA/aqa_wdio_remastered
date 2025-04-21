@@ -1,5 +1,5 @@
-import { IResponseFields } from './api.types';
-import { ObtainTypeValues } from './helper.types';
+import { IResponseFields } from './api.types.ts';
+import { ObtainTypeValues } from './helper.types.ts';
 
 export interface IProduct {
   name: string;

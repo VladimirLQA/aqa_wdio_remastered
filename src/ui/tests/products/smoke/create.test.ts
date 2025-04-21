@@ -6,7 +6,7 @@ import addNewProductPageService from '../../../services/products/addNewProductPa
 import productsPageService from '../../../services/products/productsPage.service';
 import signInPageService from '../../../services/signInPage.service';
 
-describe(`[UI] [Products] Smoke (${TAGS.GLOBAL_SETUP})`, () => {
+describe(`[UI] [Products] Smoke ${TAGS.GLOBAL_SETUP}`, () => {
   beforeEach(async () => {
     await homePageService.openProductsPage();
     await productsPageService.openAddNewProductPage();

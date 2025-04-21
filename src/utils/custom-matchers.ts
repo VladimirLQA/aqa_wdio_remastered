@@ -1,5 +1,5 @@
 import { browser } from '@wdio/globals';
-import { borderColors } from '../data/ui/inputs';
+import { borderColors } from '../data/ui/inputs.ts';
 
 export const addCustomCommands = () => {
   browser.addCommand(

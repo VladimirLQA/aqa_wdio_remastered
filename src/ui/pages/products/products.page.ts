@@ -1,4 +1,5 @@
-import { ListPage } from '../list.page';
+import { logAction } from '../../../utils/reporter/decorators.ts';
+import { ListPage } from '../list.page.ts';
 
 class ProductsPage extends ListPage {
   readonly ['Add New Product'] = 'button.page-title-button';
@@ -16,10 +17,12 @@ class ProductsPage extends ListPage {
   readonly ['Product Creation Date in table'] = (productName: string) =>
     `${this['Table row'](productName)}/td[4]`;
 
-  async clickOnAddNewProduct() {
+  @logAction()
+  async clickOnAddNewProductButton() {
     await this.click(this['Add New Product']);
   }
 
+  @logAction()
   async getProductFromTable(productName: string) {
     const [name, price, manufacturer] = await Promise.all([
       this.getText(this['Product Name in table'](productName)),

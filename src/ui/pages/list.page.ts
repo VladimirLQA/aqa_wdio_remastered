@@ -1,5 +1,6 @@
-import { ActionButtons } from '../../data/types/common.types';
-import { SalesPortalPage } from './salesPortal.page';
+import { ActionButtons } from '../../data/types/common.types.ts';
+import { logAction } from '../../utils/reporter/decorators.ts';
+import { SalesPortalPage } from './salesPortal.page.ts';
 
 export abstract class ListPage extends SalesPortalPage {
   readonly ['Chip buttons'] = '#chip-buttons .chip';
@@ -22,18 +23,22 @@ export abstract class ListPage extends SalesPortalPage {
   readonly ['Table action button'] = (searchValue: string, actionButton: string) =>
     `${this['Table row'](searchValue)}/td/button[@title='${actionButton}']`;
 
+  @logAction()
   async clickOnTableRowActionButton(searchValue: string, actionButton: ActionButtons) {
     await this.click(this['Table action button'](searchValue, actionButton));
   }
 
+  @logAction()
   async clickOnEditActionButton(searchValue: string) {
     await this.clickOnTableRowActionButton(searchValue, 'Edit');
   }
 
+  @logAction()
   async clickOnDeleteActionButton(searchValue: string) {
     await this.clickOnTableRowActionButton(searchValue, 'Delete');
   }
 
+  @logAction()
   async clickOnDetailsActionButton(searchValue: string) {
     await this.clickOnTableRowActionButton(searchValue, 'Details');
   }

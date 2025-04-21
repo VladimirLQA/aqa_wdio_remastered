@@ -1,4 +1,4 @@
-import { AddEditProductPage } from './addEditProduct.page';
+import { AddEditProductPage } from './addEditProduct.page.ts';
 
 class AddNewProductPage extends AddEditProductPage {
   readonly ['Save New Product button'] = '#save-new-product';

@@ -1,10 +1,14 @@
-import { logStep } from '../../../utils/reporter/decorators';
-import editProductPage from '../../pages/products/editProduct.page';
-import { SalesPortalPageService } from '../salesPortalPage.service';
-import { IProduct, IProductFromResponse } from '../../../data/types/product.types';
+import { logStep } from '../../../utils/reporter/decorators.ts';
+import editProductPage from '../../pages/products/editProduct.page.ts';
+import { SalesPortalPageService } from '../salesPortalPage.service.ts';
+import { IProduct, IProductFromResponse } from '../../../data/types/product.types.ts';
 
 class EditProductPageService extends SalesPortalPageService {
   private editProductPage = editProductPage;
+
+  protected get notificationPage() {
+    return this.editProductPage;
+  }
 
   @logStep('Check Edit Product page title')
   async checkPageTitle(productName: string) {

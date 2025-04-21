@@ -1,7 +1,7 @@
 import allure from '@wdio/allure-reporter';
 import { Status } from 'allure-js-commons';
-import { hideSecretData } from '../string/hide';
-import { getElementSelector } from '../helpers';
+import { hideSecretData } from '../string/hide.ts';
+import { camelCaseToReadableString, getElementSelector } from '../helpers.ts';
 
 /*
   https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#decorators
@@ -14,7 +14,7 @@ export function logStep<This, Args extends any[], Return>(stepName: string) {
     return async function (this: This, ...args: Args): Promise<Return> {
       let res: any;
       try {
-        allure.startStep(stepName);
+        allure.startStep(`Step: ${stepName}`);
         res = await target.apply(this, args);
         allure.endStep();
         return res;
@@ -39,17 +39,26 @@ export const replaceStepNameParts = (stepName: string, args: any[]) => {
 
   return stepName
     .replace('{selector}', `"${getElementSelector(selectorOrElement)}"`)
-    .replace('{text}', `"${getValueOfSecret(secretArgument) ? hideSecretData(value) : value}"`);
+    .replace('{text}', `"${getValueOfSecret(secretArgument) ? hideSecretData(value) : value}"`)
+    .replace('{url}', `"${selectorOrElement}"`)
+    .replace(
+      '{cookies}',
+      `"${Array.isArray(selectorOrElement) && (selectorOrElement as unknown as string[]).join(' ; ')}"`,
+    )
+    .replace('{cookie}', `"${selectorOrElement}"`);
 };
 
-export function logAction<This, Args extends any[], Return>(stepName: string) {
+export function logAction<This extends object, Args extends any[], Return>(action?: string) {
   return function (
     target: (this: This, ...args: Args) => Promise<Return>,
     _context: ClassMethodDecoratorContext<This, (this: This, ...args: Args) => Promise<Return>>,
   ) {
     return async function (this: This, ...args: Args): Promise<Return> {
-      const newStepName = replaceStepNameParts(stepName, args);
-
+      const pageName: string = this.constructor.name;
+      const actionName = action || camelCaseToReadableString(<string>_context.name);
+      const actionDescription: string = ` -- I ${actionName} on the page '${pageName}'`;
+      // TODO add console logs based on cli args
+      const newStepName = replaceStepNameParts(actionDescription, args);
       try {
         allure.startStep(newStepName);
         const result = await target.apply(this, args);

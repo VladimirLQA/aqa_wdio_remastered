@@ -1,4 +1,4 @@
-import { logAction } from '../../utils/reporter/decorators';
+import { logAction } from '../../utils/reporter/decorators.ts';
 
 export type ActionContext = {
   isSecretValue?: boolean;
@@ -28,7 +28,7 @@ export abstract class ActionsPage {
     return element;
   }
 
-  @logAction('Click on element with selector {selector}')
+  @logAction('click on element with selector {selector}')
   async click(selector: string) {
     const element = await this.waitForDisplayed(selector);
     await element.waitForEnabled();
@@ -36,42 +36,44 @@ export abstract class ActionsPage {
     await element.click();
   }
 
-  @logAction('Set {text} into element with selector {selector}')
+  @logAction('set {text} into element with selector {selector}')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async setValue(selector: SelectorOrLocator, value: string | number, _context?: ActionContext) {
     const input = await this.waitForDisplayed(selector);
     await input.setValue(value);
   }
 
-  @logAction('Select dropdown value from {selector}')
+  @logAction('select dropdown value from {selector}')
   async selectDropdownValue(selector: SelectorOrLocator, value: string | number) {
     const select = await this.waitForDisplayed(selector);
     await select.selectByVisibleText(value);
   }
 
-  @logAction('Get value from {selector}')
+  @logAction('get value from {selector}')
   async getValue(selector: SelectorOrLocator) {
     const element = await this.waitForDisplayed(selector);
     const value = await element.getValue();
     return value;
   }
 
-  @logAction('Get text from {selector}')
+  @logAction('get text from {selector}')
   async getText(selector: SelectorOrLocator) {
     const element = await this.waitForDisplayed(selector);
     const text = await element.getText();
     return text;
   }
 
-  @logAction('Open page')
+  @logAction('open page with url {url}')
   async openPage(url: string) {
     await browser.url(url);
   }
 
+  @logAction('delete browser cookies {cookies}')
   async deleteCookies(cookieNames: string[]) {
     await browser.deleteCookies(cookieNames);
   }
 
+  @logAction('get browser cookie with name {cookie}')
   async getCookie(cookieName: string) {
     return (await browser.getCookies(cookieName))[0];
   }

@@ -1,0 +1,12 @@
+{
+  "require": ["ts-node/register"],
+  "slow": 50000,
+  "timeout": 60000,
+  "reporterOptions": ["resultsDir=allure-results", "extraReporters=spec"],
+  "reporter": "allure-mocha",
+  "diff": true,
+  "inlineDiffs": true,
+  "ignore": ["node_modules", "allure-results", "allure-report"],
+  "loader": "ts-node/esm",
+  "spec": ["src/api/tests/**/smoke.test.ts"]
+}

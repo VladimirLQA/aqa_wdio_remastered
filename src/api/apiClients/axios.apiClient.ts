@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, isAxiosError } from 'axios';
-import { IRequestOptions, IResponse, IResponseFields } from '../../data/types/api.types';
-import { reportApiRequest } from '../../utils/reporter/api';
+import { IRequestOptions, IResponse, IResponseFields } from '../../data/types/api.types.ts';
+import { reportApiRequest } from '../../utils/reporter/api.ts';
 
 export class AxiosApiClient {
   private response: AxiosResponse | undefined;
