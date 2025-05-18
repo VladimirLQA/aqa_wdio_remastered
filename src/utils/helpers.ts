@@ -32,6 +32,7 @@ export const isWebElement = (value: WebdriverIO.Element | string): value is Webd
  */
 export const getElementSelector = (item: WebdriverIO.Element | string) => {
   if (isWebElement(item)) {
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
     return item.selector.toString();
   } else {
     return item;
@@ -57,7 +58,7 @@ export const getElementSelector = (item: WebdriverIO.Element | string) => {
  *
  * @returns {void}
  */
-export function fileBailOnFailure() {
+export function fileBailOnFailure(): void {
   let suiteFailed = false;
 
   beforeEach(function () {
@@ -75,6 +76,16 @@ export function fileBailOnFailure() {
 
 export const isID = (value: string) => /^[0-9a-fA-F]{24}$/.test(value);
 
+/**
+ * Converts a camelCase string to a human-readable string by inserting spaces before uppercase letters
+ * and converting them to lowercase (except for the last character).
+ *
+ * @param {string} str - The camelCase string to convert.
+ * @returns {string} The converted, human-readable string.
+ *
+ * @example
+ * camelCaseToReadableString('myCamelCaseString'); // "my camel case string"
+ */
 export const camelCaseToReadableString = (str: string) =>
   [...str].reduce(
     (readableStr, char, idx) => (
@@ -85,3 +96,9 @@ export const camelCaseToReadableString = (str: string) =>
     ),
     '',
   );
+
+export const isAsyncFn = (value: any): value is (...args: any[]) => Promise<any> =>
+  typeof value === 'function' && value.constructor.name === 'AsyncFunction';
+
+export const isFn = (value: any): value is (...args: any[]) => any =>
+  typeof value === 'function' && value.constructor.name !== 'AsyncFunction';

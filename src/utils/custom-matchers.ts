@@ -6,22 +6,20 @@ export const addCustomCommands = () => {
     'toHaveInputBorder',
     async function (
       this: WebdriverIO.Element,
-      options: { mode: 'dark' | 'light'; type: 'valid' | 'invalid' },
+      { mode, type }: { mode: 'dark' | 'light'; type: 'valid' | 'invalid' },
     ) {
-      const { mode, type } = options;
-      const elementClass = await this.getAttribute('class');
-      const elementCss = (await this.getCSSProperty('border-color')).parsed.hex;
-
       const expectedClass = type === 'valid' ? 'is-valid' : 'is-invalid';
       const expectedBorderColor = borderColors[mode][type];
-
-      if (!elementClass.includes(expectedClass) || elementCss !== expectedBorderColor) {
+      const elementCss = await this.getCSSProperty('border-color');
+      const elementClass = await this.getAttribute('class');
+      const pass = elementClass.includes(expectedClass) && elementCss.parsed.hex === expectedBorderColor;
+      if (!pass) {
         throw new Error(
-          `Element "${JSON.stringify(this.selector, null, 2)}" should have border-color "${expectedBorderColor}" and class "${expectedClass}", but got "${elementCss}" and "${elementClass}"`,
+          `Element "${JSON.stringify(this.selector)}}" should have border-color "${expectedBorderColor}" and class "${expectedClass}", but got "${elementCss.parsed.hex}" and "${elementClass}"`,
         );
       }
     },
-    true, // only for elements
+    true,
   );
 };
 
