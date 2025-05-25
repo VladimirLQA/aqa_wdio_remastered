@@ -37,7 +37,7 @@
     "test": "npx wdio run ./wdio.conf.ts",
     "test:mocha": "npx mocha",
     "test:ui-products": "npm run test -- --suite ui_products",
-    "test:single": "cross-env HEADLESS=false npm run test -- --suite single",
+    "test:single": "cross-env HEADLESS=true npm run test -- --suite single",
     "test:grep-test": "npm run test -- --suite api_products --mochaOpts.grep=@serial",
     "test:grep": "cross-env GREP=@serial npm run test",
     "test:ui-simple": "npm run test -- --suite ui_simple",
