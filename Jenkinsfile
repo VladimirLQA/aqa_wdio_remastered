@@ -1,49 +1,43 @@
 pipeline {
     agent any
+
+    tools {
+        nodejs('node:23.7.0')
+    }
+
     environment {
         NPM_CONFIG_CACHE = '${WORKSPACE}/.npm'
     }
 
-    stages {
-        stage('In Node Container') {
-        agent {
-            docker { image 'node:latest' }
+
+
+    stages { 
+        stage('Install dependencies') {
+            steps {
+                sh '''
+                    ls -la
+                    node --version
+                    npm --version
+                    npm ci
+                '''
+            }
         }
-        steps {
-            sh 'node --version'             // Runs inside node:latest
-            sh 'npm install && npm test'
+
+        stage('Check code style') {
+            steps {
+                echo 'npm run lint:fix'
+                // sh 'npm run lint:fix'
+            }
         }
+
+        stage('Run api tests') {
+            steps {
+                sh '''
+                    npm run test:single
+                '''
+            }
         }
     }
-
-
-    // stages { 
-    //     stage('Install dependencies') {
-    //         steps {
-    //             sh '''
-    //                 ls -la
-    //                 node --version
-    //                 npm --version
-    //                 npm ci
-    //             '''
-    //         }
-    //     }
-
-    //     stage('Check code style') {
-    //         steps {
-    //             echo 'npm run lint:fix'
-    //             // sh 'npm run lint:fix'
-    //         }
-    //     }
-
-    //     stage('Run api tests') {
-    //         steps {
-    //             sh '''
-    //                 npm run test:single
-    //             '''
-    //         }
-    //     }
-    // }
 }
 // pipeline { 
 //     agent any
