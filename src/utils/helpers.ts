@@ -97,8 +97,103 @@ export const camelCaseToReadableString = (str: string) =>
     '',
   );
 
+/**
+ * Type guard that checks if a value is an async function.
+ *
+ * @param {any} value - The value to check.
+ * @returns {value is (...args: any[]) => Promise<any>} - Type predicate
+ * confirming if value is an async function.
+ *
+ * @example
+ * isAsyncFn(myAsyncFunction); // true
+ * isAsyncFn(mySyncFunction); // false
+ */
 export const isAsyncFn = (value: any): value is (...args: any[]) => Promise<any> =>
   typeof value === 'function' && value.constructor.name === 'AsyncFunction';
+/**
+ * Type guard that checks if a value is a function (but not an async function).
+ *
+ * @param {any} value - The value to check.
+ * @returns {value is (...args: any[]) => any} - Type predicate confirming if value is a function.
+ *
+ * @example
+ * const add = (a: number, b: number) => a + b;
+ * if (isFn(add)) {
+ *   // add is confirmed as a function
+ *   console.log(add(2, 3));
+ * }
+ */
 
 export const isFn = (value: any): value is (...args: any[]) => any =>
   typeof value === 'function' && value.constructor.name !== 'AsyncFunction';
+
+export const getCliArgs = () => globalThis.process.argv.slice(2);
+
+/**
+ * Parses CLI arguments and returns an array of values for the given options.
+ *
+ * @param {string[]} args - CLI arguments.
+ * @param {string[]} option - CLI options to parse. The values for these options will be returned.
+ * @returns {string[]} An array of values for the given options.
+ *
+ * @example
+ * const CLI_ARGS = ['--foo', 'bar', '--baz', 'qux', '--foo', 'quux'];
+ * const OPTIONS = ['--foo', '--baz'];
+ * const values = parseCliArgs(CLI_ARGS, OPTIONS); // ['bar', 'qux']
+ */
+export const pasrseCliArgs = (args: string[], option: string[]) => {
+  const values: string[] = [];
+
+  for (let i = 0; i < args.length; i += 1) {
+    if (option.includes(args[i])) {
+      values.push(args[i + 1]);
+      i++;
+    }
+  }
+
+  return values;
+};
+
+export const escapeRegExpCharacters = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/**
+ * Creates a regular expression pattern that matches any of the given tags.
+ *
+ * @param {string[]} tags - An array of strings to match as tags.
+ * @returns {RegExp} A regular expression pattern that matches any of the given tags.
+ *
+ * @example
+ * // Assuming the following tags array: ['@tag1', '@tag2', '@tag3']
+ * const pattern = createTagRegex(tags);
+ * // pattern will be a RegExp matching '@tag1', '@tag2', or '@tag3'
+ */
+export const createTagRegex = (tags: string[]): RegExp => {
+  const escapedTags = tags.map(escapeRegExpCharacters);
+  return new RegExp(escapedTags.join('|'));
+};
+
+/**
+ * Generates a regular expression pattern based on command-line arguments.
+ *
+ * @param {string[]} options - An array of string options to parse from the CLI arguments.
+ * @returns {RegExp | undefined} - A regular expression pattern created from the parsed
+ * CLI arguments, or undefined if no matching tags are found.
+ *
+ * @example
+ * // Assuming CLI arguments contain '--tags @tag1 @tag2'
+ * const pattern = createGrepPattern(['--tags']);
+ * // pattern will be a RegExp matching '@tag1' or '@tag2'
+ */
+
+export const createGrepPattern = (options: string[]): RegExp | undefined => {
+  const args = getCliArgs();
+  console.log(globalThis.process.argv);
+
+  const tagValues = pasrseCliArgs(args, options);
+
+  if (tagValues.length === 0) {
+    return;
+  }
+
+  return createTagRegex(tagValues);
+};

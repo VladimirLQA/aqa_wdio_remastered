@@ -11,11 +11,11 @@ class ProductApiService {
   private createdProducts: IProductFromResponse[] = [];
 
   constructor(
-    private controller = ProductsController,
+    private controller = new ProductsController(),
     private signInApiService = SignInApiService,
   ) {}
 
-  async create(customData?: Partial<IProduct>, token?: string) {
+  async create(customData: Partial<IProduct> = {}, token?: string) {
     const authToken = token ?? (await this.signInApiService.signInAsAdmin());
     const response = await this.controller.create(generateProductData(customData), authToken);
 
@@ -25,13 +25,11 @@ class ProductApiService {
     return response.body.Product;
   }
 
-  async populate(amount: number, customData?: Partial<IProduct>, token?: string) {
+  async populate(amount: number, customData: Partial<IProduct> = {}, token?: string) {
     await Promise.all(Array.from({ length: amount }, () => this.create(customData, token)));
   }
 
-  getCreatedProduct(name: string): IProductFromResponse;
-  getCreatedProduct(id: string): IProductFromResponse;
-  getCreatedProduct(idOrName?: string) {
+  getCreatedProduct(idOrName?: string): IProductFromResponse {
     if (idOrName) {
       if (isID(idOrName)) return this.findProductByID(idOrName);
       else return this.findProductByName(idOrName);

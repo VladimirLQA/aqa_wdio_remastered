@@ -27,6 +27,10 @@ class UsersToken {
     return tokenObj[type];
   }
 
+  isTokenExist() {
+    return !!this.tokens.size;
+  }
+
   removeToken(username?: string) {
     username ? this.tokens.delete(username) : this.tokens.delete(this.getLastAddedUserName() as string);
   }

@@ -10,4 +10,4 @@ class AddNewProductPage extends AddEditProductPage {
   }
 }
 
-export default new AddNewProductPage();
+export default AddNewProductPage;

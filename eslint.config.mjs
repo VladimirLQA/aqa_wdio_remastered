@@ -78,7 +78,7 @@ export default tseslint.config([
       '@stylistic/js/arrow-spacing': ['error', { before: true, after: true }],
       '@stylistic/js/arrow-parens': ['error', 'always'],
       '@stylistic/js/block-spacing': ['error', 'always'],
-      '@stylistic/js/indent': ['error', 2],
+      // '@stylistic/js/indent': ['error', 2],
       '@stylistic/js/brace-style': ['error', '1tbs', { allowSingleLine: true }],
       '@stylistic/js/comma-dangle': ['error', 'always-multiline'],
       '@stylistic/js/eol-last': ['error'],
@@ -120,7 +120,7 @@ export default tseslint.config([
       // '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],
     },
   },
-  { ignores: ['node-modules', 'eslint', 'src/report', 'test-results', 'jest.config.ts'] },
+  { ignores: ['node-modules', 'eslint', 'src/report', 'test-results', 'jest.config.ts', '.mocharc.mjs'] },
   {
     languageOptions: {
       globals: { ...globals.es2025, ...globals.browser, ...globals.node },

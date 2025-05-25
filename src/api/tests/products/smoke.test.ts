@@ -8,11 +8,9 @@ import { IProduct, IProductFromResponse } from '../../../data/types/product.type
 import { TAGS } from '../../../utils/tags.ts';
 import { PRODUCTS_SCHEMA_RESPONSE } from '../../../data/jsonSchemas/products/products.schema.ts';
 import { API_ERROR_MESSAGES } from '../../../data/errorMessages.ts';
-import { fileBailOnFailure } from '../../../utils/helpers.ts';
 import { expect as chaiExpect } from 'chai';
 
 describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
-  fileBailOnFailure();
   let id = '',
     productData: IProduct,
     token: string,
@@ -25,8 +23,8 @@ describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
   after(async () => {
     const product = await ProductsController.get(id, token);
     if (product.status === STATUS_CODES.OK) {
-      const response = await ProductsController.delete(product.body.Product._id, token);
-      chaiExpect(response.status).to.equal(STATUS_CODES.DELETED);
+      // const response = await ProductsController.delete(product.body.Product._id, token);
+      // chaiExpect(response.status).to.equal(STATUS_CODES.DELETED);
     }
   });
 

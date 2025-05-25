@@ -6,14 +6,14 @@ import productsPageService from '../../../services/products/productsPage.service
 import signInPageService from '../../../services/signInPage.service';
 import { TAGS } from '../../../../utils/tags';
 
-describe(`[UI] [Products edit page] Smoke (${TAGS.SMOKE} | ${TAGS.REGRESSION})`, () => {
+describe(`[UI] [Products edit page] Smoke ${TAGS.SMOKE} | ${TAGS.REGRESSION}`, () => {
   before(async () => {
     await signInPageService.openSalesPortal();
   });
 
   beforeEach(async () => {
     const token = await SignInApiService.signInAsAdmin();
-    await ProductApiService.create(token);
+    await ProductApiService.create({}, token);
     await signInPageService.loginAsAdmin();
     await homePageService.openProductsPage();
   });
@@ -31,7 +31,7 @@ describe(`[UI] [Products edit page] Smoke (${TAGS.SMOKE} | ${TAGS.REGRESSION})`,
   });
 
   afterEach(async () => {
-    await ProductApiService.delete(SignInApiService.getToken());
+    await ProductApiService.delete();
     await signInPageService.signOut();
   });
 });

@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 import { IProduct } from '../../../data/types/product.types.ts';
 import { logStep } from '../../../utils/reporter/decorators.ts';
 import addNewProductPage from '../../pages/products/addNewProduct.page.ts';
@@ -5,8 +6,8 @@ import productsPage from '../../pages/products/products.page.ts';
 import { SalesPortalPageService } from '../salesPortalPage.service.ts';
 
 class AddNewProductService extends SalesPortalPageService {
-  private addNewProductPage = addNewProductPage;
-  private productsPage = productsPage;
+  private addNewProductPage = new addNewProductPage();
+  private productsPage = new productsPage();
 
   protected get notificationPage() {
     return this.addNewProductPage;

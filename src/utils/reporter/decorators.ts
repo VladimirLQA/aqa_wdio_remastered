@@ -2,6 +2,7 @@ import allure from '@wdio/allure-reporter';
 import { Status } from 'allure-js-commons';
 import { hideSecretData } from '../string/hide.ts';
 import { camelCaseToReadableString, getElementSelector } from '../helpers.ts';
+import logger from '../logger/index.ts';
 
 /*
   https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#decorators
@@ -56,9 +57,10 @@ export function logAction<This extends object, Args extends any[], Return>(actio
     return async function (this: This, ...args: Args): Promise<Return> {
       const pageName: string = this.constructor.name;
       const actionName = action || camelCaseToReadableString(<string>_context.name);
-      const actionDescription: string = ` -- I ${actionName} on the page '${pageName}'`;
+      const actionDescription: string = ` -- I ${actionName} on the '${pageName}' page`;
       // TODO add console logs based on cli args
       const newStepName = replaceStepNameParts(actionDescription, args);
+      logger.info(newStepName);
       try {
         allure.startStep(newStepName);
         const result = await target.apply(this, args);

@@ -1,4 +1,5 @@
 export const TAGS = {
+  TEST: '@TEST',
   SERIAL: '(@SERIAL)',
   SMOKE: '(@SMOKE)',
   REGRESSION: '(@REGRESSION)',

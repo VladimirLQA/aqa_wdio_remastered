@@ -1,0 +1,25 @@
+[2025-05-25T16:15:03.204Z] [INFO]: TEST SUITE STARTS: Page Fixture Tests @TEST
+[2025-05-25T16:15:03.207Z] [INFO]:  -- I open 'Sign in' page  on the 'SignInPage' page
+[2025-05-25T16:15:03.207Z] [INFO]:  -- I open page with url "https://anatoly-karpovich.github.io/aqa-course-project/#" on the 'SignInPage' page
+[2025-05-25T16:15:03.925Z] [INFO]:  -- I fill credentials on the 'SignInPage' page
+[2025-05-25T16:15:03.926Z] [INFO]:  -- I set "aqacourse@gmail.com" into element with selector "#emailinput" on the 'SignInPage' page
+[2025-05-25T16:15:04.058Z] [INFO]:  -- I set "********" into element with selector "#passwordinput" on the 'SignInPage' page
+[2025-05-25T16:15:04.131Z] [INFO]:  -- I click on login button on the 'SignInPage' page
+[2025-05-25T16:15:04.131Z] [INFO]:  -- I click on element with selector "button[type="submit"]" on the 'SignInPage' page
+[2025-05-25T16:15:04.209Z] [INFO]: TEST STARTS: Login flow with pages (@REGRESSION)
+[2025-05-25T16:15:04.210Z] [INFO]:  -- I wait for page opened on the 'HomePage' page
+[2025-05-25T16:15:04.532Z] [INFO]:  -- I wait for spinners to be hidden on the 'HomePage' page
+[2025-05-25T16:15:04.751Z] [INFO]:  -- I click on element with selector "[name="Products"]" on the 'HomePage' page
+[2025-05-25T16:15:04.841Z] [INFO]:  -- I delete browser cookies "Authorization" on the 'SignInPage' page
+[2025-05-25T16:15:04.950Z] [INFO]:  -- I open 'Sign in' page  on the 'SignInPage' page
+[2025-05-25T16:15:04.951Z] [INFO]:  -- I open page with url "https://anatoly-karpovich.github.io/aqa-course-project/#" on the 'SignInPage' page
+[2025-05-25T16:15:04.956Z] [INFO]:  -- I fill credentials on the 'SignInPage' page
+[2025-05-25T16:15:04.956Z] [INFO]:  -- I set "aqacourse@gmail.com" into element with selector "#emailinput" on the 'SignInPage' page
+[2025-05-25T16:15:05.013Z] [INFO]:  -- I set "********" into element with selector "#passwordinput" on the 'SignInPage' page
+[2025-05-25T16:15:05.069Z] [INFO]:  -- I click on login button on the 'SignInPage' page
+[2025-05-25T16:15:05.069Z] [INFO]:  -- I click on element with selector "button[type="submit"]" on the 'SignInPage' page
+[2025-05-25T16:15:05.135Z] [INFO]: TEST STARTS: Login flow with pages 2
+[2025-05-25T16:15:05.135Z] [INFO]:  -- I wait for page opened on the 'HomePage' page
+[2025-05-25T16:15:05.356Z] [INFO]:  -- I wait for spinners to be hidden on the 'HomePage' page
+[2025-05-25T16:15:05.477Z] [INFO]:  -- I click on element with selector "[name="Products"]" on the 'HomePage' page
+[2025-05-25T16:15:05.555Z] [INFO]:  -- I delete browser cookies "Authorization" on the 'SignInPage' page

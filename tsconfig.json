@@ -33,6 +33,6 @@
         "wdio.conf.ts",
         "eslint.config.mjs",
         "prettier.config.mjs",
-        ".mocharc.json"
+        ".mocharc.mjs"
     ],
 }

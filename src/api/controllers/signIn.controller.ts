@@ -22,4 +22,4 @@ class SignInController {
   }
 }
 
-export default new SignInController();
+export default SignInController;

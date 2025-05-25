@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 import _ from 'lodash';
 import { IProduct } from '../../../data/types/product.types.ts';
 import addNewProductPage from '../../pages/products/addNewProduct.page.ts';
@@ -8,8 +9,8 @@ import { logStep } from '../../../utils/reporter/decorators.ts';
 import deleteProductModalPage from '../../pages/modals/delete.modal.page.ts';
 
 class ProductsPageService extends SalesPortalPageService {
-  private productsPage = productsPage;
-  private addNewProductPage = addNewProductPage;
+  private productsPage = new productsPage();
+  private addNewProductPage = new addNewProductPage();
   private editProductPage = editProductPage;
   private deleteProductModalPage = deleteProductModalPage;
 
