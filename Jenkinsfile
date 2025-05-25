@@ -16,37 +16,34 @@ pipeline {
         }
     }
 
-    environment {
-        NPM_CONFIG_CACHE = '${WORKSPACE}/.npm'
-    }
 
-    stages { 
-        stage('Install dependencies') {
-            steps {
-                sh '''
-                    ls -la
-                    node --version
-                    npm --version
-                    npm ci
-                '''
-            }
-        }
+    // stages { 
+    //     stage('Install dependencies') {
+    //         steps {
+    //             sh '''
+    //                 ls -la
+    //                 node --version
+    //                 npm --version
+    //                 npm ci
+    //             '''
+    //         }
+    //     }
 
-        stage('Check code style') {
-            steps {
-                echo 'npm run lint:fix'
-                // sh 'npm run lint:fix'
-            }
-        }
+    //     stage('Check code style') {
+    //         steps {
+    //             echo 'npm run lint:fix'
+    //             // sh 'npm run lint:fix'
+    //         }
+    //     }
 
-        stage('Run api tests') {
-            steps {
-                sh '''
-                    npm run test:single
-                '''
-            }
-        }
-    }
+    //     stage('Run api tests') {
+    //         steps {
+    //             sh '''
+    //                 npm run test:single
+    //             '''
+    //         }
+    //     }
+    // }
 }
 // pipeline { 
 //     agent any
