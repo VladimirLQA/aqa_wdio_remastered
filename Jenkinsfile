@@ -1,10 +1,15 @@
 pipeline {
-    agent any
+    // agent any
 
-    tools {
-        nodejs('node:23.7.0')
+    // tools {
+    //     nodejs('node:23.7.0')
+    // }
+    agent {
+        docker {
+            image 'node:latest'
+            reuseNode true
+        }
     }
-
     environment {
         NPM_CONFIG_CACHE = '${WORKSPACE}/.npm'
     }
