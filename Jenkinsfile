@@ -2,6 +2,7 @@ pipeline {
     agent any
     tools {
         nodejs('node:23.7.0')
+        reuseNode true
     }
     // agent {
     //     docker {
