@@ -11,7 +11,7 @@ class ProductApiService {
   private createdProducts: IProductFromResponse[] = [];
 
   constructor(
-    private controller = new ProductsController(),
+    private controller = ProductsController,
     private signInApiService = SignInApiService,
   ) {}
 

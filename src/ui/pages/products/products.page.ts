@@ -38,4 +38,4 @@ class ProductsPage extends ListPage {
   }
 }
 
-export default ProductsPage;
+export default new ProductsPage();

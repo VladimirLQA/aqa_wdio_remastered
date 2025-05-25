@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { expect as baseExpect } from 'expect-webdriverio';
-import { isFn } from './helpers';
+
+export const isFn = (value: any): value is (...args: any[]) => any =>
+  typeof value === 'function' && value.constructor.name !== 'AsyncFunction';
 
 type MathcherFn = (...args: any[]) => any;
 

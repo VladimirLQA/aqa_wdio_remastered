@@ -11,4 +11,4 @@ class HomePage extends SalesPortalPage {
   }
 }
 
-export default HomePage;
+export default new HomePage();

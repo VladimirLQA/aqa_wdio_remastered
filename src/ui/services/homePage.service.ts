@@ -1,12 +1,11 @@
-/* eslint-disable new-cap */
 import { logStep } from '../../utils/reporter/decorators.ts';
 import homePage from '../pages/home.page.ts';
 import productsPage from '../pages/products/products.page.ts';
 import { SalesPortalPageService } from './salesPortalPage.service.ts';
 
 class HomePageService extends SalesPortalPageService {
-  private homePage = new homePage();
-  private productsPage = new productsPage();
+  private homePage = homePage;
+  private productsPage = productsPage;
 
   protected get notificationPage() {
     return this.homePage;

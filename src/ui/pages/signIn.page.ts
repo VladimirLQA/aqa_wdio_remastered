@@ -27,4 +27,4 @@ class SignInPage extends SalesPortalPage {
   }
 }
 
-export default SignInPage;
+export default new SignInPage();

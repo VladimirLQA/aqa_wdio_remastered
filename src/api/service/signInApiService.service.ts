@@ -1,4 +1,3 @@
-/* eslint-disable new-cap */
 import { ADMIN_PASSWORD, ADMIN_USERNAME } from '../../config/environment.ts';
 import { STATUS_CODES } from '../../data/api/statusCodes.ts';
 import usersTokenStorage, { TokenTypes } from '../../utils/storage/users-token.storage.ts';
@@ -6,7 +5,7 @@ import { validateResponse } from '../../utils/validation/apiValidation.ts';
 import signInController from '../controllers/signIn.controller.ts';
 
 class SignInApiService {
-  constructor(private controller = new signInController()) {}
+  constructor(private controller = signInController) {}
 
   async signInAsAdmin() {
     if (usersTokenStorage.isTokenExist()) return this.getToken({ username: ADMIN_USERNAME });

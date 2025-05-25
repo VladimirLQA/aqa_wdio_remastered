@@ -125,6 +125,6 @@ async function checkCheckbox(checkboxSelector: string, toBeChecked: boolean) {
 
     await checkbox.click();
     // await expect(checkbox).not.toBeChecked();
-    await browser.waitUntil(async () => !await checkbox.getAttribute('checked'));
+    await browser.waitUntil(async () => !(await checkbox.getAttribute('checked')));
   }
 }

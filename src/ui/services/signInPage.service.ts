@@ -1,4 +1,3 @@
-/* eslint-disable new-cap */
 import { ADMIN_USERNAME, ADMIN_PASSWORD } from '../../config/environment.ts';
 import { ICredentials } from '../../data/types/signIn.types.ts';
 import { logStep } from '../../utils/reporter/decorators.ts';
@@ -7,8 +6,8 @@ import signInPage from '../pages/signIn.page.ts';
 import { SalesPortalPageService } from './salesPortalPage.service.ts';
 
 class SignInPageService extends SalesPortalPageService {
-  private signInPage = new signInPage();
-  private homePage = new homePage();
+  private signInPage = signInPage;
+  private homePage = homePage;
 
   protected get notificationPage() {
     return this.signInPage;
