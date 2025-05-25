@@ -120,7 +120,7 @@ export default tseslint.config([
       // '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],
     },
   },
-  { ignores: ['node-modules', 'eslint', 'src/report', 'test-results', 'jest.config.ts', '.mocharc.mjs'] },
+  { ignores: ['node-modules', 'eslint', 'src/report', 'test-results', 'jest.config.js', '.mocharc.mjs'] },
   {
     languageOptions: {
       globals: { ...globals.es2025, ...globals.browser, ...globals.node },

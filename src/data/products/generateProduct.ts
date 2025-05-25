@@ -31,5 +31,5 @@ const getStringAlpha = createStringGenerator('alpha');
 // const getStringAlphanumeric = createStringGenerator('alphanumeric');
 // const getStringNumeric = createStringGenerator('numeric');
 
-const at = getStringAlpha({ length: 10 });
-console.log(at);
+// const at = getStringAlpha({ length: 10 });
+// console.log(at);
