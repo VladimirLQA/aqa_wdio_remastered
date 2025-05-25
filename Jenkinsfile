@@ -1,13 +1,18 @@
 pipeline {
-    // agent any
-    // tools {
-    //     nodejs('node:23.7.0')
-    //     reuseNode true
-    // }
-    agent {
-        docker {
-            image 'node:latest'
-            reuseNode true
+    agent any
+    environment {
+        NPM_CONFIG_CACHE = '${WORKSPACE}/.npm'
+    }
+
+    stages {
+        stage('In Node Container') {
+        agent {
+            docker { image 'node:latest' }
+        }
+        steps {
+            sh 'node --version'             // Runs inside node:latest
+            sh 'npm install && npm test'
+        }
         }
     }
 
