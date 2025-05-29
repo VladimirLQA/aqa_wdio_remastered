@@ -27,6 +27,7 @@ export const config: WebdriverIO.Config = {
   },
   maxInstances: +MAX_INSTANCES || 5,
 
+  port: 4444,
   capabilities: [
     {
       browserName: 'chrome',
@@ -36,6 +37,7 @@ export const config: WebdriverIO.Config = {
           '--no-sandbox',
           '--disable-gpu',
           '--window-size=1280,800',
+          '--disable-dev-shm-usage'
         ],
       },
       webSocketUrl: true,
@@ -47,7 +49,7 @@ export const config: WebdriverIO.Config = {
 
   bail: BAIL === 'true' ? 1 : 0,
 
-  // baseUrl: "http://localhost:8080",
+  baseUrl: "http://localhost:8080",
 
   waitforTimeout: 10000,
 
@@ -239,7 +241,7 @@ export const config: WebdriverIO.Config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {<Object>} results object containing test results
    */
-  onComplete: async function (exitCode, config, capabilities, results) {},
+  onComplete: async function (exitCode, config, capabilities, results) { },
   /**
    * Gets executed when a refresh happens.
    * @param {string} oldSessionId session ID of the old session
