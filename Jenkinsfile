@@ -12,7 +12,7 @@ pipeline {
     agent {
         docker {
             image 'node:latest'
-            args '--shm-size=2gb'
+            args '--user root --shm-size=2gb'
             reuseNode true
         }
     }
