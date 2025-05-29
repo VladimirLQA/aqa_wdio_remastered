@@ -21,7 +21,6 @@ pipeline {
     }
 
 
-
     stages { 
         stage('Install chrome') {
             steps {
@@ -29,8 +28,8 @@ pipeline {
                     apt-get update
                     apt-get install -y wget gnupg ca-certificates
 
-                    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
-                    echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+                    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list
+                    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
                     apt-get update
                     apt-get install -y google-chrome-stable
 
