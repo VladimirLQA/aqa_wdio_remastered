@@ -33,10 +33,18 @@ export const config: WebdriverIO.Config = {
   },
   maxInstances: +MAX_INSTANCES || 5,
 
-  // for selenium
   capabilities: [
     {
       browserName: 'chrome',
+      'goog:chromeOptions': {
+        args: [
+          ...(HEADLESS === 'true' ? ['--headless'] : []),
+          '--no-sandbox',
+          '--disable-gpu',
+          '--window-size=1280,800',
+          '--disable-dev-shm-usage',
+        ],
+      },
       webSocketUrl: true,
       platformName: 'mac',
     },
@@ -62,7 +70,7 @@ export const config: WebdriverIO.Config = {
 
   bail: BAIL === 'true' ? 1 : 0,
 
-  // baseUrl: "http://localhost:8080",
+  baseUrl: 'http://localhost:8080',
 
   waitforTimeout: 10000,
 

@@ -1,20 +1,42 @@
 pipeline {
-    agent any
-    tools {
-        nodejs('node:23.7.0')
+    parameters {
+        choice(name: 'PLATFORM_FILTER', choices: ['all', 'linux', 'windows', 'mac'], description: 'Run on specific platform')
+        string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: 'Should you choose to accept')
+        text(name: 'TEXT_PARAMETER', defaultValue: '', description: 'Enter something valuable')
+        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
     }
-    // agent {
-    //     docker {
-    //         image 'node:latest'
-    //         reuseNode true
-    //     }
-    // }
 
+    // tools {
+    //     nodejs('node:23.7.0')
+    // }
+    agent {
+        docker {
+            image 'node:latest'
+            args '--user root --shm-size=2gb --platform=linux/amd64'
+            reuseNode true
+        }
+    }
     environment {
         NPM_CONFIG_CACHE = '${WORKSPACE}/.npm'
     }
 
+
     stages { 
+        stage('Install chrome') {
+            steps {
+                sh '''
+                    apt-get update
+                    apt-get install -y wget gnupg ca-certificates
+
+                    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee -a /etc/apt/sources.list
+                    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+                    apt-get update
+                    apt-get install -y google-chrome-stable
+
+                    google-chrome --version
+                '''
+            }
+        }
         stage('Install dependencies') {
             steps {
                 sh '''
