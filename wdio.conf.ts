@@ -9,7 +9,13 @@ import { createGrepPattern } from './src/utils/helpers';
 import './src/fixtures/base.fixture';
 
 export const config: WebdriverIO.Config = {
+  // for selenium grid
+  protocol: 'http',
+  hostname: 'localhost',
+  port: 4444,
+  path: '/wd/hub',
   runner: 'local',
+  // ---
 
   tsConfigPath: './tsconfig.json',
 
@@ -23,24 +29,33 @@ export const config: WebdriverIO.Config = {
     ui_simple: ['./src/ui/tests/baseTests/**/*.test.ts'],
     api_products: ['./src/api/tests/**/*.test.ts'],
     serial: ['./src/api/tests/**/smoke.test.ts'],
-    single: ['./src/ui/tests/**/fixture.test.ts'],
+    single: ['./src/ui/tests/**/registration.*.ts'],
   },
   maxInstances: +MAX_INSTANCES || 5,
 
+  // for selenium
   capabilities: [
     {
       browserName: 'chrome',
-      'goog:chromeOptions': {
-        args: [
-          ...(HEADLESS === 'true' ? ['--headless'] : []),
-          '--no-sandbox',
-          '--disable-gpu',
-          '--window-size=1280,800',
-        ],
-      },
       webSocketUrl: true,
+      platformName: 'mac',
     },
   ],
+
+  // capabilities: [
+  //   {
+  //     browserName: 'chrome',
+  //     'goog:chromeOptions': {
+  //       args: [
+  //         ...(HEADLESS === 'true' ? ['--headless'] : []),
+  //         '--no-sandbox',
+  //         '--disable-gpu',
+  //         '--window-size=1280,800',
+  //       ],
+  //     },
+  //     webSocketUrl: true,
+  //   },
+  // ],
 
   // Level of logging verbosity: trace | debug | info | warn | error | silent
   logLevel: 'error',
