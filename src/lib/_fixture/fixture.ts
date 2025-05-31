@@ -11,6 +11,11 @@ export interface SuiteFunction {
 
 type HookFunction<T> = (fixtures: T) => Promise<void> | void;
 
+type FixtureFactory<T> = () => T | Promise<T>;
+type NewFixture<T extends Record<string, any>> = {
+  [K in keyof T]: T[K] | FixtureFactory<T[K]>;
+};
+
 export const getTagsFromDetails = (details: TestDetails): string[] => {
   const tags: string[] = [];
   if (details.tag) {
@@ -28,6 +33,7 @@ export const getFullTitle = (title: string, details: TestDetails): string => {
   const tagSuffix = tags.length > 0 ? ` ${tags.join(' ')}` : '';
   return `${title}${tagSuffix}`;
 };
+
 // Create test function factory
 function createTestFunction<T extends Record<string, any>>(
   fixtureFactory: () => T | Promise<T> = () => ({}) as T,
@@ -84,9 +90,7 @@ function createTestFunction<T extends Record<string, any>>(
   };
 
   // Add extend method to any test function
-  testFn.extend = <U extends Record<string, any>>(newFixtures: {
-    [K in keyof U]: U[K] | Promise<U[K]>;
-  }) => {
+  testFn.extend = <U extends Record<string, any>>(newFixtures: NewFixture<U>) => {
     return createTestFunction<T & U>(async () => {
       const baseFixtures = await fixtureFactory();
       const extendedFixtures = { ...baseFixtures } as T & U;

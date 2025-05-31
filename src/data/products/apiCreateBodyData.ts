@@ -1,10 +1,11 @@
+import { getStringAlpha } from '../../utils/random-data.ts';
 import { TAGS } from '../../utils/tags.ts';
 import { STATUS_CODES } from '../api/statusCodes.ts';
 
 export const PRODUCTS_CREATE_VALIDATIONS = [
   {
     description: 'Should create product with minimal valid name length',
-    params: { name: 'A'.repeat(3) },
+    params: { name: getStringAlpha({ length: 3 }) },
     expectedStatus: STATUS_CODES.CREATED,
     isSuccess: true,
     errorMessage: null,
@@ -12,7 +13,7 @@ export const PRODUCTS_CREATE_VALIDATIONS = [
   },
   {
     description: 'Should create product with maximal valid name length',
-    params: { name: 'A'.repeat(40) },
+    params: { name: getStringAlpha({ length: 40 }) },
     expectedStatus: STATUS_CODES.CREATED,
     isSuccess: true,
     errorMessage: null,

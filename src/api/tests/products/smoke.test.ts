@@ -10,7 +10,7 @@ import { PRODUCTS_SCHEMA_RESPONSE } from '../../../data/jsonSchemas/products/pro
 import { API_ERROR_MESSAGES } from '../../../data/errorMessages.ts';
 import { expect as chaiExpect } from 'chai';
 
-describe(`[API] [Products] Smoke run ${TAGS.SERIAL}`, () => {
+describe(`[API] [Products] Smoke run ${TAGS.SMOKE}`, () => {
   let id = '',
     productData: IProduct,
     token: string,

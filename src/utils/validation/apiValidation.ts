@@ -1,6 +1,6 @@
 import Ajv from 'ajv';
 import { IResponse, IResponseFields } from '../../data/types/api.types.ts';
-import { expect as chaiExpect } from 'chai';
+import chaiExpect from '../../lib/_chai_expect/_chai_expect.ts';
 
 /**
  * Validates a JSON response against a given schema using Ajv.

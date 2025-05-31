@@ -1,7 +1,6 @@
-import productsController from '../../../api/controllers/products.controller';
-import signInController from '../../../api/controllers/signIn.controller';
-import { BaseFixtures } from '../../../lib/_fixture/fixture';
-import { test as base } from '../../base.fixture';
+import { productsController, signInController } from '../../../api/controllers/index.ts';
+import { BaseFixtures } from '../../../lib/_fixture/fixture.ts';
+import { test as base } from '../../base.fixture.ts';
 
 export type ControllerFixtures = BaseFixtures & {
   productsController: typeof productsController;

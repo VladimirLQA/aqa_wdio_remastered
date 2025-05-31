@@ -1,5 +1,3 @@
-import { faker } from '@faker-js/faker';
-
 /**
  * Type guard that checks if a value is a WebdriverIO Element.
  *
@@ -198,21 +196,3 @@ export const createGrepPattern = (options: string[]): RegExp | undefined => {
 
   return createTagRegex(tagValues);
 };
-
-type LengthParams =
-  | { length: number; min?: never; max?: never }
-  | { min: number; max: number; length?: never };
-
-type StringGeneratorParams = LengthParams & { excludeSpace?: boolean };
-
-const createStringGenerator =
-  (method: 'alpha' | 'alphanumeric' | 'numeric') =>
-  ({ min, max, length, excludeSpace = true }: StringGeneratorParams) =>
-    faker.string[method]({
-      length: length ? length : { min: min!, max: max! },
-      exclude: excludeSpace ? ' ' : '',
-    });
-
-export const getStringAlpha = createStringGenerator('alpha');
-export const getStringAlphanumeric = createStringGenerator('alphanumeric');
-export const getStringNumeric = createStringGenerator('numeric');

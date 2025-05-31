@@ -6,6 +6,7 @@ import { IProduct, IProductFromResponse } from '../../data/types/product.types.t
 import { validateJsonSchema, validateResponse } from '../../utils/validation/apiValidation.ts';
 import ProductsController from '../controllers/products.controller.ts';
 import { isID } from '../../utils/helpers.ts';
+import chaiExpect from '../../lib/_chai_expect/_chai_expect.ts';
 
 class ProductApiService {
   private createdProducts: IProductFromResponse[] = [];
@@ -26,7 +27,7 @@ class ProductApiService {
   }
 
   async populate(amount: number, customData: Partial<IProduct> = {}, token?: string) {
-    await Promise.all(Array.from({ length: amount }, () => this.create(customData, token)));
+    return await Promise.all(Array.from({ length: amount }, () => this.create(customData, token)));
   }
 
   getCreatedProduct(idOrName?: string): IProductFromResponse {
@@ -55,13 +56,13 @@ class ProductApiService {
 
   async deleteProduct(id: string, token: string) {
     const response = await this.controller.delete(id, token);
-    await expect(response.status).toBe(STATUS_CODES.DELETED);
+    chaiExpect(response.status).to.equal(STATUS_CODES.DELETED);
   }
 
   async deleteProducts(products: IProductFromResponse[], token: string) {
     for (const product of products) {
       const response = await this.controller.delete(product._id, token);
-      await expect(response.status).toBe(STATUS_CODES.DELETED);
+      chaiExpect(response.status).to.equal(STATUS_CODES.DELETED);
     }
     this.createdProducts = [];
   }

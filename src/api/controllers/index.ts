@@ -1,4 +1,4 @@
-import signInController from './signIn.controller';
-import ProductsController from './products.controller';
+import signInController from './signIn.controller.ts';
+import productsController from './products.controller.ts';
 
-export { signInController, ProductsController };
+export { signInController, productsController };

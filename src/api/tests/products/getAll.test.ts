@@ -1,105 +1,126 @@
-import { STATUS_CODES } from '../../../data/api/statusCodes';
-import { MANUFACTURERS } from '../../../data/types/product.types';
-import { validateResponse } from '../../../utils/validation/apiValidation';
-import productsController from '../../controllers/products.controller';
-import productApiService from '../../service/productApi.service';
-import signInApiService from '../../service/signInApiService.service';
-import { describe } from 'mocha';
+import { STATUS_CODES } from '../../../data/api/statusCodes.ts';
+import { validateResponse } from '../../../utils/validation/apiValidation.ts';
+import { test } from '../../../fixtures/api/apiServices/apiServices.fixture.ts';
+import { TAGS } from '../../../utils/tags.ts';
+import chaiExpect from '../../../lib/_chai_expect/_chai_expect.ts';
 
-describe('[API] [Products] Get All', () => {
-  beforeEach(async () => {
-    await signInApiService.signInAsAdmin();
+test.describe('[API] [Products] Get All', { tag: TAGS.REGRESSION }, () => {
+  let token: string;
+
+  test.beforeEach(async ({ signInApiService }) => {
+    token = await signInApiService.signInAsAdmin();
   });
 
-  it('Should get created product', async () => {
-    await productApiService.create(signInApiService.getToken());
-    const getAllProductResponse = await productsController.getAll(signInApiService.getToken());
-    await expect(getAllProductResponse.status).toBe(STATUS_CODES.OK);
+  test('Should get existing products', async ({ productsApiService, productsController }) => {
+    await productsApiService.create();
+    const getAllProductResponse = await productsController.getAll(token);
+
     validateResponse(getAllProductResponse, STATUS_CODES.OK, true, null);
+
     const receivedProducts = getAllProductResponse.body.Products;
-    await expect(receivedProducts.length).toBeGreaterThan(0);
+
+    chaiExpect(receivedProducts.length, 'Products array in response is empty').greaterThan(0);
   });
 
-  it('Should get products with search param', async () => {
-    const product = await productApiService.create(signInApiService.getToken());
-    const response = await productsController.getAll(signInApiService.getToken(), {
+  test('Should get products with search param', async ({ productsApiService, productsController }) => {
+    const product = await productsApiService.create();
+    const response = await productsController.getAll(token, {
       search: product.name,
     });
+
     validateResponse(response, STATUS_CODES.OK, true, null);
-    await expect(response.body.Products).toHaveLength(1);
+    chaiExpect(response.body.Products).to.have.length(1);
   });
 
-  it('Should get products with manufacturer in param', async () => {
-    const product = await productApiService.create(signInApiService.getToken());
-    const response = await productsController.getAll(signInApiService.getToken(), {
+  test('Should get products with manufacturer in param', async ({
+    productsApiService,
+    productsController,
+  }) => {
+    const product = await productsApiService.create();
+    const response = await productsController.getAll(token, {
       manufacturer: product.manufacturer,
     });
+
+    const everyProductHasManufacturer = response.body.Products.every(
+      (p) => p.manufacturer === product.manufacturer,
+    );
+
     validateResponse(response, STATUS_CODES.OK, true, null);
-    await expect(response.body.Products.length).toBeGreaterThan(0);
-    await expect(response.body.Products.every((p) => p.manufacturer === product.manufacturer)).toBe(true);
+    chaiExpect(response.body.Products.length).greaterThan(0);
+    chaiExpect(everyProductHasManufacturer).to.equal(true);
   });
 
-  it('Should get products with 2 manufacturers in param', async () => {
-    const product1 = await productApiService.create(signInApiService.getToken(), {
-      manufacturer: MANUFACTURERS.AMAZON,
-    });
-    const product2 = await productApiService.create(signInApiService.getToken(), {
-      manufacturer: MANUFACTURERS.APPLE,
-    });
+  test('Should get products with 2 manufacturers in param', async ({
+    productsApiService,
+    productsController,
+  }) => {
+    const [product1, product2] = await productsApiService.populate(2);
 
-    const response = await productsController.getAll(signInApiService.getToken(), {
+    const response = await productsController.getAll(token, {
       manufacturer: [product1.manufacturer, product2.manufacturer],
     });
+
+    const everyProductHasManufacturer = response.body.Products.every((p) =>
+      [product1.manufacturer, product2.manufacturer].includes(p.manufacturer),
+    );
+
     validateResponse(response, STATUS_CODES.OK, true, null);
-    await expect(response.body.Products.length).toBeGreaterThan(0);
-    await expect(
-      response.body.Products.every(
-        (p) => p.manufacturer === product1.manufacturer || p.manufacturer === product2.manufacturer,
-      ),
-    ).toBe(true);
+    chaiExpect(response.body.Products.length).greaterThan(0);
+    chaiExpect(everyProductHasManufacturer).to.equal(true, 'Products do not have passed manufacturer');
   });
 
-  it('Should get products sorted by price in asc order', async () => {
-    const response = await productsController.getAll(signInApiService.getToken(), {
+  test('Should get products sorted by price in asc order', async ({ productsController }) => {
+    const response = await productsController.getAll(token, {
       sortField: 'price',
       sortOrder: 'asc',
     });
+
     validateResponse(response, STATUS_CODES.OK, true, null);
+
     const sortedResponse = response.body.Products.toSorted((p1, p2) => p1.price - p2.price);
-    await expect(sortedResponse.every((p, i) => p.price === response.body.Products[i].price)).toBe(true);
+    const isOrdered = sortedResponse.every((p, i) => p.price === response.body.Products[i].price);
+
+    chaiExpect(isOrdered).to.equal(true, 'Products are not sorted by price in asc order');
   });
 
-  it('Should get products sorted by price in desc order', async () => {
-    const response = await productsController.getAll(signInApiService.getToken(), {
+  test('Should get products sorted by price in desc order', async ({ productsController }) => {
+    const response = await productsController.getAll(token, {
       sortField: 'price',
       sortOrder: 'desc',
     });
+
     validateResponse(response, STATUS_CODES.OK, true, null);
+
     const sortedResponse = response.body.Products.toSorted((p1, p2) => p2.price - p1.price);
-    await expect(sortedResponse.every((p, i) => p.price === response.body.Products[i].price)).toBe(true);
+    const isOrdered = sortedResponse.every((p, i) => p.price === response.body.Products[i].price);
+
+    chaiExpect(isOrdered).to.equal(true, 'Products are not sorted by price in desc order');
   });
 
-  it('Should get products sorted by manufacturer in asc order', async () => {
-    const response = await productsController.getAll(signInApiService.getToken(), {
+  test('Should get products sorted by manufacturer in asc order', async ({ productsController }) => {
+    const response = await productsController.getAll(token, {
       sortField: 'manufacturer',
       sortOrder: 'asc',
     });
+
     validateResponse(response, STATUS_CODES.OK, true, null);
+
     const sortedResponse = response.body.Products.toSorted((p1, p2) =>
       p1.manufacturer.localeCompare(p2.manufacturer),
     );
-
     const isOrdered = sortedResponse.every(
       (p, i) => p.manufacturer === response.body.Products[i].manufacturer,
     );
-    await expect(isOrdered).toBe(true);
+
+    chaiExpect(isOrdered).to.equal(true, 'Products are not sorted by manufacturer in asc order');
   });
 
-  it('Should get products sorted by manufacturer in desc order', async () => {
-    const response = await productsController.getAll(signInApiService.getToken(), {
+  test('Should get products sorted by manufacturer in desc order', async ({ productsController }) => {
+    const response = await productsController.getAll(token, {
       sortField: 'manufacturer',
       sortOrder: 'desc',
     });
+
     validateResponse(response, STATUS_CODES.OK, true, null);
     const sortedResponse = response.body.Products.toSorted((p1, p2) =>
       p2.manufacturer.localeCompare(p1.manufacturer),
@@ -107,10 +128,11 @@ describe('[API] [Products] Get All', () => {
     const isOrdered = sortedResponse.every(
       (p, i) => p.manufacturer === response.body.Products[i].manufacturer,
     );
-    await expect(isOrdered).toBe(true);
+
+    chaiExpect(isOrdered).to.equal(true, 'Products are not sorted by manufacturer in desc order');
   });
 
-  afterEach(async () => {
-    await productApiService.delete(signInApiService.getToken());
+  test.afterEach(async ({ productsApiService }) => {
+    await productsApiService.delete();
   });
 });
