@@ -8,5 +8,5 @@
   "inlineDiffs": true,
   "ignore": ["node_modules", "allure-results", "allure-report"],
   "loader": "ts-node/esm",
-  "spec": ["src/api/tests/**/fixture.test.ts"]
+  "spec": ["src/api/tests/**/*.test.ts"]
 }
