@@ -90,8 +90,8 @@ test.describe('[API] [Products] Get All', { tag: TAGS.TEST }, () => {
           const sortedResponse = genericSort(products, sortField, sortOrder);
           const isSorted = sortedResponse.every(
             (p, i) =>
-              p[sortField as keyof IProductFromResponse] ===
-              products[i][sortField as keyof IProductFromResponse],
+              p[sortField as keyof IProductFromResponse]
+              === products[i][sortField as keyof IProductFromResponse],
           );
 
           chaiExpect(

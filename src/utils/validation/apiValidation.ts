@@ -31,12 +31,12 @@ export const isWithIsSuccess = (response: IResponse<unknown>): response is IResp
   const body = response.body;
 
   return (
-    typeof body === 'object' &&
-    body !== null &&
-    'IsSuccess' in body &&
-    'ErrorMessage' in body &&
-    typeof body.IsSuccess === 'boolean' &&
-    (typeof body.ErrorMessage === 'string' || body.ErrorMessage === null)
+    typeof body === 'object'
+    && body !== null
+    && 'IsSuccess' in body
+    && 'ErrorMessage' in body
+    && typeof body.IsSuccess === 'boolean'
+    && (typeof body.ErrorMessage === 'string' || body.ErrorMessage === null)
   );
 };
 
