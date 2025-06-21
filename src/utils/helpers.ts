@@ -169,6 +169,7 @@ export const escapeRegExpCharacters = (str: string) => str.replace(/[.*+?^${}()|
  */
 export const createTagRegex = (tags: string[]): RegExp => {
   const escapedTags = tags.map(escapeRegExpCharacters);
+
   return new RegExp(escapedTags.join('|'));
 };
 
@@ -196,3 +197,12 @@ export const createGrepPattern = (options: string[]): RegExp | undefined => {
 
   return createTagRegex(tagValues);
 };
+
+/**
+ * Extracts and returns an array of '_id' values from the given array of items.
+ *
+ * @template T - The type of the items in the array, which must have a '_id' property.
+ * @param {T[]} items - The array of items to extract '_id' values from.
+ * @returns {string[]} An array of '_id' values extracted from the items.
+ */
+export const extractIds = <T extends { _id: string }>(items: T[]): string[] => items.map((item) => item._id);

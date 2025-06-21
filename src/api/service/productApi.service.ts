@@ -5,7 +5,7 @@ import { generateProductData } from '../../data/products/generateProduct.ts';
 import { IProduct, IProductFromResponse } from '../../data/types/product.types.ts';
 import { validateJsonSchema, validateResponse } from '../../utils/validation/apiValidation.ts';
 import ProductsController from '../controllers/products.controller.ts';
-import { isID } from '../../utils/helpers.ts';
+import { extractIds, isID } from '../../utils/helpers.ts';
 import chaiExpect from '../../lib/_chai_expect/_chai_expect.ts';
 
 class ProductApiService {
@@ -23,11 +23,20 @@ class ProductApiService {
     validateResponse(response, STATUS_CODES.CREATED, true, null);
     validateJsonSchema(PRODUCT_SCHEMA_RESPONSE, response);
     this.createdProducts.push(response.body.Product);
+
     return response.body.Product;
   }
 
-  async populate(amount: number, customData: Partial<IProduct> = {}, token?: string) {
-    return await Promise.all(Array.from({ length: amount }, () => this.create(customData, token)));
+  async populate(amount: number, customData: Partial<IProduct>[] = [], token?: string) {
+    return await Promise.all(
+      Array.from({ length: amount }, (_, idx) => this.create(customData[idx] ?? {}, token)),
+    );
+  }
+
+  public async populateAndGetIds(amount: number, customData: Partial<IProduct>[] = [], token?: string) {
+    const products = await this.populate(amount, customData, token);
+
+    return extractIds(products);
   }
 
   getCreatedProduct(idOrName?: string): IProductFromResponse {
@@ -35,6 +44,7 @@ class ProductApiService {
       if (isID(idOrName)) return this.findProductByID(idOrName);
       else return this.findProductByName(idOrName);
     }
+
     return this.getLastCreatedProduct();
   }
 
@@ -44,6 +54,7 @@ class ProductApiService {
 
   getCreatedProducts() {
     if (!this.createdProducts.length) throw new Error('No product was created');
+
     return this.createdProducts;
   }
 
@@ -56,12 +67,14 @@ class ProductApiService {
 
   async deleteProduct(id: string, token: string) {
     const response = await this.controller.delete(id, token);
+
     chaiExpect(response.status).to.equal(STATUS_CODES.DELETED);
   }
 
   async deleteProducts(products: IProductFromResponse[], token: string) {
     for (const product of products) {
       const response = await this.controller.delete(product._id, token);
+
       chaiExpect(response.status).to.equal(STATUS_CODES.DELETED);
     }
     this.createdProducts = [];
@@ -70,12 +83,14 @@ class ProductApiService {
   private findProductByID(id: string) {
     const foundProduct = this.createdProducts[this.findProductIndexByID(id)];
     if (!foundProduct) throw new Error(`No product with id "${id}" was found`);
+
     return foundProduct;
   }
 
   private findProductByName(name: string) {
     const foundProduct = this.createdProducts[this.findProductIndexByName(name)];
     if (!foundProduct) throw new Error(`No product with name "${name}" was found`);
+
     return foundProduct;
   }
 

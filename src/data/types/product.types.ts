@@ -1,4 +1,4 @@
-import { IResponseFields } from './api.types.ts';
+import { IPagination, IResponseFields, ISorting } from './api.types.ts';
 import { ObtainTypeValues } from './helper.types.ts';
 
 export interface IProduct {
@@ -31,4 +31,37 @@ export interface IProductResponse extends IResponseFields {
 
 export interface IProductsResponse extends IResponseFields {
   Products: IProductFromResponse[];
+}
+
+export interface IProductInOrder extends IProduct {
+  _id: string;
+  received: boolean;
+}
+
+export interface IProductResponseSorted extends IProductsResponse, IPagination {
+  sorting: ISorting<TSortProductsFields>;
+  manufacturer: (typeof MANUFACTURERS)[];
+}
+
+export interface ITopProduct {
+  name: string;
+  sales: number;
+}
+
+export enum ESortProductsFields {
+  NAME = 'name',
+  PRICE = 'price',
+  MANUFACTURER = 'manufacturer',
+  CREATED_ON = 'createdOn',
+}
+
+export type TSortProductsFields = `${ESortProductsFields}`;
+
+export type TTableFields = 'Name' | 'Price' | 'Manufacturer' | 'Created On';
+
+export interface IProductRequestParams {
+  search?: string;
+  manufacturer?: ObtainTypeValues<typeof MANUFACTURERS> | string | ObtainTypeValues<typeof MANUFACTURERS>[];
+  sortField?: TSortProductsFields | string;
+  sortOrder?: 'asc' | 'desc';
 }

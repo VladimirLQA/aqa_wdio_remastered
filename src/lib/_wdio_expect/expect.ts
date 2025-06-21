@@ -26,9 +26,8 @@ const makeHandler = (message?: string): ProxyHandler<any> => {
   return {
     get(target, prop, receiver) {
       const originalProp = Reflect.get(target, prop, receiver);
-      if (!isFn(originalProp)) {
-        return originalProp;
-      }
+      if (!isFn(originalProp)) return originalProp;
+
       return wrapMatcher(originalProp.bind(target), message);
     },
   };

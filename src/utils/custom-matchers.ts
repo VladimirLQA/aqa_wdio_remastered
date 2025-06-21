@@ -22,35 +22,3 @@ export const addCustomCommands = () => {
     true,
   );
 };
-
-// TODO to extend expect matchers (example)
-// export const addCustomMatchers = () => {
-//   expect.extend({
-//     async toHaveInputBorder(element: WebdriverIO.Element, type: 'valid' | 'invalid') {
-//       const $el = await element;
-//       const elementClass = await $el.getElementAttribute((await $el.getElement()).elementId, 'class');
-//       const elementCss = (await $el.getCSSProperty('border-color')).value;
-
-//       const expectedClass = type === 'valid' ? 'is-valid' : 'is-invalid';
-//       const expectedBorderColor = borderColors[type];
-
-//       const pass = elementClass.includes(expectedClass) && expectedBorderColor === elementCss;
-
-//       return {
-//         message: () =>
-//           pass
-//             ? `expected element with selector "${$el.selector}" not to have border-color "${expectedBorderColor}" and class "${expectedClass}"`
-//             : `expected element with selector "${$el.selector}" to have border-color "${expectedBorderColor}" and class "${expectedClass}"`,
-//         pass,
-//       };
-//     }
-//   });
-
-//   browser.addCommand(
-//     'toHaveInputBorder',
-//     async function (this: WebdriverIO.Element, type: 'valid' | 'invalid') {
-//       return expect(this).toHaveInputBorder(type);
-//     },
-//     true
-//   );
-// };

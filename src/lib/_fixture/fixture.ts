@@ -25,12 +25,14 @@ export const getTagsFromDetails = (details: TestDetails): string[] => {
       tags.push(details.tag);
     }
   }
+
   return tags;
 };
 
 export const getFullTitle = (title: string, details: TestDetails): string => {
   const tags = getTagsFromDetails(details);
   const tagSuffix = tags.length > 0 ? ` ${tags.join(' ')}` : '';
+
   return `${title}${tagSuffix}`;
 };
 

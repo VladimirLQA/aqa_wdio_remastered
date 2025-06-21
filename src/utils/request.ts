@@ -18,5 +18,6 @@ export function convertRequestParams(params: Record<string, string>): string {
       url += `${url.length === 1 ? '' : '&'}${key}=${params[key].replaceAll(' ', '%20')}`;
     }
   }
+
   return url;
 }

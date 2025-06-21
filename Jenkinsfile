@@ -50,8 +50,18 @@ pipeline {
 
         stage('Check code style') {
             steps {
-                echo 'npm run lint:fix'
-                // sh 'npm run lint:fix'
+                sh '''
+                    echo "Running linting checks..."
+                    npm run lint:check
+                '''
+            }
+            post {
+                failure {
+                    echo "Linting failed! Please fix the code style issues."
+                }
+                success {
+                    echo "Linting passed successfully!"
+                }
             }
         }
 

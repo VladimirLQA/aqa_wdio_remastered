@@ -18,6 +18,7 @@ export function logStep<This, Args extends any[], Return>(stepName: string) {
         allure.startStep(`Step: ${stepName}`);
         res = await target.apply(this, args);
         allure.endStep();
+
         return res;
       } catch (e) {
         allure.endStep(Status.FAILED);
@@ -57,7 +58,7 @@ export function logAction<This extends object, Args extends any[], Return>(actio
     return async function (this: This, ...args: Args): Promise<Return> {
       const pageName: string = this.constructor.name;
       const actionName = action || camelCaseToReadableString(<string>_context.name);
-      const actionDescription: string = ` -- I ${actionName} on the '${pageName}' page`;
+      const actionDescription: string = ` - I ${actionName} on the '${pageName}' page`;
       // TODO add console logs based on cli args
       const newStepName = replaceStepNameParts(actionDescription, args);
       logger.info(newStepName);
@@ -65,6 +66,7 @@ export function logAction<This extends object, Args extends any[], Return>(actio
         allure.startStep(newStepName);
         const result = await target.apply(this, args);
         allure.endStep();
+
         return result;
       } catch (error) {
         allure.endStep(Status.FAILED);

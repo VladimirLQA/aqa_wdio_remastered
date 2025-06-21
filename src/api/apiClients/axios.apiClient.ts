@@ -7,13 +7,15 @@ export class AxiosApiClient {
   async send<T extends IResponseFields>(options: IRequestOptions): Promise<IResponse<T>> {
     try {
       this.response = await axios(options as AxiosRequestConfig);
+
       return this.transformResponse();
     } catch (err: unknown) {
       if (!isAxiosError(err)) throw err;
       else {
-        console.log('Error', (err as AxiosError).message);
-        console.log('Request URL:', options.method, options.url);
+        console.log('Error', (err as AxiosError).message); // eslint-disable-line no-console
+        console.log('Request URL:', options.method, options.url); // eslint-disable-line no-console
         this.response = (err as AxiosError).response;
+
         return this.transformResponse();
       }
     } finally {

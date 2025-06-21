@@ -24,6 +24,7 @@ class UsersToken {
     const tokenObj = username
       ? (this.tokens.get(username) as TokenTypes)
       : (this.getLastAddedToken() as TokenTypes);
+
     return tokenObj[type];
   }
 

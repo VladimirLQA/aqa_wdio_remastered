@@ -30,6 +30,7 @@ export abstract class SalesPortalPage extends ActionsPage {
       const notificationText = await this.getText(n);
       if (this.isNotificationTextMatch(notificationText, text, method)) return notificationText;
     }
+
     return null;
   }
 
@@ -38,6 +39,7 @@ export abstract class SalesPortalPage extends ActionsPage {
     await browser.waitUntil(
       async () => {
         notificationText = await this.findNotificationTextMatching(text, method);
+
         return !!notificationText;
       },
       {
@@ -45,6 +47,7 @@ export abstract class SalesPortalPage extends ActionsPage {
         timeoutMsg: `Notification ${method} text ${text} not found`,
       },
     );
+
     return notificationText!;
   }
 
@@ -58,6 +61,7 @@ export abstract class SalesPortalPage extends ActionsPage {
     await browser.waitUntil(
       async () => {
         const result = !(await this.findArrayOfElements(this.Spinner)).length;
+
         return result;
       },
       {

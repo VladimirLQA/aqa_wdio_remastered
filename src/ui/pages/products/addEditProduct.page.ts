@@ -27,6 +27,7 @@ export abstract class AddEditProductPage extends SalesPortalPage {
       this.getValue(this['Manufacturer dropdown']),
       this.getText(this['Notes textarea']),
     ]);
+
     return {
       name,
       amount: +amount,

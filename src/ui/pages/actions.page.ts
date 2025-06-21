@@ -25,6 +25,7 @@ export abstract class ActionsPage {
       reverse,
       timeout,
     });
+
     return element;
   }
 
@@ -53,6 +54,7 @@ export abstract class ActionsPage {
   async getValue(selector: SelectorOrLocator) {
     const element = await this.waitForDisplayed(selector);
     const value = await element.getValue();
+
     return value;
   }
 
@@ -60,6 +62,7 @@ export abstract class ActionsPage {
   async getText(selector: SelectorOrLocator) {
     const element = await this.waitForDisplayed(selector);
     const text = await element.getText();
+
     return text;
   }
 

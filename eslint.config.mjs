@@ -2,18 +2,17 @@ import globals from 'globals';
 import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import stylisticJs from '@stylistic/eslint-plugin-js';
-import configPrettier from 'eslint-config-prettier';
-import pluginPrettier from 'eslint-plugin-prettier';
 
 export default tseslint.config([
   pluginJs.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
-  configPrettier,
   {
     files: ['**/*.{js,mjs,cjs,ts}'],
-    plugins: { '@stylistic/js': stylisticJs, prettier: pluginPrettier },
+    plugins: {
+      '@stylistic/js': stylisticJs,
+    },
     rules: {
-      'prettier/prettier': 'error',
+      'no-console': 'error',
       'no-this-before-super': 'error',
       'no-useless-catch': 'off',
       'max-nested-callbacks': [
@@ -48,7 +47,7 @@ export default tseslint.config([
         { anonymous: 'always', named: 'never', asyncArrow: 'always' },
       ],
       '@stylistic/js/space-before-blocks': ['error', 'always'],
-      '@stylistic/js/operator-linebreak': ['error', 'after', { overrides: { '?': 'before', ':': 'before' } }],
+      '@stylistic/js/operator-linebreak': ['error', 'before'],
       '@stylistic/js/no-whitespace-before-property': 'error',
       '@stylistic/js/new-parens': 'error',
       '@stylistic/js/keyword-spacing': [
@@ -109,6 +108,12 @@ export default tseslint.config([
       '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@stylistic/js/function-call-argument-newline': ['error', 'consistent'],
+      '@stylistic/js/padding-line-between-statements': [
+        'error',
+        { blankLine: 'always', prev: '*', next: 'return' },
+        { blankLine: 'always', prev: 'import', next: '*' },
+        { blankLine: 'any', prev: 'import', next: 'import' },
+      ],
       // '@typescript-eslint/no-unused-expressions': [
       //   'error',
       //   {
@@ -120,7 +125,24 @@ export default tseslint.config([
       // '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],
     },
   },
-  { ignores: ['node-modules', 'eslint', 'src/report', 'test-results', 'jest.config.ts', '.mocharc.mjs'] },
+  {
+    ignores: [
+      'node-modules',
+      'eslint',
+      'src/report',
+      'test-results',
+      'jest.config.ts',
+      '.mocharc.mjs',
+      'src/lib',
+      'allure-report',
+      'allure-results',
+      'wdio.conf.ts',
+      'prettier.config.mjs',
+      'eslint.config.mjs',
+      'src/utils/reporter/decorators.ts',
+      'src/utils/helpers.ts',
+    ],
+  },
   {
     languageOptions: {
       globals: { ...globals.es2025, ...globals.browser, ...globals.node },

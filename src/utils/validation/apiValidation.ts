@@ -15,7 +15,7 @@ export function validateJsonSchema<T extends IResponseFields>(schema: object, re
   const validate = ajv.compile(schema);
   const isValidSchema = validate(response.body);
   if (validate.errors) {
-    console.log(validate.errors);
+    console.log(validate.errors); // eslint-disable-line no-console
   }
   chaiExpect(isValidSchema).to.equal(true);
 }
@@ -29,6 +29,7 @@ export function validateJsonSchema<T extends IResponseFields>(schema: object, re
  */
 export const isWithIsSuccess = (response: IResponse<unknown>): response is IResponse<IResponseFields> => {
   const body = response.body;
+
   return (
     typeof body === 'object' &&
     body !== null &&

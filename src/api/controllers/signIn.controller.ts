@@ -15,9 +15,10 @@ class SignInController {
         'content-type': 'application/json',
       },
       data: credentials,
-      baseURL: apiConfig.baseUrl,
-      url: apiConfig.endpoints.Login,
+      baseURL: apiConfig.BASE_URL,
+      url: apiConfig.ENDPOINTS.LOGIN,
     };
+
     return await this.apiClient.send<IResponseFields>(options);
   }
 }

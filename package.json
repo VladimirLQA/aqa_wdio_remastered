@@ -27,6 +27,8 @@
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.6",
     "globals": "^15.12.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "prettier": "3.5.3",
     "ts-node": "^10.9.2",
     "typescript-eslint": "^8.14.0",
@@ -35,11 +37,8 @@
   },
   "scripts": {
     "test": "npx wdio run ./wdio.conf.ts",
-    "test:mocha": "npx mocha",
     "test:ui-products": "npm run test -- --suite ui_products",
     "test:single": "cross-env HEADLESS=true npm run test -- --suite single",
-    "test:grep-test": "npm run test -- --suite api_products --mochaOpts.grep=@serial",
-    "test:grep": "cross-env GREP=@serial npm run test",
     "test:ui-simple": "npm run test -- --suite ui_simple",
     "test:api-products": "npm run test -- --suite api_products",
     "test:testp": "npm run test -- --tag '@TEST'",
@@ -47,13 +46,23 @@
     "test:regression": "npm run test -- --tag @REGRESSION",
     "test:smoke-regression": "npm run test -- --tag @SMOKE --tag @REGRESSION",
     "test:global-setup": "npm run test -- --tag @GLOBAL_SETUP",
-    "test:fixture": "cross-env HEADLESS=false MAX_INSTANCES=1 npm run test -- --suite single",
-    "test:fixture:tags": "cross-env HEADLESS=false MAX_INSTANCES=1 npm run test -- --suite single --tag '@TEST'",
     "report:generate": "allure generate allure-results -o allure-report --clean",
     "report:open": "npm run report:generate && allure open allure-report",
     "lint:check": "eslint .",
     "lint:fix": "eslint . --fix",
-    "wdio": "wdio run ./wdio.conf.ts"
+    "lint:check:staged": "eslint --cache --cache-location node_modules/.cache/eslint/",
+    "lint:fix:staged": "eslint --fix --cache --cache-location node_modules/.cache/eslint/",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "code-quality": "npm run lint:check && npm run format",
+    "code-quality:fix": "npm run lint:fix && npm run format:fix",
+    "wdio": "wdio run ./wdio.conf.ts",
+    "test:api:smoke": "npx mocha --grep '@SMOKE' src/api/tests/**/*.test.ts",
+    "test:api:regression": "npx mocha --grep '@REGRESSION' src/api/tests/**/*.test.ts",
+    "test:api:smoke-regression": "npx mocha --grep '@SMOKE|@REGRESSION' src/api/tests/**/*.test.ts",
+    "test:api:no-smoke": "npx mocha --grep '(?!@SMOKE).*' src/api/tests/**/*.test.ts",
+    "test:api:single": "npx mocha src/api/tests/products/getAll.test.ts",
+    "test:api:products": "npx mocha src/api/tests/products/**/*.test.ts"
   },
   "dependencies": {
     "ajv": "^8.17.1",
@@ -67,5 +76,14 @@
     "mocha": "^11.1.0",
     "rimraf": "^6.0.1",
     "webdriverio": "^9.12.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,mjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
   }
 }

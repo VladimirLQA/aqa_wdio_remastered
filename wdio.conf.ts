@@ -10,11 +10,11 @@ import './src/fixtures/base.fixture';
 
 export const config: WebdriverIO.Config = {
   // for selenium grid
-  protocol: 'http',
-  hostname: 'localhost',
-  port: 4444,
-  path: '/wd/hub',
-  runner: 'local',
+  // protocol: 'http',
+  // hostname: 'localhost',
+  // port: 4444,
+  // path: '/wd/hub',
+  // runner: 'local',
   // ---
 
   tsConfigPath: './tsconfig.json',
@@ -29,7 +29,7 @@ export const config: WebdriverIO.Config = {
     ui_simple: ['./src/ui/tests/baseTests/**/*.test.ts'],
     api_products: ['./src/api/tests/**/*.test.ts'],
     serial: ['./src/api/tests/**/smoke.test.ts'],
-    single: ['./src/ui/tests/**/registration.*.ts'],
+    single: ['./src/api/tests/**/create.test.ts'],
   },
   maxInstances: +MAX_INSTANCES || 5,
 

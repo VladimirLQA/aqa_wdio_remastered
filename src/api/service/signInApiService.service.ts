@@ -15,6 +15,7 @@ class SignInApiService {
     });
     validateResponse(response, STATUS_CODES.OK, true, null);
     usersTokenStorage.addToken(ADMIN_USERNAME, response.headers['authorization']);
+
     return usersTokenStorage.getToken();
   }
 
