@@ -3,13 +3,11 @@
 
 echo "🔍 Running pre-commit checks..."
 
-# Run linting checks
+# Run linting and formatting
 echo "📝 Checking code style..."
-npm run lint:fix
+npm run code-quality:fix
 
-# Run formatting checks
-echo "🎨 Checking code formatting..."
-npm run format:fix
+# Add all changes to the index
 git add .
 
 echo "✅ Pre-commit checks passed!" 
