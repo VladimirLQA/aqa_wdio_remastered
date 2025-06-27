@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'node:22-alpine'
-            args '--user root --shm-size=2gb --no-sandbox --disable-gpu --disable-dev-shm-usage'
+            args '--user jenkinsuser --shm-size=2gb --no-sandbox --disable-gpu --disable-dev-shm-usage'
             reuseNode true
         }
     }
