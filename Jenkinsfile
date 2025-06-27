@@ -6,17 +6,18 @@ pipeline {
         booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
     }
 
-    agent {
-        docker {
-            image 'cypress/browsers:node18.12.0-chrome107-ff107'
-            args '--user root --shm-size=2gb --platform=linux/amd64'
-            reuseNode true
-        }
-    }
+    // agent {
+    //     docker {
+    //         image 'cypress/browsers:node18.12.0-chrome107-ff107'
+    //         args '--user root --shm-size=2gb --platform=linux/amd64'
+    //         reuseNode true
+    //     }
+    // }
 
-    environment {
-        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
-    }
+    // environment {
+    //     NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
+    // }
+    agent none
 
 
     stages { 
