@@ -7,6 +7,12 @@ pipeline {
         }
     }
 
+    environment {
+        ADMIN_USERNAME = credentials('ADMIN_USERNAME')
+        ADMIN_PASSWORD = credentials('ADMIN_PASSWORD')
+        SALES_PORTAL_URL = credentials('SALES_PORTAL_URL')
+    }
+
     stages { 
         stage('Install dependencies') {
             steps {
@@ -39,7 +45,7 @@ pipeline {
         stage('Run api tests') {
             steps {
                 sh '''
-                    test:api:regression
+                    npm run test:api:regression
                 '''
             }
         }
