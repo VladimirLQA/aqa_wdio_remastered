@@ -8,5 +8,7 @@
   "inlineDiffs": true,
   "ignore": ["node_modules", "allure-results", "allure-report"],
   "loader": "ts-node/esm",
+  "parallel": true,
+  "jobs": 7,
   "spec": ["src/api/tests/**/*.test.ts"]
 }

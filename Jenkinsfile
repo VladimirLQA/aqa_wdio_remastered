@@ -6,37 +6,20 @@ pipeline {
         booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
     }
 
-    // tools {
-    //     nodejs('node:23.7.0')
-    // }
     agent {
         docker {
-            image 'node:latest'
+            image 'cypress/browsers:node18.12.0-chrome107-ff107'
             args '--user root --shm-size=2gb --platform=linux/amd64'
             reuseNode true
         }
     }
+
     environment {
-        NPM_CONFIG_CACHE = '${WORKSPACE}/.npm'
+        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
     }
 
 
     stages { 
-        stage('Install chrome') {
-            steps {
-                sh '''
-                    apt-get update
-                    apt-get install -y wget gnupg ca-certificates
-
-                    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee -a /etc/apt/sources.list
-                    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-                    apt-get update
-                    apt-get install -y google-chrome-stable
-
-                    google-chrome --version
-                '''
-            }
-        }
         stage('Install dependencies') {
             steps {
                 sh '''

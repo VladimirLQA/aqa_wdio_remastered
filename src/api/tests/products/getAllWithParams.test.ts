@@ -12,7 +12,7 @@ import {
 import { faker } from '@faker-js/faker';
 import { genericSort } from '../../../utils/sort-algorithm.ts';
 
-test.describe('[API] [Products] Get All', { tag: TAGS.TEST }, () => {
+test.describe('[API] [Products] Get All', { tag: TAGS.REGRESSION }, () => {
   let token: string;
   let product1: IProduct;
   let product2: IProduct;

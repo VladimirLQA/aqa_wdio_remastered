@@ -41,44 +41,23 @@ export const isWithIsSuccess = (response: IResponse<unknown>): response is IResp
 };
 
 /**
- * Validates API response status and optional success fields.
+ * Validates API response status and required success fields.
  *
- * @template T - Response body type
- * @param {IResponse<T>} response - API response to validate
- * @param {number} status - chaiExpected HTTP status code
- * @param {boolean} [IsSuccess] - chaiExpected IsSuccess value (optional)
- * @param {null | string} [ErrorMessage] - chaiExpected ErrorMessage (optional)
+ * @param {IResponse<IResponseFields>} response - API response to validate
+ * @param {number} status - Expected HTTP status code
+ * @param {boolean} IsSuccess - Expected IsSuccess value
+ * @param {null | string} ErrorMessage - Expected ErrorMessage value
  *
  * @example
- * // Basic status check
- * validateResponse(response, 200);
- *
- * // Full validation
  * validateResponse(response, 200, true, null);
  */
-export function validateResponse<T>(
-  response: IResponse<T>,
+export function validateResponse(
+  response: IResponse<IResponseFields>,
   status: number,
   IsSuccess: boolean,
   ErrorMessage: null | string,
-): void;
-
-export function validateResponse<T>(
-  response: IResponse<T>,
-  status: number,
-  IsSuccess?: boolean,
-  ErrorMessage?: null | string,
-): void;
-
-export function validateResponse<T>(
-  response: IResponse<T>,
-  status: number,
-  IsSuccess?: boolean,
-  ErrorMessage?: null | string,
-) {
+): void {
   chaiExpect(response.status).to.equal(status);
-  if (isWithIsSuccess(response)) {
-    chaiExpect(response.body.IsSuccess).to.equal(IsSuccess);
-    chaiExpect(response.body.ErrorMessage).to.equal(ErrorMessage);
-  }
+  chaiExpect(response.body.IsSuccess).to.equal(IsSuccess);
+  chaiExpect(response.body.ErrorMessage).to.equal(ErrorMessage);
 }
