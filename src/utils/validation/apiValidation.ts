@@ -1,6 +1,7 @@
 import Ajv from 'ajv';
 import { IResponse, IResponseFields } from '../../data/types/api.types.ts';
 import chaiExpect from '../../lib/_chai_expect/_chai_expect.ts';
+import { STATUS_CODES } from '../../data/api/statusCodes.ts';
 
 /**
  * Validates a JSON response against a given schema using Ajv.
@@ -54,10 +55,12 @@ export const isWithIsSuccess = (response: IResponse<unknown>): response is IResp
 export function validateResponse(
   response: IResponse<IResponseFields>,
   status: number,
-  IsSuccess: boolean,
-  ErrorMessage: null | string,
+  IsSuccess?: boolean,
+  ErrorMessage?: null | string,
 ): void {
   chaiExpect(response.status).to.equal(status);
-  chaiExpect(response.body.IsSuccess).to.equal(IsSuccess);
-  chaiExpect(response.body.ErrorMessage).to.equal(ErrorMessage);
+  if (status !== STATUS_CODES.DELETED) {
+    chaiExpect(response.body.IsSuccess).to.equal(IsSuccess);
+    chaiExpect(response.body.ErrorMessage).to.equal(ErrorMessage);
+  }
 }
