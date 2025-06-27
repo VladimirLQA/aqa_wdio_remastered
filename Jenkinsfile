@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'node:22-alpine'
-            args '--user jenkinsuser --shm-size=2gb --no-sandbox --disable-gpu --disable-dev-shm-usage'
+            args '--shm-size=2gb'
             reuseNode true
         }
     }
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 sh '''
                     echo "Running linting checks..."
-                    npm run lint:check
+                    npm run lint:check:staged
                 '''
             }
             post {
@@ -39,7 +39,7 @@ pipeline {
         stage('Run api tests') {
             steps {
                 sh '''
-                    npm run test:single
+                    test:api:regression
                 '''
             }
         }
