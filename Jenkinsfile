@@ -1,18 +1,18 @@
 pipeline {
-    parameters {
-        choice(name: 'PLATFORM_FILTER', choices: ['all', 'linux', 'windows', 'mac'], description: 'Run on specific platform')
-        string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: 'Should you choose to accept')
-        text(name: 'TEXT_PARAMETER', defaultValue: '', description: 'Enter something valuable')
-        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
-    }
-
-    // agent {
-    //     docker {
-    //         image 'cypress/browsers:node18.12.0-chrome107-ff107'
-    //         args '--user root --shm-size=2gb --platform=linux/amd64'
-    //         reuseNode true
-    //     }
+    // parameters {
+    //     choice(name: 'PLATFORM_FILTER', choices: ['all', 'linux', 'windows', 'mac'], description: 'Run on specific platform')
+    //     string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: 'Should you choose to accept')
+    //     text(name: 'TEXT_PARAMETER', defaultValue: '', description: 'Enter something valuable')
+    //     booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
     // }
+
+    agent {
+        docker {
+            image 'node:22-alpine'
+            args '--user root --shm-size=2gb --no-sandbox --disable-gpu --disable-dev-shm-usage'
+            reuseNode true
+        }
+    }
 
     // environment {
     //     NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
