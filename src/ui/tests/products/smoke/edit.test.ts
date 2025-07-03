@@ -1,37 +1,29 @@
 import _ from 'lodash';
-import { SignInApiService, ProductApiService } from '../../../../api/service/index';
-import homePageService from '../../../services/homePage.service';
-import editProductPageService from '../../../services/products/editProductPage.service';
-import productsPageService from '../../../services/products/productsPage.service';
-import signInPageService from '../../../services/signInPage.service';
 import { TAGS } from '../../../../utils/tags';
+import { test } from '../../../../fixtures';
 
-describe(`[UI] [Products edit page] Smoke ${TAGS.SMOKE} | ${TAGS.REGRESSION}`, () => {
-  before(async () => {
-    await signInPageService.openSalesPortal();
-  });
-
-  beforeEach(async () => {
-    const token = await SignInApiService.signInAsAdmin();
-    await ProductApiService.create({}, token);
-    await signInPageService.loginAsAdmin();
+test.describe('UI.Products edit page', { tag: [TAGS.GLOBAL_SETUP, TAGS.SMOKE, TAGS.REGRESSION] }, () => {
+  test.beforeEach(async ({ homePageService, productsApiService }) => {
+    await productsApiService.create();
     await homePageService.openProductsPage();
   });
 
-  it('should contain created product name in page title', async () => {
-    await productsPageService.openEditProductPage(ProductApiService.getCreatedProduct().name);
-    await editProductPageService.checkPageTitle(ProductApiService.getCreatedProduct().name);
+  test('should contain created product name in page title',
+    async ({ productsPageService, productsApiService, editProductPageService }) => {
+      await productsPageService.openEditProductPage(productsApiService.getCreatedProduct().name);
+      await editProductPageService.checkPageTitle(productsApiService.getCreatedProduct().name);
   });
 
-  it('should contain data of created product in input fields', async () => {
-    await productsPageService.openEditProductPage(ProductApiService.getCreatedProduct().name);
-    await editProductPageService.checkTextInInputFields({
-      ..._.omit(ProductApiService.getCreatedProduct(), ['_id', 'createdOn']),
+  test('should contain data of created product in input fields',
+    async ({ productsPageService, productsApiService, editProductPageService }) => {
+      await productsPageService.openEditProductPage(productsApiService.getCreatedProduct().name);
+      await editProductPageService.checkTextInInputFields({
+        ..._.omit(productsApiService.getCreatedProduct(), ['_id', 'createdOn']),
     });
   });
 
-  afterEach(async () => {
-    await ProductApiService.delete();
-    await signInPageService.signOut();
+  test.afterEach(async ({ productsApiService, signInPageService }) => {
+    await productsApiService.delete();
+    await signInPageService.clearStoragesAndSession();
   });
 });

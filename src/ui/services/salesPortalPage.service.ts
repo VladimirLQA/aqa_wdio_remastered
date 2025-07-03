@@ -8,15 +8,17 @@ export abstract class SalesPortalPageService {
 
   protected abstract get notificationPage(): SalesPortalPage;
 
-  @logStep('Validate Notification')
-  async validateNotification(text: string, method: GetTextMethod = 'with') {
+  @logStep('Check Notification')
+  async checkNotification(text: string, method: GetTextMethod = 'with') {
     const notification = await this.notificationPage.getNotificationText(text, method);
-    await expect(notification).toBe(text);
+
+    await expect(notification).toEqual(text);
   }
 
-  @logStep('Log out')
-  async signOut() {
-    await this.basePage.deleteCookies(['Authorization']);
-    await browser.refresh();
+  @logStep('Clear storages and session')
+  async clearStoragesAndSession() {
+    await this.basePage.clearLocalStorage();
+    await this.basePage.clearSessionStorage();
+    await this.basePage.clearAllCookies();
   }
 }

@@ -66,18 +66,29 @@ export abstract class ActionsPage {
     return text;
   }
 
-  @logAction('open page with url {url}')
   async openPage(url: string) {
     await browser.url(url);
   }
 
   @logAction('delete browser cookies {cookies}')
-  async deleteCookies(cookieNames: string[]) {
+  async deleteCookiesWithNames(cookieNames: string[]) {
     await browser.deleteCookies(cookieNames);
   }
 
   @logAction('get browser cookie with name {cookie}')
   async getCookie(cookieName: string) {
     return (await browser.getCookies(cookieName))[0];
+  }
+
+  async clearLocalStorage() {
+    await browser.execute('window.localStorage.clear()');
+  }
+
+  async clearSessionStorage() {
+    await browser.execute('window.sessionStorage.clear()');
+  }
+
+  async clearAllCookies() {
+    await browser.deleteAllCookies();
   }
 }

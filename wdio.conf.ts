@@ -29,7 +29,7 @@ export const config: WebdriverIO.Config = {
     ui_simple: ['./src/ui/tests/baseTests/**/*.test.ts'],
     api_products: ['./src/api/tests/**/*.test.ts'],
     serial: ['./src/api/tests/**/smoke.test.ts'],
-    single: ['./src/api/tests/**/create.test.ts'],
+    single: ['./src/ui/tests/**/edit.test.ts'],
   },
   maxInstances: +MAX_INSTANCES || 5,
 
@@ -90,6 +90,12 @@ export const config: WebdriverIO.Config = {
         autoSaveBaseline: true,
       },
     ],
+    [
+      'chromedriver',
+      {
+        version: '138.0.7204.49',
+      },
+    ]
   ],
   framework: 'mocha',
 

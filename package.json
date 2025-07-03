@@ -22,6 +22,7 @@
     "@wdio/spec-reporter": "^9.11.0",
     "@wdio/types": "^9.10.1",
     "@wdio/visual-service": "^6.3.3",
+    "chromedriver": "^138.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.14.0",
     "eslint-config-prettier": "^10.1.1",
@@ -32,13 +33,14 @@
     "prettier": "3.5.3",
     "ts-node": "^10.9.2",
     "typescript-eslint": "^8.14.0",
+    "wdio-chromedriver-service": "^8.1.1",
     "wdio-custom-commands-matchers": "^1.0.2",
     "wdio-intercept-service": "^4.4.1"
   },
   "scripts": {
     "test": "npx wdio run ./wdio.conf.ts",
     "test:ui-products": "npm run test -- --suite ui_products",
-    "test:single": "cross-env HEADLESS=true npm run test -- --suite single",
+    "test:single": "cross-env HEADLESS=false npm run test -- --suite single",
     "test:ui-simple": "npm run test -- --suite ui_simple",
     "test:api-products": "npm run test -- --suite api_products",
     "test:testp": "npm run test -- --tag '@TEST'",
@@ -73,10 +75,12 @@
     "axios": "^1.7.9",
     "chai": "^5.2.0",
     "dotenv": "^16.5.0",
+    "latest": "^0.2.0",
     "lodash": "^4.17.21",
     "logger-vlaqa": "^1.0.5",
     "mocha": "^11.1.0",
     "rimraf": "^6.0.1",
+    "typescript": "^5.8.3",
     "webdriverio": "^9.12.0"
   },
   "lint-staged": {

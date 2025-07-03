@@ -206,3 +206,5 @@ export const createGrepPattern = (options: string[]): RegExp | undefined => {
  * @returns {string[]} An array of '_id' values extracted from the items.
  */
 export const extractIds = <T extends { _id: string }>(items: T[]): string[] => items.map((item) => item._id);
+
+export const toLowerCase = (str: string) => str.toLowerCase();

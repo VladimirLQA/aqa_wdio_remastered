@@ -1,1 +1,1 @@
-export type MenuItemNames = 'Products' | 'Customers' | 'Orders';
+export type ModuleName = 'Products' | 'Customers' | 'Orders';

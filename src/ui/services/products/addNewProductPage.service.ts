@@ -13,7 +13,7 @@ class AddNewProductService extends SalesPortalPageService {
   }
 
   @logStep('Create product via UI')
-  async populate(product: IProduct) {
+  async createProduct(product: IProduct) {
     await this.addNewProductPage.fillInputs(product);
     await this.addNewProductPage.clickOnSaveButton();
     await this.productsPage.waitForPageOpened();

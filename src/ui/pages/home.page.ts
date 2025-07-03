@@ -1,13 +1,14 @@
-import { MenuItemNames } from '../../data/types/home.types.ts';
+import {  ModuleName } from '../../data/types/home.types.ts';
+import { toLowerCase } from '../../utils/helpers.ts';
 import { SalesPortalPage } from './salesPortal.page.ts';
 
 class HomePage extends SalesPortalPage {
-  readonly ['Menu Button'] = (menuItemName: MenuItemNames) => `[name="${menuItemName}"]`;
+  readonly ['Menu Button'] = (moduleName: ModuleName) => `#${toLowerCase(moduleName)}-from-home`;
   readonly ['Welcome label'] = '.welcome-text';
   protected readonly uniqueElement: string = this['Welcome label'];
 
-  async clickOnMenuButton(menuItemName: MenuItemNames) {
-    await this.click(this['Menu Button'](menuItemName));
+  async clickOnMenuButton(moduleName: ModuleName) {
+    await this.click(this['Menu Button'](moduleName));
   }
 }
 

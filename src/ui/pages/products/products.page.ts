@@ -2,8 +2,8 @@ import { logAction } from '../../../utils/reporter/decorators.ts';
 import { ListPage } from '../list.page.ts';
 
 class ProductsPage extends ListPage {
-  readonly ['Add New Product'] = 'button.page-title-button';
-  readonly Title = '//h2[.="Products List "]';
+  readonly ['Add New Product'] = '[name="add-button"]';
+  readonly Title = '#title h2';
 
   protected readonly uniqueElement = this.Title;
 

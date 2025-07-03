@@ -3,13 +3,12 @@ import { ObtainTypeValues } from '../../data/types/helper.types.ts';
 import { MANUFACTURERS } from '../../data/types/product.types.ts';
 import { logAction } from '../../utils/reporter/decorators.ts';
 import { ActionsPage } from './actions.page.ts';
+import toastPage from './toast.page.ts';
 
 export abstract class SalesPortalPage extends ActionsPage {
-  protected abstract uniqueElement: string;
-  readonly ['Notification container'] = 'div.toast-container';
-  readonly Notification = `${this['Notification container']} .toast-body`;
-  readonly ['Toast close button'] = '.toast-container button';
+  protected toastPage = toastPage;
   readonly Spinner = '.spinner-border';
+  protected abstract uniqueElement: string;
   // | COUNTRIES | DELIVERY | string,
   readonly ['Dropdown option [last()]'] = (option: ObtainTypeValues<typeof MANUFACTURERS>) =>
     `(//option[text()="${option}"])[last()]`;
@@ -25,7 +24,7 @@ export abstract class SalesPortalPage extends ActionsPage {
   }
 
   private async findNotificationTextMatching(text: string, method: GetTextMethod = 'with') {
-    const notifications = await this.findArrayOfElements(this.Notification);
+    const notifications = await this.findArrayOfElements(this.toastPage['Toast text']);
     for (const n of notifications) {
       const notificationText = await this.getText(n);
       if (this.isNotificationTextMatch(notificationText, text, method)) return notificationText;
@@ -44,7 +43,7 @@ export abstract class SalesPortalPage extends ActionsPage {
       },
       {
         timeout: 10000,
-        timeoutMsg: `Notification ${method} text ${text} not found`,
+        timeoutMsg: `Notification '${method}' text '${text}' not found`,
       },
     );
 

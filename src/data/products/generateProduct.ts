@@ -12,3 +12,6 @@ export function generateProductData(customData?: Partial<IProduct>): IProduct {
     ...customData,
   };
 }
+
+export const populateProductData = (count: number, customData: Partial<IProduct>[] = []): IProduct[] =>
+  Array.from({ length: count }, (_, idx) => generateProductData(customData[idx]));

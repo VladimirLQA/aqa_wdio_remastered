@@ -11,8 +11,8 @@ export interface SuiteFunction {
 
 type HookFunction<T> = (fixtures: T) => Promise<void> | void;
 
-type FixtureFactory<T> = () => T | Promise<T>;
-type NewFixture<T extends Record<string, any>> = {
+export type FixtureFactory<T> = () => T | Promise<T>;
+export type NewFixture<T extends Record<string, any>> = {
   [K in keyof T]: T[K] | FixtureFactory<T[K]>;
 };
 

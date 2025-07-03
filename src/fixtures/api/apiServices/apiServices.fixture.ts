@@ -6,7 +6,9 @@ export type ApiServicesFixtures = {
   productsApiService: typeof ProductApiService;
 };
 
-export const test = base.extend<ApiServicesFixtures>({
+export const apiServicesFixtures = {
   signInApiService: SignInApiService,
   productsApiService: ProductApiService,
-});
+};
+
+export const test = base.extend<ApiServicesFixtures>(apiServicesFixtures);

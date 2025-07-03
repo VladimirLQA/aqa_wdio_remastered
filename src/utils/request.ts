@@ -11,7 +11,7 @@ export function convertRequestParams(params: Record<string, string>): string {
   for (const key of Object.keys(params)) {
     if (Array.isArray(params[key])) {
       for (const value of params[key]) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
         url += `${url.length === 1 ? '' : '&'}${key}=${value.replaceAll(' ', '%20')}`;
       }
     } else {

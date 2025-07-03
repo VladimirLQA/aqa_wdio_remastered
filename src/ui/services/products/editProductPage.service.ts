@@ -14,12 +14,14 @@ class EditProductPageService extends SalesPortalPageService {
   async checkPageTitle(productName: string) {
     const actualTitle = await this.editProductPage.getTitleText();
     const expectedTitle = 'Edit ' + productName;
-    await expect(actualTitle).toBe(expectedTitle);
+
+    await expect(actualTitle).toEqual(expectedTitle);
   }
 
   @logStep('Check text in input fields')
   async checkTextInInputFields(expected: Partial<IProduct | IProductFromResponse>) {
     const actualObject = await this.editProductPage.getInputsText();
+
     await expect(actualObject).toMatchObject(expected);
   }
 }
