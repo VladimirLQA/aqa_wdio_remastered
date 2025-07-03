@@ -1,9 +1,8 @@
-t import { test as baseTest } from './base.fixture.ts';
+import { test as baseTest } from './base.fixture.ts';
 import { PageFixtures, pageFixtures } from './ui/pages/page.fixture.ts';
 import { ServiceFixtures, uiServicesFixtures } from './ui/uiServices/uiServices.fixture.ts';
 import { ApiServicesFixtures, apiServicesFixtures } from './api/apiServices/apiServices.fixture.ts';
 import { NewFixture } from '../lib/_fixture/fixture.ts';
-import { t } from '@faker-js/faker/dist/airline-BUL6NtOJ';
 
 export type MergedFixtures = PageFixtures & ServiceFixtures & ApiServicesFixtures;
 
