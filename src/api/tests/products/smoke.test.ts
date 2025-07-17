@@ -1,37 +1,36 @@
 import { STATUS_CODES } from '../../../data/api/statusCodes.ts';
 import { generateProductData } from '../../../data/products/generateProduct.ts';
-import ProductsController from '../../controllers/products.controller.ts';
 import { validateJsonSchema, validateResponse } from '../../../utils/validation/apiValidation.ts';
 import { PRODUCT_SCHEMA_RESPONSE } from '../../../data/jsonSchemas/products/product.schema.ts';
-import { SignInApiService } from '../../service/index.ts';
 import { IProduct, IProductFromResponse } from '../../../data/types/product.types.ts';
 import { TAGS } from '../../../utils/tags.ts';
 import { PRODUCTS_SCHEMA_RESPONSE } from '../../../data/jsonSchemas/products/products.schema.ts';
 import { API_ERROR_MESSAGES } from '../../../data/errorMessages.ts';
 import { expect as chaiExpect } from 'chai';
+import { test } from '../../../fixtures/api/apiServices/apiServices.fixture.ts';
 
-describe(`[API] [Products] Smoke run ${TAGS.SMOKE}`, () => {
+test.describe(`[API] [Products] Smoke run `, { tag: TAGS.SMOKE }, () => {
   let id = '',
     productData: IProduct,
     token: string,
     createdProduct: IProductFromResponse;
 
-  before(async () => {
-    token = await SignInApiService.signInAsAdmin();
+  test.before(async ({ signInApiService }) => {
+    token = await signInApiService.signInAsAdmin();
   });
 
-  after(async () => {
-    const product = await ProductsController.get(id, token);
+  test.after(async ({  productsController }) => {
+    const product = await productsController.get(id, token);
     if (product.status === STATUS_CODES.OK) {
-      // const response = await ProductsController.delete(product.body.Product._id, token);
-      // chaiExpect(response.status).to.equal(STATUS_CODES.DELETED);
+      const response = await productsController.delete(product.body.Product._id, token);
+      chaiExpect(response.status).to.equal(STATUS_CODES.DELETED);
     }
   });
 
-  it('Should create product with smoke data', async () => {
+  test('Should create product with smoke data', async ({ productsController }) => {
     productData = generateProductData();
 
-    const createProductResponse = await ProductsController.create(productData, token);
+    const createProductResponse = await productsController.create(productData, token);
     id = createProductResponse.body.Product._id;
     createdProduct = createProductResponse.body.Product;
 
@@ -40,8 +39,8 @@ describe(`[API] [Products] Smoke run ${TAGS.SMOKE}`, () => {
     chaiExpect(createdProduct).to.containSubset({ ...productData });
   });
 
-  it('Should get created product', async () => {
-    const createProductResponse = await ProductsController.get(id, token);
+  test('Should get created product', async ({ productsController }) => {
+    const createProductResponse = await productsController.get(id, token);
 
     validateResponse(createProductResponse, STATUS_CODES.OK, true, null);
     validateJsonSchema(PRODUCT_SCHEMA_RESPONSE, createProductResponse);
@@ -50,8 +49,8 @@ describe(`[API] [Products] Smoke run ${TAGS.SMOKE}`, () => {
     chaiExpect(createdProduct).to.containSubset({ ...productData });
   });
 
-  it('Should get all products and contain created', async () => {
-    const productsResponse = await ProductsController.getAll(token);
+  test('Should get all products and contain created', async ({ productsController }) => {
+    const productsResponse = await productsController.getAll(token);
 
     validateResponse(productsResponse, STATUS_CODES.OK, true, null);
     validateJsonSchema(PRODUCTS_SCHEMA_RESPONSE, productsResponse);
@@ -63,9 +62,9 @@ describe(`[API] [Products] Smoke run ${TAGS.SMOKE}`, () => {
     chaiExpect(product).to.containSubset({ ...createdProduct });
   });
 
-  it('Should update created product', async () => {
+  test('Should update created product', async ({ productsController }) => {
     productData = generateProductData();
-    const updatedProductResponse = await ProductsController.update(productData, id, token);
+    const updatedProductResponse = await productsController.update(productData, id, token);
 
     validateResponse(updatedProductResponse, STATUS_CODES.OK, true, null);
     validateJsonSchema(PRODUCT_SCHEMA_RESPONSE, updatedProductResponse);
@@ -74,12 +73,12 @@ describe(`[API] [Products] Smoke run ${TAGS.SMOKE}`, () => {
     chaiExpect(createdProduct).to.containSubset({ ...productData });
   });
 
-  it('Should delete created product', async () => {
-    const updatedProductResponse = await ProductsController.delete(id, token);
+  test('Should delete created product', async ({ productsController }) => {
+    const updatedProductResponse = await productsController.delete(id, token);
 
     validateResponse(updatedProductResponse, STATUS_CODES.DELETED);
 
-    const createProductResponse = await ProductsController.get(id, token);
+    const createProductResponse = await productsController.get(id, token);
     validateResponse(
       createProductResponse,
       STATUS_CODES.NOT_FOUND,

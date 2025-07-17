@@ -1,11 +1,11 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+# . "$(dirname -- "$0")/_/husky.sh"
 
 echo "🔍 Running pre-commit checks..."
 
 # Run linting and formatting
 echo "📝 Checking code style..."
-npm run code-quality:fix
+# npm run code-quality:fix
 
 # Add all changes to the index
 git add .

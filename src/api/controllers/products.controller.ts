@@ -49,7 +49,7 @@ class ProductsController {
 
   @logStep('Get Product by id via API')
   async get(productId: string, token: string) {
-    if (!productId) throw new Error('Product ID is required and cannot be null or undefined');
+    // if (!productId) throw new Error('Product ID is required and cannot be null or undefined');
 
     const options: IRequestOptions = {
       method: 'get',
